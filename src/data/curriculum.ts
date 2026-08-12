@@ -14,10 +14,17 @@ export interface SubjectMapping {
   evidence: string;
 }
 
+export interface Resource {
+  name: string;
+  url: string;
+  description: string;
+}
+
 export interface InclusivePath {
   learnerGroup: string;
   strategy: string;
   icon: 'visual' | 'auditory' | 'kinesthetic' | 'support' | 'advanced';
+  resources?: Resource[];
 }
 
 export interface StageData {
@@ -67,10 +74,40 @@ export const stages: Record<string, StageData> = {
     ],
     image: foundationalImage,
     inclusivePaths: [
-      { learnerGroup: "Visual & Spatial", strategy: "Use high-contrast picture schedules, color-coded blocks, and visual storytelling cues.", icon: "visual" },
-      { learnerGroup: "Kinesthetic", strategy: "Integrate sandpaper letters, jumping to count, and frequent movement breaks.", icon: "kinesthetic" },
-      { learnerGroup: "Support Needs", strategy: "Maintain predictable routines, provide quiet sensory zones, and offer tactile calming items.", icon: "support" },
-      { learnerGroup: "Advanced Pacing", strategy: "Provide open-ended building materials and complex storytelling prompts for deeper exploration.", icon: "advanced" }
+      { 
+        learnerGroup: "Visual & Spatial", 
+        strategy: "Use high-contrast picture schedules, color-coded blocks, and visual storytelling cues.", 
+        icon: "visual",
+        resources: [
+          { name: "Khan Academy Kids", url: "https://learn.khanacademy.org/khan-academy-kids/", description: "Free, visual-heavy learning app." }
+        ]
+      },
+      { 
+        learnerGroup: "Kinesthetic", 
+        strategy: "Integrate sandpaper letters, jumping to count, and frequent movement breaks.", 
+        icon: "kinesthetic",
+        resources: [
+          { name: "PBS Kids Games", url: "https://pbskids.org/games/", description: "Interactive and activity-based games." },
+          { name: "GoNoodle", url: "https://www.gonoodle.com/", description: "Free movement and mindfulness videos." }
+        ]
+      },
+      { 
+        learnerGroup: "Support Needs", 
+        strategy: "Maintain predictable routines, provide quiet sensory zones, and offer tactile calming items.", 
+        icon: "support",
+        resources: [
+          { name: "StoryWeaver", url: "https://storyweaver.org.in/", description: "Open-source digital repository of multilingual children's books." },
+          { name: "Tar Heel Reader", url: "https://tarheelreader.org/", description: "Free, easy-to-read, and accessible books." }
+        ]
+      },
+      { 
+        learnerGroup: "Advanced Pacing", 
+        strategy: "Provide open-ended building materials and complex storytelling prompts for deeper exploration.", 
+        icon: "advanced",
+        resources: [
+          { name: "ScratchJr", url: "https://www.scratchjr.org/", description: "Free coding language for young children." }
+        ]
+      }
     ],
     subjects: [
       {
@@ -161,10 +198,39 @@ export const stages: Record<string, StageData> = {
     ],
     image: preparatoryImage,
     inclusivePaths: [
-      { learnerGroup: "Visual & Spatial", strategy: "Incorporate mind maps, illustrated timelines, and visual fraction models.", icon: "visual" },
-      { learnerGroup: "Auditory", strategy: "Use rhythmic chanting for multiplication, read-aloud circles, and oral presentations.", icon: "auditory" },
-      { learnerGroup: "Support Needs", strategy: "Break instructions into small steps, provide graphic organizers, and allow extra time.", icon: "support" },
-      { learnerGroup: "Advanced Pacing", strategy: "Encourage independent inquiry projects and peer teaching opportunities.", icon: "advanced" }
+      { 
+        learnerGroup: "Visual & Spatial", 
+        strategy: "Incorporate mind maps, illustrated timelines, and visual fraction models.", 
+        icon: "visual",
+        resources: [
+          { name: "PhET Interactive Simulations", url: "https://phet.colorado.edu/", description: "Free math and science simulations." }
+        ]
+      },
+      { 
+        learnerGroup: "Auditory", 
+        strategy: "Use rhythmic chanting for multiplication, read-aloud circles, and oral presentations.", 
+        icon: "auditory",
+        resources: [
+          { name: "LibriVox", url: "https://librivox.org/", description: "Free public domain audiobooks." },
+          { name: "Storynory", url: "https://www.storynory.com/", description: "Free audio stories for kids." }
+        ]
+      },
+      { 
+        learnerGroup: "Support Needs", 
+        strategy: "Break instructions into small steps, provide graphic organizers, and allow extra time.", 
+        icon: "support",
+        resources: [
+          { name: "OpenDyslexic", url: "https://opendyslexic.org/", description: "Open source font created to increase readability for readers with dyslexia." }
+        ]
+      },
+      { 
+        learnerGroup: "Advanced Pacing", 
+        strategy: "Encourage independent inquiry projects and peer teaching opportunities.", 
+        icon: "advanced",
+        resources: [
+          { name: "Scratch", url: "https://scratch.mit.edu/", description: "Free programming language and online community." }
+        ]
+      }
     ],
     subjects: [
       {
@@ -263,10 +329,40 @@ export const stages: Record<string, StageData> = {
     ],
     image: middleImage,
     inclusivePaths: [
-      { learnerGroup: "Visual & Spatial", strategy: "Utilize data visualization tools, concept mapping software, and geometry manipulatives.", icon: "visual" },
-      { learnerGroup: "Kinesthetic", strategy: "Engage in hands-on science experiments, role-playing historical events, and building prototypes.", icon: "kinesthetic" },
-      { learnerGroup: "Support Needs", strategy: "Provide audiobooks, text-to-speech tools, structured templates for writing, and clear rubrics.", icon: "support" },
-      { learnerGroup: "Advanced Pacing", strategy: "Introduce open-ended design challenges, debate leadership roles, and cross-disciplinary research.", icon: "advanced" }
+      { 
+        learnerGroup: "Visual & Spatial", 
+        strategy: "Utilize data visualization tools, concept mapping software, and geometry manipulatives.", 
+        icon: "visual",
+        resources: [
+          { name: "Tinkercad", url: "https://www.tinkercad.com/", description: "Free, easy-to-use app for 3D design, electronics, and coding." },
+          { name: "GeoGebra", url: "https://www.geogebra.org/", description: "Free dynamic mathematics software." }
+        ]
+      },
+      { 
+        learnerGroup: "Kinesthetic", 
+        strategy: "Engage in hands-on science experiments, role-playing historical events, and building prototypes.", 
+        icon: "kinesthetic",
+        resources: [
+          { name: "Arduino Project Hub", url: "https://create.arduino.cc/projecthub", description: "Open-source electronics platform based on easy-to-use hardware and software." }
+        ]
+      },
+      { 
+        learnerGroup: "Support Needs", 
+        strategy: "Provide audiobooks, text-to-speech tools, structured templates for writing, and clear rubrics.", 
+        icon: "support",
+        resources: [
+          { name: "Project Gutenberg", url: "https://www.gutenberg.org/", description: "Library of over 70,000 free eBooks with readable text formats." },
+          { name: "Microsoft Immersive Reader", url: "https://www.onenote.com/learningtools", description: "Free reading enhancement tool." }
+        ]
+      },
+      { 
+        learnerGroup: "Advanced Pacing", 
+        strategy: "Introduce open-ended design challenges, debate leadership roles, and cross-disciplinary research.", 
+        icon: "advanced",
+        resources: [
+          { name: "freeCodeCamp", url: "https://www.freecodecamp.org/", description: "Open source community that helps you learn to code." }
+        ]
+      }
     ],
     subjects: [
       {
@@ -376,10 +472,42 @@ export const secondaryStage = {
   ],
   image: secondaryImage,
   inclusivePaths: [
-    { learnerGroup: "Visual & Spatial", strategy: "Support learning with 3D modeling, advanced graphing software, and visual portfolios.", icon: "visual" },
-    { learnerGroup: "Auditory", strategy: "Facilitate Socratic seminars, podcast creation, and oral debate competitions.", icon: "auditory" },
-    { learnerGroup: "Support Needs", strategy: "Offer flexible submission formats, assistive technology, and staggered deadlines for large projects.", icon: "support" },
-    { learnerGroup: "Advanced Pacing", strategy: "Provide opportunities for independent research, university-level coursework, and industry mentorships.", icon: "advanced" }
+    { 
+      learnerGroup: "Visual & Spatial", 
+      strategy: "Support learning with 3D modeling, advanced graphing software, and visual portfolios.", 
+      icon: "visual",
+      resources: [
+        { name: "Blender", url: "https://www.blender.org/", description: "Free and open source 3D creation suite." },
+        { name: "QGIS", url: "https://qgis.org/", description: "A Free and Open Source Geographic Information System." }
+      ]
+    },
+    { 
+      learnerGroup: "Auditory", 
+      strategy: "Facilitate Socratic seminars, podcast creation, and oral debate competitions.", 
+      icon: "auditory",
+      resources: [
+        { name: "MIT OpenCourseWare", url: "https://ocw.mit.edu/", description: "Free lecture videos and audio from MIT courses." },
+        { name: "TED-Ed", url: "https://ed.ted.com/", description: "Free educational videos and lessons." }
+      ]
+    },
+    { 
+      learnerGroup: "Support Needs", 
+      strategy: "Offer flexible submission formats, assistive technology, and staggered deadlines for large projects.", 
+      icon: "support",
+      resources: [
+        { name: "NVDA", url: "https://www.nvaccess.org/", description: "Free and open source screen reader." },
+        { name: "Zotero", url: "https://www.zotero.org/", description: "Free, easy-to-use tool to help collect and organize research." }
+      ]
+    },
+    { 
+      learnerGroup: "Advanced Pacing", 
+      strategy: "Provide opportunities for independent research, university-level coursework, and industry mentorships.", 
+      icon: "advanced",
+      resources: [
+        { name: "OpenStax", url: "https://openstax.org/", description: "Free, peer-reviewed, openly licensed textbooks." },
+        { name: "GitHub Education", url: "https://education.github.com/", description: "Free tools and resources for student developers." }
+      ]
+    }
   ],
   phase1: {
     title: "Secondary Phase I: Grades 9–10",

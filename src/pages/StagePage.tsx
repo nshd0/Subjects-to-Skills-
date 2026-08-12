@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ChevronRight, Target, Activity, FileCheck, Lightbulb, ThumbsUp, ThumbsDown, Eye, Ear, Hand, HeartHandshake, Zap, Users } from 'lucide-react';
+import { ChevronRight, Target, Activity, FileCheck, Lightbulb, ThumbsUp, ThumbsDown, Eye, Ear, Hand, HeartHandshake, Zap, Users, ExternalLink } from 'lucide-react';
 import { stages, secondaryStage, InclusivePath } from '@/data/curriculum';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
@@ -29,14 +29,33 @@ function InclusivePathsSection({ paths }: { paths?: InclusivePath[] }) {
       </div>
       <div className="grid sm:grid-cols-2 gap-4">
         {paths.map((path, i) => (
-          <div key={i} className="bg-slate-50 dark:bg-slate-900/50 rounded-xl p-5 border border-slate-200 dark:border-slate-800">
+          <div key={i} className="bg-slate-50 dark:bg-slate-900/50 rounded-xl p-5 border border-slate-200 dark:border-slate-800 flex flex-col">
             <div className="flex items-center gap-3 mb-3">
               <div className="p-2 bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-slate-100 dark:border-slate-700">
                 <InclusivePathIcon icon={path.icon} />
               </div>
               <h3 className="font-semibold text-slate-900 dark:text-slate-100">{path.learnerGroup}</h3>
             </div>
-            <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">{path.strategy}</p>
+            <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-4">{path.strategy}</p>
+            
+            {path.resources && path.resources.length > 0 && (
+              <div className="mt-auto pt-3 border-t border-slate-200 dark:border-slate-700">
+                <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">Free & Open Source Tools</h4>
+                <ul className="space-y-2.5">
+                  {path.resources.map((res, idx) => (
+                    <li key={idx}>
+                      <a href={res.url} target="_blank" rel="noopener noreferrer" className="group flex items-start gap-2 text-sm text-indigo-600 dark:text-indigo-400 hover:underline">
+                        <ExternalLink className="h-4 w-4 shrink-0 mt-0.5 group-hover:text-indigo-700 dark:group-hover:text-indigo-300" />
+                        <span className="leading-snug">
+                          <strong className="font-medium text-slate-800 dark:text-slate-200">{res.name}</strong>
+                          <span className="text-slate-500 dark:text-slate-400"> — {res.description}</span>
+                        </span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         ))}
       </div>
