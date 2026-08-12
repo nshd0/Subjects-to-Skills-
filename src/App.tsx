@@ -1,0 +1,35 @@
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { ThemeProvider } from './contexts/ThemeContext';
+import { ProgressProvider } from './contexts/ProgressContext';
+import { Layout } from './components/Layout';
+import { Home } from './pages/Home';
+import { StagePage } from './pages/StagePage';
+import { SkillProgression } from './pages/SkillProgression';
+import { TeacherToolkit } from './pages/TeacherToolkit';
+import { About } from './pages/About';
+
+export default function App() {
+  return (
+    <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+      <ProgressProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Home />} />
+              <Route path="stage/:stageId" element={<StagePage />} />
+              <Route path="skill-progression" element={<SkillProgression />} />
+              <Route path="toolkit" element={<TeacherToolkit />} />
+              <Route path="about" element={<About />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </ProgressProvider>
+    </ThemeProvider>
+  );
+}

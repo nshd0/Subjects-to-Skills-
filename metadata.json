@@ -1,0 +1,6 @@
+{
+  "name": "CBSE Skill-Centred Learning Navigator",
+  "description": "A public educational web app that presents a complete skill-centred curriculum framework mapped to existing CBSE subjects.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
