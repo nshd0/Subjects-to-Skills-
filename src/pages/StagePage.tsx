@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ChevronRight, Target, Activity, FileCheck, Lightbulb, ThumbsUp, ThumbsDown, Eye, Ear, Hand, HeartHandshake, Zap, Users, ExternalLink } from 'lucide-react';
-import { stages, secondaryStage, InclusivePath } from '@/data/curriculum';
+import { ChevronRight, Target, Activity, FileCheck, Lightbulb, ThumbsUp, ThumbsDown, Eye, Ear, Hand, HeartHandshake, Zap, Users, ExternalLink, GraduationCap, CheckCircle2 } from 'lucide-react';
+import { stages, secondaryStage, InclusivePath, StageGuidance } from '@/data/curriculum';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/Accordion';
@@ -58,6 +58,71 @@ function InclusivePathsSection({ paths }: { paths?: InclusivePath[] }) {
             )}
           </div>
         ))}
+      </div>
+    </section>
+  );
+}
+
+function StageGuidanceSection({ guidance }: { guidance?: StageGuidance }) {
+  if (!guidance) return null;
+
+  return (
+    <section className="mt-12 border-t border-slate-200 dark:border-slate-800 pt-10">
+      <div className="mb-8">
+        <h2 className="text-2xl font-bold mb-2 flex items-center gap-2">
+          <GraduationCap className="h-6 w-6 text-indigo-600 dark:text-indigo-400" />
+          Assessment & Activity Guidance
+        </h2>
+        <p className="text-slate-600 dark:text-slate-400">Teacher facilitation tips and structured evaluation rubrics for this stage.</p>
+      </div>
+
+      <div className="grid lg:grid-cols-3 gap-8">
+        {/* Activity Tips */}
+        <div className="lg:col-span-1 bg-indigo-50 dark:bg-indigo-950/30 rounded-xl p-6 border border-indigo-100 dark:border-indigo-900/50 h-fit">
+          <h3 className="font-semibold text-lg mb-4 text-indigo-900 dark:text-indigo-300 flex items-center gap-2">
+            <Lightbulb className="h-5 w-5" />
+            Facilitation Tips
+          </h3>
+          <ul className="space-y-3">
+            {guidance.activityTips.map((tip, idx) => (
+              <li key={idx} className="flex gap-3 text-sm text-slate-700 dark:text-slate-300">
+                <CheckCircle2 className="h-4 w-4 shrink-0 text-indigo-500 mt-0.5" />
+                <span className="leading-relaxed">{tip}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Rubrics */}
+        <div className="lg:col-span-2">
+          <h3 className="font-semibold text-lg mb-4 flex items-center gap-2">
+            <FileCheck className="h-5 w-5 text-slate-500" />
+            Core Competency Rubrics
+          </h3>
+          <div className="space-y-4">
+            {guidance.rubrics.map((rubric, idx) => (
+              <div key={idx} className="border border-slate-200 dark:border-slate-800 rounded-lg overflow-hidden bg-white dark:bg-slate-900">
+                <div className="bg-slate-50 dark:bg-slate-800/50 px-4 py-3 border-b border-slate-200 dark:border-slate-800">
+                  <h4 className="font-medium text-slate-900 dark:text-slate-100">{rubric.criteria}</h4>
+                </div>
+                <div className="grid sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-slate-100 dark:divide-slate-800">
+                  <div className="p-4">
+                    <span className="inline-block px-2 py-1 bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-400 text-xs font-medium rounded mb-2">Emerging</span>
+                    <p className="text-sm text-slate-600 dark:text-slate-400">{rubric.emerging}</p>
+                  </div>
+                  <div className="p-4">
+                    <span className="inline-block px-2 py-1 bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400 text-xs font-medium rounded mb-2">Proficient</span>
+                    <p className="text-sm text-slate-600 dark:text-slate-400">{rubric.proficient}</p>
+                  </div>
+                  <div className="p-4">
+                    <span className="inline-block px-2 py-1 bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 text-xs font-medium rounded mb-2">Advanced</span>
+                    <p className="text-sm text-slate-600 dark:text-slate-400">{rubric.advanced}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -195,6 +260,9 @@ export function StagePage() {
 
         {/* Inclusive Paths */}
         <InclusivePathsSection paths={stage.inclusivePaths} />
+
+        {/* Stage Guidance & Assessment */}
+        <StageGuidanceSection guidance={stage.guidance} />
 
         {/* Subject Mapping */}
         <section>
@@ -349,6 +417,9 @@ function SecondaryStagePage() {
 
         {/* Inclusive Paths */}
         <InclusivePathsSection paths={stage.inclusivePaths} />
+
+        {/* Stage Guidance & Assessment */}
+        <StageGuidanceSection guidance={stage.guidance} />
 
         {/* Phase I */}
         <section>

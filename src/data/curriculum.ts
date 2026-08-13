@@ -27,6 +27,18 @@ export interface InclusivePath {
   resources?: Resource[];
 }
 
+export interface AssessmentRubric {
+  criteria: string;
+  emerging: string;
+  proficient: string;
+  advanced: string;
+}
+
+export interface StageGuidance {
+  activityTips: string[];
+  rubrics: AssessmentRubric[];
+}
+
 export interface StageData {
   id: string;
   title: string;
@@ -40,6 +52,7 @@ export interface StageData {
   subjects: SubjectMapping[];
   image: string;
   inclusivePaths?: InclusivePath[];
+  guidance?: StageGuidance;
   project?: {
     title: string;
     details: string[];
@@ -109,6 +122,34 @@ export const stages: Record<string, StageData> = {
         ]
       }
     ],
+    guidance: {
+      activityTips: [
+        "Focus on short, 10-15 minute bursts of guided activity to match attention spans.",
+        "Use multisensory materials (sand, water, blocks, playdough) to ground abstract concepts.",
+        "Emphasize oral feedback, praise, and encouragement over written correction.",
+        "Integrate learning into daily routines (e.g., counting during cleanup, storytelling during snack time)."
+      ],
+      rubrics: [
+        {
+          criteria: "Communication & Expression",
+          emerging: "Uses single words or gestures; hesitant to share.",
+          proficient: "Expresses simple ideas in short, clear sentences.",
+          advanced: "Tells a coherent short story or explains a drawing in detail."
+        },
+        {
+          criteria: "Social Collaboration",
+          emerging: "Engages mostly in parallel play alongside peers.",
+          proficient: "Shares materials and takes turns with prompts.",
+          advanced: "Initiates cooperative play, helps peers, and resolves minor conflicts."
+        },
+        {
+          criteria: "Sensory & Motor Skills",
+          emerging: "Shows some difficulty grasping tools or tracking objects.",
+          proficient: "Holds writing tools correctly; completes basic puzzles.",
+          advanced: "Demonstrates fine motor precision (e.g., cutting complex shapes, building intricate towers)."
+        }
+      ]
+    },
     subjects: [
       {
         name: "Hindi / Regional Language",
@@ -232,6 +273,34 @@ export const stages: Record<string, StageData> = {
         ]
       }
     ],
+    guidance: {
+      activityTips: [
+        "Introduce collaborative group roles (e.g., timekeeper, scribe, presenter).",
+        "Connect classroom activities to local community or home life for real-world relevance.",
+        "Provide graphic organizers (Venn diagrams, mind maps) to help structure thought processes.",
+        "Balance direct instruction with structured, hands-on discovery sessions."
+      ],
+      rubrics: [
+        {
+          criteria: "Concept Application",
+          emerging: "Recalls facts but struggles to apply them to tasks.",
+          proficient: "Applies concepts correctly to familiar situations.",
+          advanced: "Transfers concepts to new, unfamiliar problems with ease."
+        },
+        {
+          criteria: "Project Execution",
+          emerging: "Requires constant guidance to complete assigned tasks.",
+          proficient: "Follows instructions and completes tasks independently.",
+          advanced: "Plans own steps, self-corrects, and improves upon the original idea."
+        },
+        {
+          criteria: "Peer Feedback",
+          emerging: "Provides simple, generic feedback (e.g., 'It is good').",
+          proficient: "Provides specific, constructive feedback when guided.",
+          advanced: "Offers detailed, actionable feedback and graciously accepts critiques."
+        }
+      ]
+    },
     subjects: [
       {
         name: "Hindi / Regional Language",
@@ -364,6 +433,34 @@ export const stages: Record<string, StageData> = {
         ]
       }
     ],
+    guidance: {
+      activityTips: [
+        "Shift focus to inquiry-based questions where students design the investigation.",
+        "Incorporate peer-review sessions using structured feedback protocols.",
+        "Allow choice in how students present their findings (e.g., podcast, essay, 3D model).",
+        "Facilitate structured debates to explore multiple perspectives on historical or scientific issues."
+      ],
+      rubrics: [
+        {
+          criteria: "Critical Analysis",
+          emerging: "Summarizes information without questioning sources or bias.",
+          proficient: "Compares different viewpoints and identifies obvious biases.",
+          advanced: "Synthesizes multiple sources to form a unique, evidence-based argument."
+        },
+        {
+          criteria: "Problem Solving",
+          emerging: "Uses trial and error without a clear overarching plan.",
+          proficient: "Selects a logical strategy and follows it through to a conclusion.",
+          advanced: "Evaluates constraints, tests multiple strategies, and optimizes the final solution."
+        },
+        {
+          criteria: "Digital & Information Literacy",
+          emerging: "Relies on the first search result; struggles to verify facts.",
+          proficient: "Uses multiple sources and citations correctly.",
+          advanced: "Evaluates source credibility deeply and uses advanced tools for data representation."
+        }
+      ]
+    },
     subjects: [
       {
         name: "Hindi / Regional Language",
@@ -444,7 +541,7 @@ export const stages: Record<string, StageData> = {
   }
 };
 
-export const secondaryStage = {
+export const secondaryStage: Omit<StageData, 'subjects'> & { phase1: any; phase2: any } = {
   id: "secondary",
   title: "Secondary Stage",
   subtitle: "Ages 14–18 | Grades 9–12",
@@ -509,6 +606,34 @@ export const secondaryStage = {
       ]
     }
   ],
+  guidance: {
+    activityTips: [
+      "Act as a facilitator or mentor rather than a direct instructor.",
+      "Encourage students to reach out to real-world experts, alumni, or community members for research.",
+      "Use Socratic seminars to deepen understanding of complex ethical, societal, or scientific issues.",
+      "Integrate long-term, self-directed Capstone projects simulating industry environments."
+    ],
+    rubrics: [
+      {
+        criteria: "Research & Synthesis",
+        emerging: "Relies on a single source or surface-level data collection.",
+        proficient: "Integrates multiple credible sources to support a strong thesis.",
+        advanced: "Identifies gaps in existing research and proposes original hypotheses."
+      },
+      {
+        criteria: "Real-World Application",
+        emerging: "Understands theory but struggles to see practical industry use.",
+        proficient: "Applies theoretical knowledge to simulated real-world scenarios.",
+        advanced: "Designs and executes a project that solves a genuine community or industry problem."
+      },
+      {
+        criteria: "Professional Communication",
+        emerging: "Presents information informally with inconsistent structure.",
+        proficient: "Communicates clearly using domain-specific terminology.",
+        advanced: "Adapts tone and complexity perfectly for varying professional audiences (peers, experts, public)."
+      }
+    ]
+  },
   phase1: {
     title: "Secondary Phase I: Grades 9–10",
     subjects: [

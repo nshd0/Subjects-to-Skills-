@@ -79,6 +79,49 @@ Transfer Question:`;
             <li>What visible evidence will tell me the student has mastered this skill?</li>
           </ul>
         </div>
+        <div className="mt-16">
+          <h2 className="text-2xl font-bold mb-6 border-b border-slate-200 dark:border-slate-800 pb-2">Custom AI Agents</h2>
+          <p className="text-slate-600 dark:text-slate-300 mb-6">
+            Accelerate your planning and differentiation by using our dedicated AI assistants. Clicking these will open external custom agents.
+          </p>
+          <div className="grid md:grid-cols-3 gap-6">
+            <a href="#" target="_blank" rel="noopener noreferrer" className="block group">
+              <div className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm transition-all hover:border-indigo-500 dark:hover:border-indigo-400 hover:shadow-md h-full flex flex-col">
+                <h3 className="text-lg font-bold mb-2 text-indigo-700 dark:text-indigo-400 group-hover:underline">Lesson Plan Architect</h3>
+                <p className="text-slate-600 dark:text-slate-400 text-sm flex-grow">
+                  Generates complete 45-minute lesson plans aligned to the skills and pedagogies of your selected stage.
+                </p>
+                <div className="mt-4 text-indigo-600 dark:text-indigo-400 text-sm font-medium flex items-center">
+                  Open Agent <span className="ml-1 group-hover:translate-x-1 transition-transform">→</span>
+                </div>
+              </div>
+            </a>
+            
+            <a href="#" target="_blank" rel="noopener noreferrer" className="block group">
+              <div className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm transition-all hover:border-emerald-500 dark:hover:border-emerald-400 hover:shadow-md h-full flex flex-col">
+                <h3 className="text-lg font-bold mb-2 text-emerald-700 dark:text-emerald-400 group-hover:underline">Inclusive Differentiation Engine</h3>
+                <p className="text-slate-600 dark:text-slate-400 text-sm flex-grow">
+                  Adapts activities and provides specific scaffolding for visual, kinesthetic, and support-needs learners.
+                </p>
+                <div className="mt-4 text-emerald-600 dark:text-emerald-400 text-sm font-medium flex items-center">
+                  Open Agent <span className="ml-1 group-hover:translate-x-1 transition-transform">→</span>
+                </div>
+              </div>
+            </a>
+
+            <a href="#" target="_blank" rel="noopener noreferrer" className="block group">
+              <div className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm transition-all hover:border-rose-500 dark:hover:border-rose-400 hover:shadow-md h-full flex flex-col">
+                <h3 className="text-lg font-bold mb-2 text-rose-700 dark:text-rose-400 group-hover:underline">Assessment Rubric Generator</h3>
+                <p className="text-slate-600 dark:text-slate-400 text-sm flex-grow">
+                  Translates generic core competency rubrics into project-specific grading criteria instantly.
+                </p>
+                <div className="mt-4 text-rose-600 dark:text-rose-400 text-sm font-medium flex items-center">
+                  Open Agent <span className="ml-1 group-hover:translate-x-1 transition-transform">→</span>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   );

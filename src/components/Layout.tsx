@@ -32,7 +32,7 @@ export function Layout() {
           <div className="flex h-16 items-center justify-between">
             <div className="flex items-center gap-2">
               <GraduationCap className="h-6 w-6 text-indigo-600 dark:text-indigo-400" />
-              <span className="text-lg font-bold tracking-tight">CBSE Navigator</span>
+              <span className="text-lg font-bold tracking-tight">Subjects2skills Navigator</span>
             </div>
 
             {/* Desktop Nav */}
