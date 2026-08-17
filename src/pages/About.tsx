@@ -33,6 +33,30 @@ export function About() {
               </p>
             </section>
 
+            <section>
+              <h2 className="text-2xl font-bold mb-4 text-slate-900 dark:text-slate-100">Scope of Improvements & Future Roadmap</h2>
+              <p className="text-slate-700 dark:text-slate-300 mb-4">
+                As education evolves, this framework is designed to grow. We envision several key areas for future development and enhancement to better serve educators and institutions:
+              </p>
+              <ul className="list-disc pl-6 space-y-3 text-slate-700 dark:text-slate-300">
+                <li>
+                  <strong>Integrated AI Agents:</strong> Transitioning from external AI tools to deeply integrated, dynamic AI assistants that can read the selected stage and subject to instantly generate personalized lesson plans and inclusive differentiation strategies.
+                </li>
+                <li>
+                  <strong>Comprehensive Subject Expansion:</strong> Expanding the framework to cover specialized higher-secondary vocational subjects, advanced electives, and emerging disciplines (e.g., Artificial Intelligence, Financial Literacy).
+                </li>
+                <li>
+                  <strong>Interactive Assessment Tracking:</strong> Developing built-in tools for educators to log student progress against the core competency rubrics, creating a longitudinal view of skill development across stages.
+                </li>
+                <li>
+                  <strong>Regional Localization:</strong> Translating the framework and toolkit resources into multiple regional languages to support educators in diverse linguistic contexts across India.
+                </li>
+                <li>
+                  <strong>Community Contributions:</strong> Introducing a collaborative hub where educators can submit, review, and share their own successful skill-mapped lesson plans and activities.
+                </li>
+              </ul>
+            </section>
+
             <div className="mt-12 p-6 bg-slate-100 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700">
               <h3 className="font-bold text-slate-900 dark:text-slate-100 mb-2">Important Notice</h3>
               <p className="text-slate-700 dark:text-slate-300 text-sm">

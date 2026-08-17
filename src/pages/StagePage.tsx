@@ -6,6 +6,20 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/Badge';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/Accordion';
 import { Button } from '@/components/ui/Button';
+import { motion } from 'motion/react';
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 24 } }
+};
 
 function InclusivePathIcon({ icon }: { icon: string }) {
   switch (icon) {
@@ -164,14 +178,22 @@ export function StagePage() {
       {/* Breadcrumbs & Header */}
       <div className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 pt-8 pb-12 relative overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl relative z-10">
-          <nav className="flex items-center text-sm text-slate-500 mb-6">
+          <motion.nav 
+            className="flex items-center text-sm text-slate-500 mb-6"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
             <Link to="/" className="hover:text-indigo-600 transition-colors">Home</Link>
             <ChevronRight className="h-4 w-4 mx-2" />
             <span className="text-slate-900 dark:text-slate-100 font-medium">{stage.title}</span>
-          </nav>
+          </motion.nav>
           
           <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div>
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+            >
               <div className="flex flex-wrap gap-3 mb-4">
                 <Badge variant="secondary" className="text-sm px-3 py-1">{stage.ageGroup}</Badge>
                 <Badge variant="outline" className="text-sm px-3 py-1">{stage.gradeBand}</Badge>
@@ -181,16 +203,22 @@ export function StagePage() {
               <p className="text-xl text-slate-600 dark:text-slate-300 leading-relaxed max-w-xl">
                 {stage.intro}
               </p>
-            </div>
+            </motion.div>
             {stage.image && (
-              <div className="rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-md">
+              <motion.div 
+                className="rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-md"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                whileHover={{ scale: 1.02 }}
+              >
                  <img 
                   src={stage.image} 
                   alt={`${stage.title} illustration`} 
                   referrerPolicy="no-referrer"
                   className="w-full h-auto object-cover aspect-4/3"
                 />
-              </div>
+              </motion.div>
             )}
           </div>
         </div>
@@ -199,44 +227,58 @@ export function StagePage() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl mt-12 space-y-16">
         
         {/* Focus & Pedagogy */}
-        <div className="grid md:grid-cols-2 gap-8">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2"><Target className="h-5 w-5 text-indigo-500"/> Developmental Focus</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ul className="grid grid-cols-1 gap-2">
-                {stage.focus.map((item, i) => (
-                  <li key={i} className="flex items-start gap-2 text-slate-700 dark:text-slate-300">
-                    <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-2 shrink-0" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
+        <motion.div 
+          className="grid md:grid-cols-2 gap-8"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-50px" }}
+        >
+          <motion.div variants={itemVariants}>
+            <Card className="h-full transition-shadow hover:shadow-md">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2"><Target className="h-5 w-5 text-indigo-500"/> Developmental Focus</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="grid grid-cols-1 gap-2">
+                  {stage.focus.map((item, i) => (
+                    <li key={i} className="flex items-start gap-2 text-slate-700 dark:text-slate-300">
+                      <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-2 shrink-0" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          </motion.div>
           
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2"><Activity className="h-5 w-5 text-emerald-500"/> Pedagogy Mode</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ul className="grid grid-cols-1 gap-2">
-                {stage.pedagogy.map((item, i) => (
-                  <li key={i} className="flex items-start gap-2 text-slate-700 dark:text-slate-300">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 shrink-0" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
-        </div>
+          <motion.div variants={itemVariants}>
+            <Card className="h-full transition-shadow hover:shadow-md">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2"><Activity className="h-5 w-5 text-emerald-500"/> Pedagogy Mode</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="grid grid-cols-1 gap-2">
+                  {stage.pedagogy.map((item, i) => (
+                    <li key={i} className="flex items-start gap-2 text-slate-700 dark:text-slate-300">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 shrink-0" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          </motion.div>
+        </motion.div>
 
         {/* Interdisciplinary Project */}
         {stage.project && (
-          <section>
-            <div className="bg-indigo-50 dark:bg-indigo-950/30 rounded-2xl p-8 border border-indigo-100 dark:border-indigo-900/50">
+          <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+          >
+            <div className="bg-indigo-50 dark:bg-indigo-950/30 rounded-2xl p-8 border border-indigo-100 dark:border-indigo-900/50 transition-colors hover:border-indigo-200 dark:hover:border-indigo-800">
               <div className="flex items-center gap-3 mb-6">
                 <div className="p-2 bg-indigo-100 dark:bg-indigo-900 rounded-lg">
                   <Lightbulb className="h-6 w-6 text-indigo-700 dark:text-indigo-300" />
@@ -255,7 +297,7 @@ export function StagePage() {
                 ))}
               </ul>
             </div>
-          </section>
+          </motion.section>
         )}
 
         {/* Inclusive Paths */}
@@ -323,14 +365,22 @@ function SecondaryStagePage() {
     <div className="pb-16">
       <div className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 pt-8 pb-12 relative overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl relative z-10">
-          <nav className="flex items-center text-sm text-slate-500 mb-6">
+          <motion.nav 
+            className="flex items-center text-sm text-slate-500 mb-6"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
             <Link to="/" className="hover:text-indigo-600 transition-colors">Home</Link>
             <ChevronRight className="h-4 w-4 mx-2" />
             <span className="text-slate-900 dark:text-slate-100 font-medium">{stage.title}</span>
-          </nav>
+          </motion.nav>
           
           <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div>
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+            >
               <div className="flex flex-wrap gap-3 mb-4">
                 <Badge variant="secondary" className="text-sm px-3 py-1">{stage.ageGroup}</Badge>
                 <Badge variant="outline" className="text-sm px-3 py-1">{stage.gradeBand}</Badge>
@@ -340,16 +390,22 @@ function SecondaryStagePage() {
               <p className="text-xl text-slate-600 dark:text-slate-300 leading-relaxed max-w-xl">
                 {stage.intro}
               </p>
-            </div>
+            </motion.div>
             {stage.image && (
-              <div className="rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-md">
+              <motion.div 
+                className="rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-md"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                whileHover={{ scale: 1.02 }}
+              >
                  <img 
                   src={stage.image} 
                   alt={`${stage.title} illustration`} 
                   referrerPolicy="no-referrer"
                   className="w-full h-auto object-cover aspect-4/3"
                 />
-              </div>
+              </motion.div>
             )}
           </div>
         </div>
@@ -358,43 +414,57 @@ function SecondaryStagePage() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl mt-12 space-y-16">
         
         {/* Focus & Pedagogy */}
-        <div className="grid md:grid-cols-2 gap-8">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2"><Target className="h-5 w-5 text-indigo-500"/> Developmental Focus</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ul className="grid grid-cols-1 gap-2">
-                {stage.focus.map((item, i) => (
-                  <li key={i} className="flex items-start gap-2 text-slate-700 dark:text-slate-300">
-                    <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-2 shrink-0" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
+        <motion.div 
+          className="grid md:grid-cols-2 gap-8"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-50px" }}
+        >
+          <motion.div variants={itemVariants}>
+            <Card className="h-full transition-shadow hover:shadow-md">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2"><Target className="h-5 w-5 text-indigo-500"/> Developmental Focus</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="grid grid-cols-1 gap-2">
+                  {stage.focus.map((item, i) => (
+                    <li key={i} className="flex items-start gap-2 text-slate-700 dark:text-slate-300">
+                      <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-2 shrink-0" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          </motion.div>
           
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2"><Activity className="h-5 w-5 text-emerald-500"/> Pedagogy Mode</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ul className="grid grid-cols-1 gap-2">
-                {stage.pedagogy.map((item, i) => (
-                  <li key={i} className="flex items-start gap-2 text-slate-700 dark:text-slate-300">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 shrink-0" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
-        </div>
+          <motion.div variants={itemVariants}>
+            <Card className="h-full transition-shadow hover:shadow-md">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2"><Activity className="h-5 w-5 text-emerald-500"/> Pedagogy Mode</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="grid grid-cols-1 gap-2">
+                  {stage.pedagogy.map((item, i) => (
+                    <li key={i} className="flex items-start gap-2 text-slate-700 dark:text-slate-300">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 shrink-0" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          </motion.div>
+        </motion.div>
 
         {/* Interdisciplinary Project */}
-        <section>
-          <div className="bg-indigo-50 dark:bg-indigo-950/30 rounded-2xl p-8 border border-indigo-100 dark:border-indigo-900/50">
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+        >
+          <div className="bg-indigo-50 dark:bg-indigo-950/30 rounded-2xl p-8 border border-indigo-100 dark:border-indigo-900/50 transition-colors hover:border-indigo-200 dark:hover:border-indigo-800">
             <div className="flex items-center gap-3 mb-6">
               <div className="p-2 bg-indigo-100 dark:bg-indigo-900 rounded-lg">
                 <Lightbulb className="h-6 w-6 text-indigo-700 dark:text-indigo-300" />
@@ -413,7 +483,7 @@ function SecondaryStagePage() {
               ))}
             </ul>
           </div>
-        </section>
+        </motion.section>
 
         {/* Inclusive Paths */}
         <InclusivePathsSection paths={stage.inclusivePaths} />

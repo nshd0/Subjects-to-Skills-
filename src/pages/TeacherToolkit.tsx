@@ -1,9 +1,30 @@
-import React from 'react';
-import { Copy, CheckCircle2 } from 'lucide-react';
+import React, { useRef } from 'react';
+import { Copy, CheckCircle2, Printer } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
+import { useReactToPrint } from 'react-to-print';
+import { motion } from 'motion/react';
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 24 } }
+};
 
 export function TeacherToolkit() {
   const [copied, setCopied] = React.useState(false);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  const handlePrint = useReactToPrint({
+    contentRef: contentRef,
+    documentTitle: 'Teacher-Toolkit-Export',
+  });
 
   const templateText = `Unit Planning Template
 Grade and Stage:
@@ -26,15 +47,35 @@ Transfer Question:`;
   };
 
   return (
-    <div className="pb-16">
+    <div className="pb-16" ref={contentRef}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl pt-12">
-        <h1 className="text-4xl font-bold tracking-tight mb-4">Teacher Toolkit</h1>
-        <p className="text-xl text-slate-600 dark:text-slate-300 mb-12">
+        <motion.div 
+          className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-4"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <h1 className="text-4xl font-bold tracking-tight">Teacher Toolkit</h1>
+          <Button onClick={() => handlePrint()} className="gap-2 print:hidden transition-transform hover:scale-105 active:scale-95">
+            <Printer className="h-4 w-4" />
+            Export to PDF
+          </Button>
+        </motion.div>
+        <motion.p 
+          className="text-xl text-slate-600 dark:text-slate-300 mb-12"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.1 }}
+        >
           Practical resources and templates for educators to design skill-centred learning units.
-        </p>
+        </motion.p>
 
-        <div className="grid md:grid-cols-2 gap-8 mb-12">
-          <div className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+        <motion.div 
+          className="grid md:grid-cols-2 gap-8 mb-12"
+          variants={containerVariants}
+          initial="hidden"
+          animate="show"
+        >
+          <motion.div variants={itemVariants} className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm transition-shadow hover:shadow-md">
             <h3 className="text-lg font-bold mb-3 text-indigo-600 dark:text-indigo-400">Stage-Based Planning Guide</h3>
             <ul className="space-y-2 text-slate-700 dark:text-slate-300 text-sm">
               <li>1. Identify the developmental focus of the stage.</li>
@@ -43,8 +84,8 @@ Transfer Question:`;
               <li>4. Choose an age-appropriate pedagogical mode.</li>
               <li>5. Design a task that generates visible evidence.</li>
             </ul>
-          </div>
-          <div className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+          </motion.div>
+          <motion.div variants={itemVariants} className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm transition-shadow hover:shadow-md">
             <h3 className="text-lg font-bold mb-3 text-emerald-600 dark:text-emerald-400">Assessment Evidence Ideas</h3>
             <ul className="space-y-2 text-slate-700 dark:text-slate-300 text-sm">
               <li>• Oral presentations and debates</li>
@@ -53,14 +94,26 @@ Transfer Question:`;
               <li>• Multimedia and digital campaigns</li>
               <li>• Peer critique and self-reflection rubrics</li>
             </ul>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
-        <h2 className="text-2xl font-bold mb-6 border-b border-slate-200 dark:border-slate-800 pb-2">Unit Planning Template</h2>
+        <motion.h2 
+          className="text-2xl font-bold mb-6 border-b border-slate-200 dark:border-slate-800 pb-2"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+        >
+          Unit Planning Template
+        </motion.h2>
         
-        <div className="relative bg-slate-50 dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 p-6 overflow-hidden">
-          <div className="absolute top-4 right-4">
-            <Button variant="outline" size="sm" onClick={handleCopy} className="gap-2 bg-white dark:bg-slate-900">
+        <motion.div 
+          className="relative bg-slate-50 dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 p-6 overflow-hidden print:border-slate-300 print:bg-white"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <div className="absolute top-4 right-4 print:hidden">
+            <Button variant="outline" size="sm" onClick={handleCopy} className="gap-2 bg-white dark:bg-slate-900 transition-transform hover:scale-105 active:scale-95">
               {copied ? <CheckCircle2 className="h-4 w-4 text-emerald-500" /> : <Copy className="h-4 w-4" />}
               {copied ? 'Copied!' : 'Copy to Clipboard'}
             </Button>
@@ -68,7 +121,7 @@ Transfer Question:`;
           <pre className="text-sm text-slate-700 dark:text-slate-300 font-mono whitespace-pre-wrap mt-8 lg:mt-0">
             {templateText}
           </pre>
-        </div>
+        </motion.div>
 
         <div className="mt-12 p-6 bg-amber-50 dark:bg-amber-950/30 rounded-xl border border-amber-200 dark:border-amber-900/50">
           <h3 className="text-lg font-bold text-amber-800 dark:text-amber-400 mb-2">Reflection Prompts for Educators</h3>
@@ -79,13 +132,24 @@ Transfer Question:`;
             <li>What visible evidence will tell me the student has mastered this skill?</li>
           </ul>
         </div>
-        <div className="mt-16">
+        <motion.div 
+          className="mt-16 print:hidden"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+        >
           <h2 className="text-2xl font-bold mb-6 border-b border-slate-200 dark:border-slate-800 pb-2">Custom AI Agents</h2>
           <p className="text-slate-600 dark:text-slate-300 mb-6">
             Accelerate your planning and differentiation by using our dedicated AI assistants. Clicking these will open external custom agents.
           </p>
-          <div className="grid md:grid-cols-3 gap-6">
-            <a href="#" target="_blank" rel="noopener noreferrer" className="block group">
+          <motion.div 
+            className="grid md:grid-cols-3 gap-6"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+          >
+            <motion.a variants={itemVariants} whileHover={{ y: -5 }} href="#" target="_blank" rel="noopener noreferrer" className="block group">
               <div className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm transition-all hover:border-indigo-500 dark:hover:border-indigo-400 hover:shadow-md h-full flex flex-col">
                 <h3 className="text-lg font-bold mb-2 text-indigo-700 dark:text-indigo-400 group-hover:underline">Lesson Plan Architect</h3>
                 <p className="text-slate-600 dark:text-slate-400 text-sm flex-grow">
@@ -95,9 +159,9 @@ Transfer Question:`;
                   Open Agent <span className="ml-1 group-hover:translate-x-1 transition-transform">→</span>
                 </div>
               </div>
-            </a>
+            </motion.a>
             
-            <a href="#" target="_blank" rel="noopener noreferrer" className="block group">
+            <motion.a variants={itemVariants} whileHover={{ y: -5 }} href="#" target="_blank" rel="noopener noreferrer" className="block group">
               <div className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm transition-all hover:border-emerald-500 dark:hover:border-emerald-400 hover:shadow-md h-full flex flex-col">
                 <h3 className="text-lg font-bold mb-2 text-emerald-700 dark:text-emerald-400 group-hover:underline">Inclusive Differentiation Engine</h3>
                 <p className="text-slate-600 dark:text-slate-400 text-sm flex-grow">
@@ -107,9 +171,9 @@ Transfer Question:`;
                   Open Agent <span className="ml-1 group-hover:translate-x-1 transition-transform">→</span>
                 </div>
               </div>
-            </a>
+            </motion.a>
 
-            <a href="#" target="_blank" rel="noopener noreferrer" className="block group">
+            <motion.a variants={itemVariants} whileHover={{ y: -5 }} href="#" target="_blank" rel="noopener noreferrer" className="block group">
               <div className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm transition-all hover:border-rose-500 dark:hover:border-rose-400 hover:shadow-md h-full flex flex-col">
                 <h3 className="text-lg font-bold mb-2 text-rose-700 dark:text-rose-400 group-hover:underline">Assessment Rubric Generator</h3>
                 <p className="text-slate-600 dark:text-slate-400 text-sm flex-grow">
@@ -119,9 +183,9 @@ Transfer Question:`;
                   Open Agent <span className="ml-1 group-hover:translate-x-1 transition-transform">→</span>
                 </div>
               </div>
-            </a>
-          </div>
-        </div>
+            </motion.a>
+          </motion.div>
+        </motion.div>
       </div>
     </div>
   );

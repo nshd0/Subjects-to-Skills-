@@ -3,6 +3,7 @@ import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import { Moon, Sun, Menu, X, Search, GraduationCap } from 'lucide-react';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Button } from './ui/Button';
+import { FeedbackWidget } from './FeedbackWidget';
 
 export function Layout() {
   const { theme, setTheme } = useTheme();
@@ -106,6 +107,7 @@ export function Layout() {
           <p className="mt-2">For design reference only. Verify with official CBSE guidance.</p>
         </div>
       </footer>
+      <FeedbackWidget />
     </div>
   );
 }

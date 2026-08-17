@@ -1,0 +1,19 @@
+{
+  "collections": {
+    "feedbacks": {
+      "description": "User feedback submissions",
+      "schema": {
+        "name": "string",
+        "email": "string",
+        "feedback": "string",
+        "createdAt": "timestamp"
+      },
+      "rules": {
+        "create": "true",
+        "read": "false",
+        "update": "false",
+        "delete": "false"
+      }
+    }
+  }
+}
