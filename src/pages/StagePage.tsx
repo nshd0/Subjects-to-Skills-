@@ -2,11 +2,13 @@ import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ChevronRight, Target, Activity, FileCheck, Lightbulb, ThumbsUp, ThumbsDown, Eye, Ear, Hand, HeartHandshake, Zap, Users, ExternalLink, GraduationCap, CheckCircle2 } from 'lucide-react';
 import { stages, secondaryStage, InclusivePath, StageGuidance } from '@/data/curriculum';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/Accordion';
+import { Accordion } from '@/components/ui/Accordion';
 import { Button } from '@/components/ui/Button';
 import { motion } from 'motion/react';
+import { CompliancePanel } from '@/components/CompliancePanel';
+import { SubjectMappingCard } from '@/components/SubjectMappingCard';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -221,6 +223,16 @@ export function StagePage() {
               </motion.div>
             )}
           </div>
+          
+          {stage.compliance && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              <CompliancePanel compliance={stage.compliance} />
+            </motion.div>
+          )}
         </div>
       </div>
 
@@ -309,45 +321,13 @@ export function StagePage() {
         {/* Subject Mapping */}
         <section>
           <div className="mb-8">
-            <h2 className="text-3xl font-bold mb-2">Existing CBSE Subjects Mapped</h2>
-            <p className="text-slate-600 dark:text-slate-400">Explore how knowledge domains translate into skills and classroom activities.</p>
+            <h2 className="text-3xl font-bold mb-2">Curriculum Mapping</h2>
+            <p className="text-slate-600 dark:text-slate-400">Explore how knowledge domains translate into competencies, skills and classroom activities.</p>
           </div>
           
           <Accordion type="single" collapsible className="w-full space-y-4">
             {stage.subjects.map((subject, index) => (
-              <AccordionItem key={index} value={`item-${index}`} className="border rounded-xl px-6 bg-white dark:bg-slate-900 shadow-sm">
-                <AccordionTrigger className="hover:no-underline py-6">
-                  <span className="text-lg font-semibold text-left">{subject.name}</span>
-                </AccordionTrigger>
-                <AccordionContent className="pb-6 pt-2 border-t border-slate-100 dark:border-slate-800">
-                  <div className="grid md:grid-cols-2 gap-x-8 gap-y-6 mt-4">
-                    <div>
-                      <h4 className="text-sm font-semibold text-slate-900 dark:text-slate-100 uppercase tracking-wider mb-2">Core Skills</h4>
-                      <p className="text-slate-700 dark:text-slate-300">{subject.skills}</p>
-                    </div>
-                    <div>
-                      <h4 className="text-sm font-semibold text-slate-900 dark:text-slate-100 uppercase tracking-wider mb-2">Pedagogical Mode</h4>
-                      <p className="text-slate-700 dark:text-slate-300">{subject.pedagogy}</p>
-                    </div>
-                    <div className="md:col-span-2 p-4 bg-slate-50 dark:bg-slate-950/50 rounded-lg border border-slate-100 dark:border-slate-800">
-                      <div className="grid md:grid-cols-2 gap-6">
-                        <div>
-                           <h4 className="flex items-center gap-2 text-sm font-semibold text-slate-900 dark:text-slate-100 mb-2">
-                            <Activity className="h-4 w-4 text-emerald-500"/> Example Activity
-                          </h4>
-                          <p className="text-slate-700 dark:text-slate-300">{subject.activities}</p>
-                        </div>
-                        <div>
-                          <h4 className="flex items-center gap-2 text-sm font-semibold text-slate-900 dark:text-slate-100 mb-2">
-                            <FileCheck className="h-4 w-4 text-amber-500"/> Assessment Evidence
-                          </h4>
-                          <p className="text-slate-700 dark:text-slate-300">{subject.evidence}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
+              <SubjectMappingCard key={index} subject={subject} index={index} />
             ))}
           </Accordion>
         </section>
@@ -408,6 +388,16 @@ function SecondaryStagePage() {
               </motion.div>
             )}
           </div>
+          
+          {stage.compliance && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              <CompliancePanel compliance={stage.compliance} />
+            </motion.div>
+          )}
         </div>
       </div>
 
@@ -491,6 +481,29 @@ function SecondaryStagePage() {
         {/* Stage Guidance & Assessment */}
         <StageGuidanceSection guidance={stage.guidance} />
 
+        {/* Pathways */}
+        {stage.pathways && (
+          <section className="mt-12 border-t border-slate-200 dark:border-slate-800 pt-10">
+            <div className="mb-8">
+              <h2 className="text-2xl font-bold mb-2">Subject Pathways (Choice Architecture)</h2>
+              <p className="text-slate-600 dark:text-slate-400">Example multidisciplinary combinations recommended by NCF-SE for holistic specialization.</p>
+            </div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {stage.pathways.map((pathway: any, i: number) => (
+                <div key={i} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 shadow-sm">
+                  <h3 className="font-bold text-lg text-slate-900 dark:text-slate-100 mb-2">{pathway.name}</h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">{pathway.description}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {pathway.subjects.map((sub: string, j: number) => (
+                      <Badge key={j} variant="secondary" className="bg-slate-100 dark:bg-slate-800">{sub}</Badge>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* Phase I */}
         <section>
           <div className="mb-8">
@@ -499,40 +512,8 @@ function SecondaryStagePage() {
           </div>
           
           <Accordion type="single" collapsible className="w-full space-y-4">
-            {stage.phase1.subjects.map((subject, index) => (
-              <AccordionItem key={`p1-${index}`} value={`p1-${index}`} className="border rounded-xl px-6 bg-white dark:bg-slate-900 shadow-sm">
-                <AccordionTrigger className="hover:no-underline py-6">
-                  <span className="text-lg font-semibold text-left">{subject.name}</span>
-                </AccordionTrigger>
-                <AccordionContent className="pb-6 pt-2 border-t border-slate-100 dark:border-slate-800">
-                  <div className="grid md:grid-cols-2 gap-x-8 gap-y-6 mt-4">
-                    <div>
-                      <h4 className="text-sm font-semibold text-slate-900 dark:text-slate-100 uppercase tracking-wider mb-2">Core Skills</h4>
-                      <p className="text-slate-700 dark:text-slate-300">{subject.skills}</p>
-                    </div>
-                    <div>
-                      <h4 className="text-sm font-semibold text-slate-900 dark:text-slate-100 uppercase tracking-wider mb-2">Pedagogical Mode</h4>
-                      <p className="text-slate-700 dark:text-slate-300">{subject.pedagogy}</p>
-                    </div>
-                    <div className="md:col-span-2 p-4 bg-slate-50 dark:bg-slate-950/50 rounded-lg border border-slate-100 dark:border-slate-800">
-                      <div className="grid md:grid-cols-2 gap-6">
-                        <div>
-                           <h4 className="flex items-center gap-2 text-sm font-semibold text-slate-900 dark:text-slate-100 mb-2">
-                            <Activity className="h-4 w-4 text-emerald-500"/> Example Activity
-                          </h4>
-                          <p className="text-slate-700 dark:text-slate-300">{subject.activities}</p>
-                        </div>
-                        <div>
-                          <h4 className="flex items-center gap-2 text-sm font-semibold text-slate-900 dark:text-slate-100 mb-2">
-                            <FileCheck className="h-4 w-4 text-amber-500"/> Assessment Evidence
-                          </h4>
-                          <p className="text-slate-700 dark:text-slate-300">{subject.evidence}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
+            {stage.phase1.subjects.map((subject: any, index: number) => (
+              <SubjectMappingCard key={`p1-${index}`} subject={subject} index={index} />
             ))}
           </Accordion>
         </section>
@@ -545,40 +526,8 @@ function SecondaryStagePage() {
           </div>
           
           <Accordion type="single" collapsible className="w-full space-y-4">
-            {stage.phase2.subjects.map((subject, index) => (
-              <AccordionItem key={`p2-${index}`} value={`p2-${index}`} className="border rounded-xl px-6 bg-white dark:bg-slate-900 shadow-sm">
-                <AccordionTrigger className="hover:no-underline py-6">
-                  <span className="text-lg font-semibold text-left">{subject.name}</span>
-                </AccordionTrigger>
-                <AccordionContent className="pb-6 pt-2 border-t border-slate-100 dark:border-slate-800">
-                  <div className="grid md:grid-cols-2 gap-x-8 gap-y-6 mt-4">
-                    <div>
-                      <h4 className="text-sm font-semibold text-slate-900 dark:text-slate-100 uppercase tracking-wider mb-2">Core Skills</h4>
-                      <p className="text-slate-700 dark:text-slate-300">{subject.skills}</p>
-                    </div>
-                    <div>
-                      <h4 className="text-sm font-semibold text-slate-900 dark:text-slate-100 uppercase tracking-wider mb-2">Pedagogical Mode</h4>
-                      <p className="text-slate-700 dark:text-slate-300">{subject.pedagogy}</p>
-                    </div>
-                    <div className="md:col-span-2 p-4 bg-slate-50 dark:bg-slate-950/50 rounded-lg border border-slate-100 dark:border-slate-800">
-                      <div className="grid md:grid-cols-2 gap-6">
-                        <div>
-                           <h4 className="flex items-center gap-2 text-sm font-semibold text-slate-900 dark:text-slate-100 mb-2">
-                            <Activity className="h-4 w-4 text-emerald-500"/> Example Activity
-                          </h4>
-                          <p className="text-slate-700 dark:text-slate-300">{subject.activities}</p>
-                        </div>
-                        <div>
-                          <h4 className="flex items-center gap-2 text-sm font-semibold text-slate-900 dark:text-slate-100 mb-2">
-                            <FileCheck className="h-4 w-4 text-amber-500"/> Assessment Evidence
-                          </h4>
-                          <p className="text-slate-700 dark:text-slate-300">{subject.evidence}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
+            {stage.phase2.subjects.map((subject: any, index: number) => (
+              <SubjectMappingCard key={`p2-${index}`} subject={subject} index={index} />
             ))}
           </Accordion>
         </section>

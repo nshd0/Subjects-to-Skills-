@@ -4,6 +4,7 @@ import { Moon, Sun, Menu, X, Search, GraduationCap } from 'lucide-react';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Button } from './ui/Button';
 import { FeedbackWidget } from './FeedbackWidget';
+import { GlobalSearch } from './GlobalSearch';
 
 export function Layout() {
   const { theme, setTheme } = useTheme();
@@ -55,7 +56,8 @@ export function Layout() {
               ))}
             </nav>
 
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 md:space-x-4 ml-auto lg:ml-0">
+              <GlobalSearch />
               <Button
                 variant="ghost"
                 size="icon"
