@@ -1,19 +1,81 @@
 {
-  "collections": {
-    "feedbacks": {
-      "description": "User feedback submissions",
-      "schema": {
-        "name": "string",
-        "email": "string",
-        "feedback": "string",
-        "createdAt": "timestamp"
+  "entities": {
+    "SubjectMapping": {
+      "title": "SubjectMapping",
+      "description": "A detailed mapping of an NCF-SE learning standard to a classroom activity and assessment.",
+      "type": "object",
+      "properties": {
+        "ncfCurricularArea": { "type": "string", "maxLength": 100 },
+        "subject": { "type": "string", "maxLength": 100 },
+        "stage": { "type": "string", "enum": ["Foundational", "Preparatory", "Middle", "Secondary"] },
+        "grade": { "type": "string", "maxLength": 50 },
+        "curricularGoal": { "type": "string", "maxLength": 1000 },
+        "competency": { "type": "string", "maxLength": 1000 },
+        "learningOutcome": { "type": "string", "maxLength": 1000 },
+        "essentialKnowledge": { "type": "string", "maxLength": 2000 },
+        "skills": { "type": "string", "maxLength": 1000 },
+        "pedagogy": { "type": "string", "maxLength": 1000 },
+        "activities": { "type": "string", "maxLength": 3000 },
+        "evidence": { "type": "string", "maxLength": 1000 },
+        "assessmentMethod": { "type": "string", "maxLength": 1000 },
+        "inclusionAndDifferentiation": { "type": "string", "maxLength": 1000 },
+        "valuesAndDispositions": { "type": "string", "maxLength": 1000 },
+        "localIndianContext": { "type": "string", "maxLength": 1000 },
+        "timeAndResources": { "type": "string", "maxLength": 500 },
+        "groupSize": { "type": "string", "maxLength": 100 },
+        "teacherPrep": { "type": "string", "maxLength": 1000 },
+        "extensionActivity": { "type": "string", "maxLength": 1000 },
+        "supportActivity": { "type": "string", "maxLength": 1000 },
+        "authorId": { "type": "string", "maxLength": 128 },
+        "isOfficial": { "type": "boolean" },
+        "createdAt": { "type": "number" },
+        "updatedAt": { "type": "number" }
       },
-      "rules": {
-        "create": "true",
-        "read": "false",
-        "update": "false",
-        "delete": "false"
-      }
+      "required": [
+        "ncfCurricularArea", "subject", "stage", "grade", 
+        "curricularGoal", "competency", "learningOutcome", 
+        "essentialKnowledge", "skills", "pedagogy", "activities", 
+        "evidence", "assessmentMethod", "authorId", "isOfficial", "createdAt", "updatedAt"
+      ]
+    },
+    "Feedback": {
+      "title": "Feedback",
+      "description": "User feedback submitted from the prototype.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "maxLength": 128 },
+        "userRole": { "type": "string", "maxLength": 50 },
+        "content": { "type": "string", "maxLength": 2000 },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["content", "createdAt"]
+    },
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Profile information for registered teachers and admins.",
+      "type": "object",
+      "properties": {
+        "role": { "type": "string", "enum": ["teacher", "admin", "curriculum_designer"] },
+        "displayName": { "type": "string", "maxLength": 100 },
+        "email": { "type": "string", "maxLength": 200 },
+        "createdAt": { "type": "number" },
+        "updatedAt": { "type": "number" }
+      },
+      "required": ["role", "email", "createdAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/subject_mappings/{mappingId}": {
+      "schema": { "$ref": "#/entities/SubjectMapping" },
+      "description": "Stores the granular curriculum mappings."
+    },
+    "/feedbacks/{feedbackId}": {
+      "schema": { "$ref": "#/entities/Feedback" },
+      "description": "Stores user feedback and improvement suggestions."
+    },
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "Stores user profiles and roles."
     }
   }
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ChevronRight, Target, Activity, FileCheck, Lightbulb, ThumbsUp, ThumbsDown, Eye, Ear, Hand, HeartHandshake, Zap, Users, ExternalLink, GraduationCap, CheckCircle2 } from 'lucide-react';
 import { stages, secondaryStage, InclusivePath, StageGuidance } from '@/data/curriculum';
@@ -169,7 +170,20 @@ export function StagePage() {
     return <SecondaryStagePage />;
   }
 
+  
   const stage = stages[stageId || ''];
+
+  const [activeGrade, setActiveGrade] = useState<string>("All");
+
+  const getGradesForStage = (sId: string) => {
+    if (sId === 'foundational') return ['Preschool', 'Grade 1', 'Grade 2'];
+    if (sId === 'preparatory') return ['Grade 3', 'Grade 4', 'Grade 5'];
+    if (sId === 'middle') return ['Grade 6', 'Grade 7', 'Grade 8'];
+    return [];
+  };
+
+  const grades = getGradesForStage(stageId || "");
+
 
   if (!stage) {
     return <div className="container mx-auto p-8 text-center">Stage not found.</div>;
@@ -318,19 +332,45 @@ export function StagePage() {
         {/* Stage Guidance & Assessment */}
         <StageGuidanceSection guidance={stage.guidance} />
 
+        
+        {/* Grade Navigation Tabs */}
+        <div className="flex flex-wrap gap-2 mb-10 border-b border-slate-200 dark:border-slate-800 pb-4">
+          <button
+            onClick={() => setActiveGrade("All")}
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${activeGrade === "All" ? 'bg-indigo-600 text-white shadow-sm' : 'bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700'}`}
+          >
+            All Grades
+          </button>
+          {grades.map(grade => (
+            <button
+              key={grade}
+              onClick={() => setActiveGrade(grade)}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${activeGrade === grade ? 'bg-indigo-600 text-white shadow-sm' : 'bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700'}`}
+            >
+              {grade}
+            </button>
+          ))}
+        </div>
+
         {/* Subject Mapping */}
         <section>
           <div className="mb-8">
-            <h2 className="text-3xl font-bold mb-2">Curriculum Mapping</h2>
+            <h2 className="text-3xl font-bold mb-2">Curriculum Mapping {activeGrade !== "All" && `- ${activeGrade}`}</h2>
             <p className="text-slate-600 dark:text-slate-400">Explore how knowledge domains translate into competencies, skills and classroom activities.</p>
           </div>
           
           <Accordion type="single" collapsible className="w-full space-y-4">
             {stage.subjects.map((subject, index) => (
-              <SubjectMappingCard key={index} subject={subject} index={index} />
+              <SubjectMappingCard 
+                key={index} 
+                subject={subject} 
+                index={index} 
+                currentGrade={activeGrade !== "All" ? activeGrade : undefined} 
+              />
             ))}
           </Accordion>
         </section>
+
         
         <FeedbackLoop context={stage.title} />
       </div>
@@ -339,7 +379,11 @@ export function StagePage() {
 }
 
 function SecondaryStagePage() {
+  
   const stage = secondaryStage;
+  const [activeGradeP1, setActiveGradeP1] = useState<string>("All");
+  const [activeGradeP2, setActiveGradeP2] = useState<string>("All");
+
 
   return (
     <div className="pb-16">
@@ -504,33 +548,71 @@ function SecondaryStagePage() {
           </section>
         )}
 
+        
         {/* Phase I */}
         <section>
           <div className="mb-8">
-            <h2 className="text-3xl font-bold mb-2">{stage.phase1.title}</h2>
+            <h2 className="text-3xl font-bold mb-2">{stage.phase1.title} {activeGradeP1 !== "All" && `- ${activeGradeP1}`}</h2>
             <p className="text-slate-600 dark:text-slate-400">Subject mapping for early secondary years.</p>
           </div>
           
+          <div className="flex flex-wrap gap-2 mb-6 border-b border-slate-200 dark:border-slate-800 pb-4">
+            {["All", "Grade 9", "Grade 10"].map(grade => (
+              <button
+                key={grade}
+                onClick={() => setActiveGradeP1(grade)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${activeGradeP1 === grade ? 'bg-indigo-600 text-white shadow-sm' : 'bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700'}`}
+              >
+                {grade === "All" ? "Both Grades" : grade}
+              </button>
+            ))}
+          </div>
+
           <Accordion type="single" collapsible className="w-full space-y-4">
             {stage.phase1.subjects.map((subject: any, index: number) => (
-              <SubjectMappingCard key={`p1-${index}`} subject={subject} index={index} />
+              <SubjectMappingCard 
+                key={`p1-${index}`} 
+                subject={subject} 
+                index={index} 
+                currentGrade={activeGradeP1 !== "All" ? activeGradeP1 : undefined} 
+              />
             ))}
           </Accordion>
         </section>
 
+
+        
         {/* Phase II */}
         <section>
           <div className="mb-8">
-            <h2 className="text-3xl font-bold mb-2">{stage.phase2.title}</h2>
+            <h2 className="text-3xl font-bold mb-2">{stage.phase2.title} {activeGradeP2 !== "All" && `- ${activeGradeP2}`}</h2>
             <p className="text-slate-600 dark:text-slate-400">Subject mapping for senior secondary specialization.</p>
           </div>
           
+          <div className="flex flex-wrap gap-2 mb-6 border-b border-slate-200 dark:border-slate-800 pb-4">
+            {["All", "Grade 11", "Grade 12"].map(grade => (
+              <button
+                key={grade}
+                onClick={() => setActiveGradeP2(grade)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${activeGradeP2 === grade ? 'bg-indigo-600 text-white shadow-sm' : 'bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700'}`}
+              >
+                {grade === "All" ? "Both Grades" : grade}
+              </button>
+            ))}
+          </div>
+
           <Accordion type="single" collapsible className="w-full space-y-4">
             {stage.phase2.subjects.map((subject: any, index: number) => (
-              <SubjectMappingCard key={`p2-${index}`} subject={subject} index={index} />
+              <SubjectMappingCard 
+                key={`p2-${index}`} 
+                subject={subject} 
+                index={index} 
+                currentGrade={activeGradeP2 !== "All" ? activeGradeP2 : undefined} 
+              />
             ))}
           </Accordion>
         </section>
+
         
         <FeedbackLoop context={stage.title} />
       </div>

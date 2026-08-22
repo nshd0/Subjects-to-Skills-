@@ -13,6 +13,8 @@ import { StagePage } from './pages/StagePage';
 import { SkillProgression } from './pages/SkillProgression';
 import { TeacherToolkit } from './pages/TeacherToolkit';
 import { About } from './pages/About';
+import { Roadmap } from './pages/Roadmap';
+import { AuditReport } from './pages/AuditReport';
 
 export default function App() {
   return (
@@ -26,6 +28,8 @@ export default function App() {
               <Route path="skill-progression" element={<SkillProgression />} />
               <Route path="toolkit" element={<TeacherToolkit />} />
               <Route path="about" element={<About />} />
+              <Route path="roadmap" element={<Roadmap />} />
+              <Route path="audit" element={<AuditReport />} />
             </Route>
           </Routes>
         </BrowserRouter>

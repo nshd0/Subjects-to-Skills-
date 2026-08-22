@@ -1,1 +1,64 @@
 @import "tailwindcss";
+
+@media print {
+  /* Set standard page margins */
+  @page {
+    margin: 1.5cm;
+  }
+
+  /* Hide navigation, footers, and feedback widgets */
+  header, 
+  footer, 
+  nav,
+  [role="navigation"],
+  .fixed.bottom-6.right-6,
+  .print\:hidden {
+    display: none !important;
+  }
+
+  /* Typography and Layout Reset */
+  body, main, div {
+    background: transparent !important;
+    color: #000 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  /* Force light mode styles for print */
+  .dark {
+    color-scheme: light !important;
+  }
+
+  /* Keep borders light and clean */
+  .border, .border-t, .border-b, .border-l, .border-r {
+    border-color: #cbd5e1 !important; /* slate-300 */
+  }
+
+  /* Ensure headings stay with their content */
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+    break-after: avoid;
+    color: #000 !important;
+  }
+
+  /* Prevent blocks from breaking inside */
+  ul, p, pre, .bg-white, .break-inside-avoid {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* Format preformatted text clearly */
+  pre {
+    border: 1px solid #94a3b8 !important; /* slate-400 */
+    padding: 1.5rem !important;
+    background-color: #f8fafc !important; /* slate-50 */
+    white-space: pre-wrap !important;
+    font-size: 14px !important;
+  }
+
+  /* Make links visible but unstyled */
+  a {
+    text-decoration: none !important;
+    color: #000 !important;
+  }
+}

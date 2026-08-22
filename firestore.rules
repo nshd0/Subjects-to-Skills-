@@ -1,9 +1,131 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /feedbacks/{document=**} {
-      allow create: if true;
-      allow read, update, delete: if false;
+    
+    // 1. Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // 3. Primitive Definition
+    function isValidId(id) { 
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); 
+    }
+    function incoming() { return request.resource.data; }
+    function existing() { return resource.data; }
+    
+    // In dev we might not enforce email_verified for easy prototyping, but for prod we should.
+    function isSignedIn() { return request.auth != null; }
+    
+    function isAdmin() { 
+      return isSignedIn() && exists(/databases/$(database)/documents/users/$(request.auth.uid)) 
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'; 
+    }
+
+    // 2. Validation Blueprints
+
+    function isValidFeedback(data) {
+      return data.keys().hasAll(['content', 'createdAt']) &&
+             data.keys().size() >= 2 && data.keys().size() <= 4 &&
+             data.content is string && data.content.size() > 0 && data.content.size() <= 2000 &&
+             data.createdAt is timestamp &&
+             (!('userId' in data) || (data.userId is string && data.userId.size() <= 128)) &&
+             (!('userRole' in data) || (data.userRole is string && data.userRole.size() <= 50));
+    }
+
+    function isValidUserProfile(data) {
+      return data.keys().hasAll(['role', 'email', 'createdAt', 'updatedAt']) &&
+             data.keys().size() >= 4 && data.keys().size() <= 5 &&
+             data.role is string && data.role in ['teacher', 'admin', 'curriculum_designer'] &&
+             data.email is string && data.email.size() <= 200 &&
+             data.createdAt is timestamp &&
+             data.updatedAt is timestamp &&
+             (!('displayName' in data) || (data.displayName is string && data.displayName.size() <= 100));
+    }
+
+    function isValidSubjectMapping(data) {
+      return data.keys().hasAll([
+               'ncfCurricularArea', 'subject', 'stage', 'grade', 
+               'curricularGoal', 'competency', 'learningOutcome', 
+               'essentialKnowledge', 'skills', 'pedagogy', 'activities', 
+               'evidence', 'assessmentMethod', 'authorId', 'isOfficial', 
+               'createdAt', 'updatedAt'
+             ]) &&
+             data.ncfCurricularArea is string && data.ncfCurricularArea.size() <= 100 &&
+             data.subject is string && data.subject.size() <= 100 &&
+             data.stage is string && data.stage in ['Foundational', 'Preparatory', 'Middle', 'Secondary'] &&
+             data.grade is string && data.grade.size() <= 50 &&
+             data.curricularGoal is string && data.curricularGoal.size() <= 1000 &&
+             data.competency is string && data.competency.size() <= 1000 &&
+             data.learningOutcome is string && data.learningOutcome.size() <= 1000 &&
+             data.essentialKnowledge is string && data.essentialKnowledge.size() <= 2000 &&
+             data.skills is string && data.skills.size() <= 1000 &&
+             data.pedagogy is string && data.pedagogy.size() <= 1000 &&
+             data.activities is string && data.activities.size() <= 3000 &&
+             data.evidence is string && data.evidence.size() <= 1000 &&
+             data.assessmentMethod is string && data.assessmentMethod.size() <= 1000 &&
+             (!('inclusionAndDifferentiation' in data) || (data.inclusionAndDifferentiation is string && data.inclusionAndDifferentiation.size() <= 1000)) &&
+             (!('valuesAndDispositions' in data) || (data.valuesAndDispositions is string && data.valuesAndDispositions.size() <= 1000)) &&
+             (!('localIndianContext' in data) || (data.localIndianContext is string && data.localIndianContext.size() <= 1000)) &&
+             (!('timeAndResources' in data) || (data.timeAndResources is string && data.timeAndResources.size() <= 500)) &&
+             (!('groupSize' in data) || (data.groupSize is string && data.groupSize.size() <= 100)) &&
+             (!('teacherPrep' in data) || (data.teacherPrep is string && data.teacherPrep.size() <= 1000)) &&
+             (!('extensionActivity' in data) || (data.extensionActivity is string && data.extensionActivity.size() <= 1000)) &&
+             (!('supportActivity' in data) || (data.supportActivity is string && data.supportActivity.size() <= 1000)) &&
+             data.authorId is string && data.authorId == request.auth.uid &&
+             data.isOfficial is bool &&
+             data.createdAt is timestamp &&
+             data.updatedAt is timestamp;
+    }
+
+    match /feedbacks/{feedbackId} {
+      allow create: if isValidId(feedbackId) && isValidFeedback(incoming()) && incoming().createdAt == request.time;
+      // Admins can read all feedback. (temporarily allow everyone to write, no reading except admins)
+      allow read: if isAdmin();
+      allow update, delete: if false;
+    }
+
+    match /users/{userId} {
+      // User can read their own profile, or admins can read any
+      allow read: if isValidId(userId) && isSignedIn() && (request.auth.uid == userId || isAdmin());
+      
+      // Creating a user profile requires matching the auth uid, and role cannot be 'admin' by default
+      allow create: if isValidId(userId) && isSignedIn() && request.auth.uid == userId && 
+                    isValidUserProfile(incoming()) && incoming().role != 'admin' &&
+                    incoming().createdAt == request.time && incoming().updatedAt == request.time;
+      
+      allow update: if isValidId(userId) && isSignedIn() && 
+                    (
+                      (request.auth.uid == userId && isValidUserProfile(incoming()) && 
+                       incoming().role == existing().role && incoming().createdAt == existing().createdAt &&
+                       incoming().updatedAt == request.time) 
+                      || isAdmin()
+                    );
+    }
+
+    match /subject_mappings/{mappingId} {
+      // Anyone can read mappings
+      allow read: if isValidId(mappingId);
+      
+      // Only authenticated users can create mappings
+      allow create: if isValidId(mappingId) && isSignedIn() && isValidSubjectMapping(incoming()) &&
+                    (incoming().isOfficial == false || isAdmin()) &&
+                    incoming().createdAt == request.time && incoming().updatedAt == request.time;
+      
+      allow update: if isValidId(mappingId) && isSignedIn() && 
+                    (
+                       (existing().authorId == request.auth.uid && 
+                        incoming().diff(existing()).affectedKeys().hasOnly([
+                          'curricularGoal', 'competency', 'learningOutcome', 'essentialKnowledge', 'skills', 
+                          'pedagogy', 'activities', 'evidence', 'assessmentMethod', 'inclusionAndDifferentiation',
+                          'valuesAndDispositions', 'localIndianContext', 'timeAndResources', 'groupSize',
+                          'teacherPrep', 'extensionActivity', 'supportActivity', 'updatedAt'
+                        ]) &&
+                        incoming().updatedAt == request.time)
+                       || isAdmin()
+                    );
+      
+      allow delete: if isValidId(mappingId) && isSignedIn() && (existing().authorId == request.auth.uid || isAdmin());
     }
   }
 }

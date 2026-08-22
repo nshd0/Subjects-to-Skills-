@@ -25,10 +25,20 @@ export function Layout() {
     { name: 'Skill Progression', path: '/skill-progression' },
     { name: 'Teacher Toolkit', path: '/toolkit' },
     { name: 'About', path: '/about' },
+    { name: 'Roadmap', path: '/roadmap' },
+    { name: 'Audit', path: '/audit' },
   ];
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50 flex flex-col font-sans transition-colors duration-200">
+      {/* Prototype Banner */}
+      <div className="bg-indigo-600 text-white px-4 py-2 text-center text-sm font-medium flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 print:hidden">
+        <span><span className="font-bold">Subjects2Skills v0.1</span> — Public prototype</span>
+        <span className="hidden sm:inline opacity-50">|</span>
+        <span>We are collecting feedback to improve Version 0.2.</span>
+        <NavLink to="/roadmap" className="bg-white/20 hover:bg-white/30 transition-colors px-3 py-1 rounded-full text-xs font-semibold ml-2">View v0.2 Roadmap</NavLink>
+      </div>
+
       <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/80 backdrop-blur dark:border-slate-800 dark:bg-slate-950/80">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
