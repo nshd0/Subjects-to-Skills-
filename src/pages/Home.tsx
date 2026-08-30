@@ -181,7 +181,7 @@ export function Home() {
                     <Badge variant="outline">Ages 14–18</Badge>
                     <Badge variant="secondary" className="bg-slate-100 dark:bg-slate-800">Grades 9–12</Badge>
                   </div>
-                <CardTitle className="text-xl group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">Secondary Stage</CardTitle>
+                <CardTitle className="text-xl group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">{secondaryStage.title}</CardTitle>
                 <CardDescription className="pt-2">Deepening disciplinary knowledge, analysis, and specialization across Phase I (9-10) and Phase II (11-12).</CardDescription>
               </CardHeader>
               <CardFooter>

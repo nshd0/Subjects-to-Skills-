@@ -19,11 +19,26 @@ export function SkillProgression() {
             <thead>
               <tr className="bg-slate-50 dark:bg-slate-950/50 border-b border-slate-200 dark:border-slate-800">
                 <th className="p-4 font-semibold text-slate-900 dark:text-slate-100 sticky left-0 bg-slate-50 dark:bg-slate-950 z-10 border-r border-slate-200 dark:border-slate-800 w-1/6">Core Skill</th>
-                <th className="p-4 font-semibold text-slate-900 dark:text-slate-100 w-1/6">Grades 1–2</th>
-                <th className="p-4 font-semibold text-slate-900 dark:text-slate-100 w-1/6">Grades 3–5</th>
-                <th className="p-4 font-semibold text-slate-900 dark:text-slate-100 w-1/6">Grades 6–8</th>
-                <th className="p-4 font-semibold text-slate-900 dark:text-slate-100 w-1/6">Grades 9–10</th>
-                <th className="p-4 font-semibold text-slate-900 dark:text-slate-100 w-1/6">Grades 11–12</th>
+                <th className="p-4 font-semibold text-slate-900 dark:text-slate-100 w-1/6">
+                  <div>Foundational</div>
+                  <div className="text-xs font-normal text-slate-500">Grades 1–2 (Ages 3–8)</div>
+                </th>
+                <th className="p-4 font-semibold text-slate-900 dark:text-slate-100 w-1/6">
+                  <div>Preparatory</div>
+                  <div className="text-xs font-normal text-slate-500">Grades 3–5 (Ages 8–11)</div>
+                </th>
+                <th className="p-4 font-semibold text-slate-900 dark:text-slate-100 w-1/6">
+                  <div>Middle</div>
+                  <div className="text-xs font-normal text-slate-500">Grades 6–8 (Ages 11–14)</div>
+                </th>
+                <th className="p-4 font-semibold text-slate-900 dark:text-slate-100 w-1/6">
+                  <div>Secondary Phase I</div>
+                  <div className="text-xs font-normal text-slate-500">Grades 9–10 (Ages 14–16)</div>
+                </th>
+                <th className="p-4 font-semibold text-slate-900 dark:text-slate-100 w-1/6">
+                  <div>Secondary Phase II</div>
+                  <div className="text-xs font-normal text-slate-500">Grades 11–12 (Ages 16–18)</div>
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800">

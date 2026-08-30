@@ -1,13 +1,15 @@
 import React from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
-import { Moon, Sun, Menu, X, Search, GraduationCap } from 'lucide-react';
+import { Moon, Sun, Menu, X, Search, GraduationCap, LogIn, LogOut, User as UserIcon } from 'lucide-react';
 import { useTheme } from '@/contexts/ThemeContext';
+import { useAuth } from '@/contexts/AuthContext';
 import { Button } from './ui/Button';
 import { FeedbackWidget } from './FeedbackWidget';
 import { GlobalSearch } from './GlobalSearch';
 
 export function Layout() {
   const { theme, setTheme } = useTheme();
+  const { user, profile, login, logout, loading } = useAuth();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const location = useLocation();
 
@@ -18,10 +20,30 @@ export function Layout() {
 
   const navLinks = [
     { name: 'Home', path: '/' },
-    { name: 'Foundational', path: '/stage/foundational' },
-    { name: 'Preparatory', path: '/stage/preparatory' },
-    { name: 'Middle', path: '/stage/middle' },
-    { name: 'Secondary', path: '/stage/secondary' },
+    { 
+      name: 'Foundational (Pre-K–2)', 
+      fullName: 'Foundational Stage (Ages 3–8 | Preschool to Grade 2)',
+      badge: 'Ages 3–8',
+      path: '/stage/foundational' 
+    },
+    { 
+      name: 'Preparatory (Gr 3–5)', 
+      fullName: 'Preparatory Stage (Ages 8–11 | Grades 3–5)',
+      badge: 'Ages 8–11',
+      path: '/stage/preparatory' 
+    },
+    { 
+      name: 'Middle (Gr 6–8)', 
+      fullName: 'Middle Stage (Ages 11–14 | Grades 6–8)',
+      badge: 'Ages 11–14',
+      path: '/stage/middle' 
+    },
+    { 
+      name: 'Secondary (Gr 9–12)', 
+      fullName: 'Secondary Stage (Ages 14–18 | Grades 9–12)',
+      badge: 'Ages 14–18',
+      path: '/stage/secondary' 
+    },
     { name: 'Skill Progression', path: '/skill-progression' },
     { name: 'Teacher Toolkit', path: '/toolkit' },
     { name: 'About', path: '/about' },
@@ -29,14 +51,18 @@ export function Layout() {
     { name: 'Audit', path: '/audit' },
   ];
 
+  if (profile?.role === 'admin') {
+    navLinks.push({ name: 'Admin', path: '/admin' });
+  }
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50 flex flex-col font-sans transition-colors duration-200">
       {/* Prototype Banner */}
       <div className="bg-indigo-600 text-white px-4 py-2 text-center text-sm font-medium flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 print:hidden">
-        <span><span className="font-bold">Subjects2Skills v0.1</span> — Public prototype</span>
+        <span><span className="font-bold">Subjects2Skills v0.2</span> — Live Data Platform</span>
         <span className="hidden sm:inline opacity-50">|</span>
-        <span>We are collecting feedback to improve Version 0.2.</span>
-        <NavLink to="/roadmap" className="bg-white/20 hover:bg-white/30 transition-colors px-3 py-1 rounded-full text-xs font-semibold ml-2">View v0.2 Roadmap</NavLink>
+        <span>Fully backed by Firestore with real-time feedback telemetry.</span>
+        <NavLink to="/roadmap" className="bg-white/20 hover:bg-white/30 transition-colors px-3 py-1 rounded-full text-xs font-semibold ml-2">View v0.3 Roadmap</NavLink>
       </div>
 
       <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/80 backdrop-blur dark:border-slate-800 dark:bg-slate-950/80">
@@ -44,17 +70,19 @@ export function Layout() {
           <div className="flex h-16 items-center justify-between">
             <div className="flex items-center gap-2">
               <GraduationCap className="h-6 w-6 text-indigo-600 dark:text-indigo-400" />
-              <span className="text-lg font-bold tracking-tight">Subjects2skills Navigator</span>
+              <span className="text-lg font-bold tracking-tight hidden lg:inline">Subjects2Skills Navigator</span>
+              <span className="text-lg font-bold tracking-tight lg:hidden">S2S</span>
             </div>
 
             {/* Desktop Nav */}
-            <nav className="hidden md:flex items-center space-x-1 lg:space-x-4">
+            <nav className="hidden md:flex flex-wrap items-center gap-1 lg:gap-2">
               {navLinks.map((link) => (
                 <NavLink
                   key={link.path}
                   to={link.path}
+                  title={link.fullName || link.name}
                   className={({ isActive }) =>
-                    `px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                    `px-2 py-2 rounded-md text-sm font-medium transition-colors ${
                       isActive
                         ? 'bg-slate-100 text-indigo-700 dark:bg-slate-800 dark:text-indigo-300'
                         : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800/50 dark:hover:text-slate-50'
@@ -68,6 +96,22 @@ export function Layout() {
 
             <div className="flex items-center space-x-2 md:space-x-4 ml-auto lg:ml-0">
               <GlobalSearch />
+              {!loading && (
+                <div className="hidden sm:flex items-center">
+                  {user ? (
+                    <Button variant="ghost" size="sm" onClick={logout} className="text-slate-600 dark:text-slate-400 flex items-center gap-2">
+                      <UserIcon className="h-4 w-4" />
+                      <span className="hidden lg:inline">{profile?.displayName || user.email?.split('@')[0]}</span>
+                      <LogOut className="h-4 w-4 ml-1" />
+                    </Button>
+                  ) : (
+                    <Button variant="outline" size="sm" onClick={login} className="flex items-center gap-2">
+                      <LogIn className="h-4 w-4" />
+                      <span>Educator Login</span>
+                    </Button>
+                  )}
+                </div>
+              )}
               <Button
                 variant="ghost"
                 size="icon"
@@ -101,9 +145,24 @@ export function Layout() {
                     }`
                   }
                 >
-                  {link.name}
+                  {link.fullName || link.name}
                 </NavLink>
               ))}
+              {!loading && (
+                <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-800">
+                  {user ? (
+                    <Button variant="ghost" className="w-full justify-start text-slate-600 dark:text-slate-400" onClick={logout}>
+                      <LogOut className="h-4 w-4 mr-2" />
+                      Logout ({profile?.role})
+                    </Button>
+                  ) : (
+                    <Button variant="outline" className="w-full justify-start" onClick={login}>
+                      <LogIn className="h-4 w-4 mr-2" />
+                      Educator Login
+                    </Button>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         )}

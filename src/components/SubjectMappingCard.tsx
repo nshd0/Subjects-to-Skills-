@@ -3,6 +3,7 @@ import { SubjectMapping } from '@/data/curriculum';
 import { AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/Accordion';
 import { Target, Lightbulb, FileCheck, Info, HeartHandshake, Map, Clock, BadgeCheck, BookOpen, Users, HelpCircle, GraduationCap } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
+import { FeedbackModal } from './FeedbackModal';
 
 export function SubjectMappingCard({ subject, index, currentGrade }: { key?: React.Key | string | number, subject: SubjectMapping, index: number, currentGrade?: string }) {
   const displayGrade = currentGrade || (subject.applicableGrades ? subject.applicableGrades[0] : "All Grades in Stage");
@@ -184,6 +185,10 @@ export function SubjectMappingCard({ subject, index, currentGrade }: { key?: Rea
           </div>
         </div>
 
+        {/* Phase 3: Telemetry / Feedback Loop */}
+        <div className="mt-4 border-t border-slate-100 dark:border-slate-800 pt-4">
+          <FeedbackModal subject={subject} />
+        </div>
       </AccordionContent>
     </AccordionItem>
   );

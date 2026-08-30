@@ -1,4 +1,3 @@
-import React from 'react';
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ChevronRight, Target, Activity, FileCheck, Lightbulb, ThumbsUp, ThumbsDown, Eye, Ear, Hand, HeartHandshake, Zap, Users, ExternalLink, GraduationCap, CheckCircle2 } from 'lucide-react';
@@ -10,6 +9,9 @@ import { Button } from '@/components/ui/Button';
 import { motion } from 'motion/react';
 import { CompliancePanel } from '@/components/CompliancePanel';
 import { SubjectMappingCard } from '@/components/SubjectMappingCard';
+import { fetchSubjectMappings } from '@/lib/db';
+import { SubjectMapping } from '@/data/curriculum';
+import { Loader2 } from 'lucide-react';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -172,8 +174,29 @@ export function StagePage() {
 
   
   const stage = stages[stageId || ''];
-
   const [activeGrade, setActiveGrade] = useState<string>("All");
+  const [dbMappings, setDbMappings] = useState<SubjectMapping[]>([]);
+  const [loadingDb, setLoadingDb] = useState(true);
+
+  const subjectsToRender = dbMappings.length > 0 ? dbMappings : (stage?.subjects || []);
+
+  React.useEffect(() => {
+    let isMounted = true;
+    async function load() {
+      if (stageId) {
+        setLoadingDb(true);
+        // Stage names in DB are Capitalized
+        const stageName = stageId.charAt(0).toUpperCase() + stageId.slice(1);
+        const data = await fetchSubjectMappings(stageName);
+        if (isMounted) {
+          setDbMappings(data);
+          setLoadingDb(false);
+        }
+      }
+    }
+    load();
+    return () => { isMounted = false; };
+  }, [stageId]);
 
   const getGradesForStage = (sId: string) => {
     if (sId === 'foundational') return ['Preschool', 'Grade 1', 'Grade 2'];
@@ -360,7 +383,9 @@ export function StagePage() {
           </div>
           
           <Accordion type="single" collapsible className="w-full space-y-4">
-            {stage.subjects.map((subject, index) => (
+            {loadingDb ? (
+              <div className="py-12 flex justify-center"><Loader2 className="w-8 h-8 animate-spin text-indigo-500" /></div>
+            ) : subjectsToRender.filter(s => activeGrade === "All" || (s.applicableGrades && s.applicableGrades.includes(activeGrade))).map((subject, index) => (
               <SubjectMappingCard 
                 key={index} 
                 subject={subject} 
@@ -383,6 +408,31 @@ function SecondaryStagePage() {
   const stage = secondaryStage;
   const [activeGradeP1, setActiveGradeP1] = useState<string>("All");
   const [activeGradeP2, setActiveGradeP2] = useState<string>("All");
+  const [dbMappings, setDbMappings] = useState<SubjectMapping[]>([]);
+  const [loadingDb, setLoadingDb] = useState(true);
+
+  React.useEffect(() => {
+    let isMounted = true;
+    async function load() {
+      setLoadingDb(true);
+      const data = await fetchSubjectMappings('Secondary');
+      if (isMounted) {
+        setDbMappings(data);
+        setLoadingDb(false);
+      }
+    }
+    load();
+    return () => { isMounted = false; };
+  }, []);
+
+  const subjectsP1 = dbMappings.length > 0 
+    ? dbMappings.filter(s => s.applicableGrades?.includes('Grade 9') || s.applicableGrades?.includes('Grade 10')) 
+    : stage.phase1.subjects;
+    
+  const subjectsP2 = dbMappings.length > 0 
+    ? dbMappings.filter(s => s.applicableGrades?.includes('Grade 11') || s.applicableGrades?.includes('Grade 12')) 
+    : stage.phase2.subjects;
+
 
 
   return (
@@ -569,7 +619,7 @@ function SecondaryStagePage() {
           </div>
 
           <Accordion type="single" collapsible className="w-full space-y-4">
-            {stage.phase1.subjects.map((subject: any, index: number) => (
+            {loadingDb ? <div className="py-8 flex justify-center"><Loader2 className="w-6 h-6 animate-spin text-indigo-500" /></div> : subjectsP1.filter(s => activeGradeP1 === "All" || (s.applicableGrades && s.applicableGrades.includes(activeGradeP1))).map((subject: any, index: number) => (
               <SubjectMappingCard 
                 key={`p1-${index}`} 
                 subject={subject} 
@@ -602,7 +652,7 @@ function SecondaryStagePage() {
           </div>
 
           <Accordion type="single" collapsible className="w-full space-y-4">
-            {stage.phase2.subjects.map((subject: any, index: number) => (
+            {loadingDb ? <div className="py-8 flex justify-center"><Loader2 className="w-6 h-6 animate-spin text-indigo-500" /></div> : subjectsP2.filter(s => activeGradeP2 === "All" || (s.applicableGrades && s.applicableGrades.includes(activeGradeP2))).map((subject: any, index: number) => (
               <SubjectMappingCard 
                 key={`p2-${index}`} 
                 subject={subject} 

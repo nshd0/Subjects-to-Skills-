@@ -100,10 +100,10 @@ export interface StageData {
 export const stages: Record<string, StageData> = {
   foundational: {
     id: "foundational",
-    title: "Foundational Stage",
-    subtitle: "Ages 3–8 | Pre-school to Grade 2",
+    title: "Foundational Stage (Ages 3–8 | Preschool to Grade 2)",
+    subtitle: "Ages 3–8 | Preschool to Grade 2 (Balvatika 1–3 & Grades 1–2)",
     ageGroup: "Ages 3–8",
-    gradeBand: "Pre-school to Grade 2",
+    gradeBand: "Preschool to Grade 2",
     description: "Play, activity, stories, movement, exploration.",
     intro: "This stage is rooted in play, activity, stories, movement, exploration, expression, early literacy and numeracy, and social-emotional development.",
     focus: [
@@ -377,7 +377,7 @@ export const stages: Record<string, StageData> = {
   },
   preparatory: {
     id: "preparatory",
-    title: "Preparatory Stage",
+    title: "Preparatory Stage (Ages 8–11 | Grades 3–5)",
     subtitle: "Ages 8–11 | Grades 3–5",
     ageGroup: "Ages 8–11",
     gradeBand: "Grades 3–5",
@@ -676,7 +676,7 @@ export const stages: Record<string, StageData> = {
   },
   middle: {
     id: "middle",
-    title: "Middle Stage",
+    title: "Middle Stage (Ages 11–14 | Grades 6–8)",
     subtitle: "Ages 11–14 | Grades 6–8",
     ageGroup: "Ages 11–14",
     gradeBand: "Grades 6–8",
@@ -1004,8 +1004,8 @@ export const stages: Record<string, StageData> = {
 
 export const secondaryStage: Omit<StageData, 'subjects'> & { phase1: any; phase2: any } = {
   id: "secondary",
-  title: "Secondary Stage",
-  subtitle: "Ages 14–18 | Grades 9–12",
+  title: "Secondary Stage (Ages 14–18 | Grades 9–12)",
+  subtitle: "Ages 14–18 | Grades 9–12 (Phase I: 9–10 & Phase II: 11–12)",
   ageGroup: "Ages 14–18",
   gradeBand: "Grades 9–12",
   description: "Deepening disciplinary knowledge, analysis, and specialization.",
@@ -1117,7 +1117,7 @@ export const secondaryStage: Omit<StageData, 'subjects'> & { phase1: any; phase2
     ]
   },
   phase1: {
-    title: "Secondary Phase I: Grades 9–10",
+    title: "Secondary Phase I (Ages 14–16 | Grades 9–10)",
     subjects: [
       {
         name: "English / Hindi / Third Language",
@@ -1352,7 +1352,7 @@ export const secondaryStage: Omit<StageData, 'subjects'> & { phase1: any; phase2
     ]
   },
   phase2: {
-    title: "Secondary Phase II: Grades 11–12",
+    title: "Secondary Phase II (Ages 16–18 | Grades 11–12)",
     subjects: [
       {
         name: "Languages",

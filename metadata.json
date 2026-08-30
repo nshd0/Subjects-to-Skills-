@@ -1,6 +1,6 @@
 {
-  "name": "CBSE Skill-Centred Learning Navigator",
-  "description": "A public educational web app that presents a complete skill-centred curriculum framework mapped to existing CBSE subjects.",
+  "name": "Subjects2Skills",
+  "description": "A modern curriculum mapping tool aligned with NCF-SE 2023 and CBSE 2026-27, bridging traditional subjects with 21st-century skills.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

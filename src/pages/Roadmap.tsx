@@ -36,7 +36,7 @@ export function Roadmap() {
     },
     {
       phase: "Phase 2",
-      status: "In Progress",
+      status: "Completed",
       title: "v0.2: Database Integration & Data Model",
       date: "Coming Soon",
       icon: <Database className="h-5 w-5 text-indigo-500" />,
@@ -50,7 +50,7 @@ export function Roadmap() {
     },
     {
       phase: "Phase 3",
-      status: "Planned",
+      status: "In Progress",
       title: "v0.3: Teacher Workspaces & AI Assistance",
       date: "Future",
       icon: <Bot className="h-5 w-5 text-amber-500" />,

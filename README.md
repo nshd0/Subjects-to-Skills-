@@ -1,36 +1,59 @@
-# CBSE Skill-Centred Learning Navigator 🎓
+# Subjects2Skills 🎓
 
-A public educational web application that presents a complete skill-centred curriculum framework mapped to existing CBSE subjects. This project demonstrates how knowledge domains (subjects) can be reorganized around skill development and pedagogical stages, rather than rote memorisation.
+A modern educational web application bridging traditional subjects with 21st-century skills, designed in strict alignment with **NCF-SE 2023** and **CBSE 2026-27** curriculum guidelines.
 
-## ✨ Features
+This platform (v0.2) demonstrates how knowledge domains can be reorganized around skill development and pedagogical stages, rather than rote memorization, and serves as a dynamic, cloud-backed curriculum mapping tool.
 
-*   **Stage-Based Navigation:** Explore curriculum tailored to specific developmental stages (Foundational, Preparatory, Middle, Secondary).
-*   **Interactive Curriculum Mapping:** Detailed mapping of existing CBSE subjects to core skills, pedagogical modes, classroom activities, and assessment evidence.
-*   **Inclusive Learning Paths:** Differentiated strategies catering to Visual, Auditory, Kinesthetic, Support Needs, and Advanced Pacing learners.
-*   **Skill Progression Matrix:** A comprehensive view of how core competencies (Communication, Critical Thinking, etc.) evolve from Grade 1 through Grade 12.
-*   **Teacher Toolkit:** Practical resources and copy-to-clipboard unit planning templates for educators.
-*   **Modern UI/UX:** Responsive, mobile-first design with beautiful editorial illustrations, fluid transitions, and a built-in Dark/Light mode toggle.
+## ✨ Key Features
+
+### 🚀 New in v0.2 (Data Model & Backend)
+*   **Firebase / Firestore Integration:** Fully dynamic data serving from the cloud, replacing static JSON payloads.
+*   **Role-Based Access Control (RBAC):** Secure authentication system supporting specific roles (`admin`, `teacher`, `curriculum_designer`).
+*   **Admin Dashboard & Migration:** Secure admin portal to run database migrations, ingest static curriculum data into Firestore, and review platform telemetry.
+*   **Strict Security Rules:** Hardened `firestore.rules` validating curriculum schemas (payload limits, regex-enforced document IDs) and preventing unauthorized writes.
+*   **Updated Stage Nomenclature:** Pedagogical stages now explicitly integrate developmental age groups and grade bands across the UI (e.g., *Foundational Stage (Ages 3–8 | Preschool to Grade 2)*).
+*   **Live Telemetry:** Real-time feedback collection system integrated directly into the database.
+
+### 🏗️ Core Architecture (Established in v0.1)
+*   **5+3+3+4 Stage Architecture:** Explore curriculum tailored to specific developmental stages (Foundational, Preparatory, Middle, Secondary).
+*   **Granular Grade-Level Mapping:** Subject maps are broken down grade-by-grade, adhering to the NCF-SE structure.
+*   **Strict Standards Alignment:** Every subject mapping follows the official NCF-SE sequence: *Curricular Area → Subject → Stage → Grade → Curricular Goal → Competency → Learning Outcome*.
+*   **Classroom Implementation Panels:** Detailed, actionable activity panes including Duration, Group Size, Teacher Preparation, Assessment & Evidence, Support (Scaffolding), Extension (Advanced), and Accessibility & Inclusion.
+*   **Compliance Dashboard:** A public audit view demonstrating mapping status for NCF-SE 2023 cross-cutting mandates.
+*   **Teacher Toolkit (Printable):** Practical resources and print-ready unit planning templates for educators.
+*   **Modern UI/UX:** Responsive, mobile-first design with beautiful editorial illustrations, fluid transitions, and a Dark/Light mode toggle.
+
+## 🛣 Roadmap to v0.3 & Beyond
+
+Subjects2Skills has transitioned from a conceptual framework (v0.1) to a fully dynamic data platform (v0.2).
+
+*   **v0.1 (Completed):** Structural alignment, prototyping, NCF-SE 2023 compliance auditing, and granular UI mapping.
+*   **v0.2 (Completed):** Firebase/Firestore backend integration, full CBSE syllabus data ingestion, role-based authentication, strict security rules, and curriculum versioning.
+*   **v0.3 (In Progress):** Personalized teacher dashboards, interactive lesson plan builders, and AI-assisted activity generation using the Gemini API.
+
+You can view the detailed baseline audit and roadmap directly within the application on the `/audit` and `/roadmap` routes.
 
 ## 🛠 Tech Stack
 
-*   **Framework:** [React](https://react.dev/) + [Vite](https://vitejs.dev/)
+*   **Framework:** [React 18](https://react.dev/) + [Vite](https://vitejs.dev/)
+*   **Backend:** [Firebase Authentication & Firestore](https://firebase.google.com/)
 *   **Styling:** [Tailwind CSS](https://tailwindcss.com/)
 *   **Routing:** [React Router](https://reactrouter.com/)
-*   **Components:** Custom UI components built with [Radix UI](https://www.radix-ui.com/) primitives
 *   **Icons:** [Lucide React](https://lucide.dev/)
-*   **Language:** TypeScript
+*   **Animations:** [Framer Motion](https://www.framer.com/motion/)
 
 ## 🚀 Getting Started
 
 ### Prerequisites
-Ensure you have [Node.js](https://nodejs.org/) installed on your machine.
+*   [Node.js](https://nodejs.org/) installed on your machine.
+*   A Firebase project with Firestore and Authentication (Google Auth / Email/Password) enabled.
 
 ### Installation
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/your-username/cbse-learning-navigator.git
-    cd cbse-learning-navigator
+    git clone https://github.com/your-username/subjects2skills.git
+    cd subjects2skills
     ```
 
 2.  **Install dependencies:**
@@ -38,11 +61,29 @@ Ensure you have [Node.js](https://nodejs.org/) installed on your machine.
     npm install
     ```
 
-3.  **Run the development server:**
+3.  **Configure Firebase:**
+    Rename `.env.example` to `.env` (or create a `.env` file) and fill in your Firebase configuration variables:
+    ```env
+    VITE_FIREBASE_API_KEY=your_api_key
+    VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain
+    VITE_FIREBASE_PROJECT_ID=your_project_id
+    VITE_FIREBASE_STORAGE_BUCKET=your_storage_bucket
+    VITE_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
+    VITE_FIREBASE_APP_ID=your_app_id
+    ```
+
+4.  **Deploy Firestore Rules (Optional but highly recommended):**
+    If you have the Firebase CLI installed, you can deploy the secure database rules included in the repository:
+    ```bash
+    firebase deploy --only firestore:rules
+    ```
+
+5.  **Run the development server:**
     ```bash
     npm run dev
     ```
-4.  Open `http://localhost:3000` (or the port specified in your terminal) to view the app in the browser.
+6.  Open `http://localhost:3000` to view the app. 
+    *Note: The first user to log in via the configured admin email (see `AuthContext.tsx`) will receive the `admin` role and can run the initial curriculum data migration directly from the Admin Dashboard.*
 
 ### Building for Production
 
@@ -51,31 +92,6 @@ To create a production-ready build:
 npm run build
 ```
 This will generate optimized static files in the `dist` directory.
-
-## 📁 Project Structure
-
-```text
-├── src/
-│   ├── assets/        # Generated editorial illustrations
-│   ├── components/    # Reusable UI components (Buttons, Cards, Accordions, Layout)
-│   ├── contexts/      # React contexts (ThemeContext, ProgressContext)
-│   ├── data/          # Core curriculum data, subject mappings, and inclusive paths
-│   ├── pages/         # Route components (Home, StagePage, SkillProgression, etc.)
-│   ├── lib/           # Utility functions (Tailwind class merging)
-│   ├── App.tsx        # Main application routing
-│   └── main.tsx       # React entry point
-├── index.html         # HTML template
-├── vite.config.ts     # Vite configuration
-└── package.json       # Project dependencies and scripts
-```
-
-## 📚 Educational Framework Outline
-
-The navigator is structured around four key pedagogical stages:
-1.  **Foundational Stage** (Ages 3–8): Rooted in play, activity, stories, movement, exploration, and socio-emotional development.
-2.  **Preparatory Stage** (Ages 8–11): Gradually introduces clearer subject structures while keeping learning experiential and discovery-based.
-3.  **Middle Stage** (Ages 11–14): Strengthens explicit subject learning through inquiry, experimentation, and real-world application.
-4.  **Secondary Stage** (Ages 14–18): Deepens disciplinary knowledge, analysis, and specialization across two phases (Grades 9-10 and 11-12).
 
 ## 📝 License
 

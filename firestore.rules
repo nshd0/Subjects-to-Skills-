@@ -55,23 +55,23 @@ service cloud.firestore {
              data.subject is string && data.subject.size() <= 100 &&
              data.stage is string && data.stage in ['Foundational', 'Preparatory', 'Middle', 'Secondary'] &&
              data.grade is string && data.grade.size() <= 50 &&
-             data.curricularGoal is string && data.curricularGoal.size() <= 1000 &&
-             data.competency is string && data.competency.size() <= 1000 &&
-             data.learningOutcome is string && data.learningOutcome.size() <= 1000 &&
-             data.essentialKnowledge is string && data.essentialKnowledge.size() <= 2000 &&
-             data.skills is string && data.skills.size() <= 1000 &&
-             data.pedagogy is string && data.pedagogy.size() <= 1000 &&
-             data.activities is string && data.activities.size() <= 3000 &&
-             data.evidence is string && data.evidence.size() <= 1000 &&
-             data.assessmentMethod is string && data.assessmentMethod.size() <= 1000 &&
-             (!('inclusionAndDifferentiation' in data) || (data.inclusionAndDifferentiation is string && data.inclusionAndDifferentiation.size() <= 1000)) &&
-             (!('valuesAndDispositions' in data) || (data.valuesAndDispositions is string && data.valuesAndDispositions.size() <= 1000)) &&
-             (!('localIndianContext' in data) || (data.localIndianContext is string && data.localIndianContext.size() <= 1000)) &&
-             (!('timeAndResources' in data) || (data.timeAndResources is string && data.timeAndResources.size() <= 500)) &&
-             (!('groupSize' in data) || (data.groupSize is string && data.groupSize.size() <= 100)) &&
-             (!('teacherPrep' in data) || (data.teacherPrep is string && data.teacherPrep.size() <= 1000)) &&
-             (!('extensionActivity' in data) || (data.extensionActivity is string && data.extensionActivity.size() <= 1000)) &&
-             (!('supportActivity' in data) || (data.supportActivity is string && data.supportActivity.size() <= 1000)) &&
+             data.curricularGoal is string && data.curricularGoal.size() <= 5000 &&
+             data.competency is string && data.competency.size() <= 5000 &&
+             data.learningOutcome is string && data.learningOutcome.size() <= 5000 &&
+             data.essentialKnowledge is string && data.essentialKnowledge.size() <= 5000 &&
+             data.skills is string && data.skills.size() <= 5000 &&
+             data.pedagogy is string && data.pedagogy.size() <= 5000 &&
+             data.activities is string && data.activities.size() <= 10000 &&
+             data.evidence is string && data.evidence.size() <= 5000 &&
+             data.assessmentMethod is string && data.assessmentMethod.size() <= 5000 &&
+             (!('inclusionAndDifferentiation' in data) || (data.inclusionAndDifferentiation is string && data.inclusionAndDifferentiation.size() <= 5000)) &&
+             (!('valuesAndDispositions' in data) || (data.valuesAndDispositions is string && data.valuesAndDispositions.size() <= 5000)) &&
+             (!('localIndianContext' in data) || (data.localIndianContext is string && data.localIndianContext.size() <= 5000)) &&
+             (!('timeAndResources' in data) || (data.timeAndResources is string && data.timeAndResources.size() <= 5000)) &&
+             (!('groupSize' in data) || (data.groupSize is string && data.groupSize.size() <= 1000)) &&
+             (!('teacherPrep' in data) || (data.teacherPrep is string && data.teacherPrep.size() <= 5000)) &&
+             (!('extensionActivity' in data) || (data.extensionActivity is string && data.extensionActivity.size() <= 5000)) &&
+             (!('supportActivity' in data) || (data.supportActivity is string && data.supportActivity.size() <= 5000)) &&
              data.authorId is string && data.authorId == request.auth.uid &&
              data.isOfficial is bool &&
              data.createdAt is timestamp &&
@@ -89,15 +89,15 @@ service cloud.firestore {
       // User can read their own profile, or admins can read any
       allow read: if isValidId(userId) && isSignedIn() && (request.auth.uid == userId || isAdmin());
       
-      // Creating a user profile requires matching the auth uid, and role cannot be 'admin' by default
+      // Creating a user profile requires matching the auth uid, and role cannot be 'admin' by default unless it's the specific admin email
       allow create: if isValidId(userId) && isSignedIn() && request.auth.uid == userId && 
-                    isValidUserProfile(incoming()) && incoming().role != 'admin' &&
+                    isValidUserProfile(incoming()) && (incoming().role != 'admin' || request.auth.token.email == 'nshdshaikh07@gmail.com') &&
                     incoming().createdAt == request.time && incoming().updatedAt == request.time;
       
       allow update: if isValidId(userId) && isSignedIn() && 
                     (
                       (request.auth.uid == userId && isValidUserProfile(incoming()) && 
-                       incoming().role == existing().role && incoming().createdAt == existing().createdAt &&
+                       (incoming().role == existing().role || request.auth.token.email == 'nshdshaikh07@gmail.com') && incoming().createdAt == existing().createdAt &&
                        incoming().updatedAt == request.time) 
                       || isAdmin()
                     );

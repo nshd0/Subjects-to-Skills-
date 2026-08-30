@@ -68,9 +68,11 @@ export function GlobalSearch() {
     allStages.forEach(stage => {
       const stageId = stage.id === 'secondary' ? 'secondary' : stage.id;
       
-      // Match Stage Title/Description
+      // Match Stage Title/Description/Age/Grade
       if (
         stage.title.toLowerCase().includes(searchTerm) || 
+        stage.ageGroup?.toLowerCase().includes(searchTerm) ||
+        stage.gradeBand?.toLowerCase().includes(searchTerm) ||
         stage.intro.toLowerCase().includes(searchTerm) ||
         stage.focus.some(f => f.toLowerCase().includes(searchTerm))
       ) {
@@ -78,7 +80,7 @@ export function GlobalSearch() {
           id: `stage-${stageId}`,
           type: 'stage',
           title: stage.title,
-          subtitle: stage.gradeBand,
+          subtitle: `${stage.gradeBand} • ${stage.ageGroup}`,
           path: `/stage/${stageId}`
         });
       }
