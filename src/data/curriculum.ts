@@ -7,6 +7,16 @@ import secondaryImage from '@/assets/images/secondary_stage_1786546784876.jpg';
 export { homeHeroImage };
 
 export interface SubjectMapping {
+  primarySkillDomain?: string;
+  supportingSkillDomains?: string[];
+  observablePerformance?: string;
+  officialReference?: any[];
+  activityStructured?: any;
+  pedagogyStructured?: any;
+  inclusionStructured?: any;
+  evidenceStructured?: any;
+  assessmentStructured?: any;
+
   ncfCurricularArea?: string;
   applicableGrades?: string[];
   groupSize?: string;
@@ -227,26 +237,45 @@ export const stages: Record<string, StageData> = {
       },
       {
         name: "English",
-        essentialKnowledge: "Vocabulary, syntax, and discourse patterns",
-        curricularGoal: "Develops multilingual communication and foundational literacy.",
-        competency: "Comprehends and expresses ideas clearly across contexts.",
-        learningOutcome: "Uses language effectively for varying audiences.",
-        skills: "oral communication, phonological awareness, expression",
-        valuesAndDispositions: "Empathy, cultural appreciation",
-        pedagogy: "songs, puppets, action-based language and picture talk",
-        activities: "describe a picture or act out a dialogue",
-        evidence: "oral response and emergent language",
-        assessmentMethod: "Formative observation and portfolio review",
-        inclusionAndDifferentiation: "Provide bilingual glossaries and audio support.",
-        localIndianContext: "Incorporate regional folktales and multilingual translation tasks.",
-        timeAndResources: "Standard allocated periods as per NCF-SE.",
-        ncfCurricularArea: "Languages",
-        applicableGrades: ['All Grades in Stage'],
-        groupSize: "Small groups (4-5 students) or paired work",
-        teacherPrep: "Review NCF-SE specific learning outcomes and prepare contextual materials.",
-        extensionActivity: "Peer-led presentation or complex problem-solving task.",
-        supportActivity: "Scaffolded worksheets with visual cues and bilingual support.",
-        sourceLabel: "NCF-SE 2023 Mapped"
+        curricularGoal: "Develop literary appreciation and critical reading skills.",
+        competency: "Analyzes character motivation and theme in a literary text.",
+        learningOutcome: "Identifies character motivations and how they contribute to the theme of a short story.",
+        essentialKnowledge: "Character traits, motivation, theme, textual evidence.",
+        skills: "Critical thinking, empathy",
+        pedagogy: "Close reading, Socratic seminar, character mapping.",
+        activities: "Read a short story, map a character's choices, and debate their motivation in small groups.",
+        evidence: "Character map, participation in debate, written reflection.",
+        assessmentMethod: "Rubric evaluating use of textual evidence and depth of analysis.",
+        primarySkillDomain: "Critical Thinking",
+        supportingSkillDomains: ["Communication", "Empathy"],
+        observablePerformance: "Selects relevant textual evidence to explain a character's motivation and connects this motivation to the overall theme of the story.",
+        officialReference: [{
+          sourceType: "NCF-SE 2023",
+          title: "Language Education Curricular Goal L-4",
+          url: "https://ncert.nic.in/pdf/NCF-SE-2023.pdf",
+          verificationStatus: "pending-review"
+        }],
+        activityStructured: {
+          title: "Character Motivation Seminar",
+          description: "Students read a focal text, complete a character decision map, and participate in a guided Socratic seminar to debate character choices.",
+          duration: "2 periods",
+          groupSize: "Whole class seminar"
+        },
+        pedagogyStructured: {
+          approaches: ["Socratic Seminar", "Close Reading"]
+        },
+        inclusionStructured: {
+          accessOptions: ["Audio version of the text, highlighted textual evidence."],
+          expressionOptions: ["Written reflections, oral participation, drawing a character map."],
+          supportStrategies: ["Provide sentence frames for the seminar (e.g. 'I agree with... because...')."],
+          extensionStrategies: ["Compare the character's motivation to a character in a different text."]
+        },
+        evidenceStructured: {
+          studentOutputs: ["Completed character map", "Observation of seminar participation"]
+        },
+        assessmentStructured: {
+          criteria: ["Use of specific textual evidence", "Clarity of explanation", "Respectful listening and responding in discussion."]
+        }
       },
       {
         name: "Mathematics (Foundational Numeracy)",
@@ -526,26 +555,47 @@ export const stages: Record<string, StageData> = {
       },
       {
         name: "Mathematics",
-        essentialKnowledge: "Number sense, spatial reasoning, data handling",
-        curricularGoal: "Develops mathematical thinking and problem-solving.",
-        competency: "Applies mathematical concepts to real-world scenarios.",
-        learningOutcome: "Applies knowledge to solve structured problems.",
-        skills: "numeracy, reasoning, problem-solving",
-        valuesAndDispositions: "Logical reasoning, perseverance",
-        pedagogy: "games, measurement, surveys and real-life problems",
-        activities: "plan a budget for a class event",
-        evidence: "calculations, strategy explanation, chart",
-        assessmentMethod: "Formative observation and portfolio review",
-        inclusionAndDifferentiation: "Use tactile manipulatives for geometric concepts.",
-        localIndianContext: "Include traditional Indian mathematics (e.g., local measuring units).",
-        timeAndResources: "Standard allocated periods as per NCF-SE.",
-        ncfCurricularArea: "Mathematics",
-        applicableGrades: ['All Grades in Stage'],
-        groupSize: "Small groups (4-5 students) or paired work",
-        teacherPrep: "Review NCF-SE specific learning outcomes and prepare contextual materials.",
-        extensionActivity: "Peer-led presentation or complex problem-solving task.",
-        supportActivity: "Scaffolded worksheets with visual cues and bilingual support.",
-        sourceLabel: "NCF-SE 2023 Mapped"
+        curricularGoal: "Develop mathematical thinking and problem solving.",
+        competency: "Selects appropriate mathematical strategy, shows reasoning process, and checks reasonableness.",
+        learningOutcome: "Uses basic operations to solve multi-step real-world problems involving volume and capacity.",
+        essentialKnowledge: "Volume, capacity, multi-step word problems, estimation.",
+        skills: "Problem-solving",
+        pedagogy: "Concrete manipulatives, collaborative problem-solving, mathematical discourse.",
+        activities: "Design a water tank. Calculate volume needed for a school garden and determine dimensions.",
+        evidence: "Tank design diagram, calculation sheet, oral explanation of choices.",
+        assessmentMethod: "Rubric evaluating accuracy, reasoning, and communication.",
+        
+        // V0.3 Fields
+        primarySkillDomain: "Problem-Solving",
+        supportingSkillDomains: ["Critical Thinking", "Communication"],
+        observablePerformance: "Selects an appropriate mathematical strategy to calculate volume, shows the reasoning process clearly, checks whether the answer is reasonable, and explains the final decision.",
+        officialReference: [{
+          sourceType: "NCF-SE 2023",
+          title: "Mathematics Curriculum Goal M-2",
+          url: "https://ncert.nic.in/pdf/NCFSE-2023.pdf",
+          verificationStatus: "pending-review"
+        }],
+        activityStructured: {
+          title: "Water Conservation Tank Design",
+          description: "Students work in pairs using interlocking cubes to model different tank volumes, then scale up calculations for real-world school usage.",
+          duration: "2 periods (80 mins)",
+          groupSize: "Pairs"
+        },
+        pedagogyStructured: {
+          approaches: ["Concrete-Pictorial-Abstract (CPA)", "Collaborative learning"]
+        },
+        inclusionStructured: {
+          accessOptions: ["Visual instructions, physical cubes for modelling."],
+          expressionOptions: ["Written calculations, oral explanations, physical models."],
+          supportStrategies: ["Provide formula cards, use smaller number sets first."],
+          extensionStrategies: ["Calculate cost per liter, optimise surface area."]
+        },
+        evidenceStructured: {
+          studentOutputs: ["3D model", "Calculation worksheet", "Design justification statement."]
+        },
+        assessmentStructured: {
+          criteria: ["Accuracy of volume calculations", "Clarity of mathematical reasoning", "Justification of tank dimensions."]
+        }
       },
       {
         name: "The World Around Us",
@@ -850,26 +900,48 @@ export const stages: Record<string, StageData> = {
       },
       {
         name: "Science",
-        essentialKnowledge: "Filtration and separation",
-        curricularGoal: "Develops scientific temper and investigates the natural world.",
+        curricularGoal: "Develop scientific temper and understanding of the physical world.",
         competency: "Plans and conducts a fair investigation.",
-        learningOutcome: "Identifies variables and uses appropriate tools to separate mixtures.",
-        skills: "Problem-solving, investigation",
-        valuesAndDispositions: "Care for shared resources, scientific integrity",
-        pedagogy: "Inquiry-based laboratory work",
-        activities: "Design and test materials for a low-cost water filtration system",
-        evidence: "Water-filter prototype",
-        assessmentMethod: "Variables chart, data table, conclusion, and peer presentation",
-        inclusionAndDifferentiation: "Provide tactile materials for visually impaired; use bilingual term sheets.",
-        localIndianContext: "Study traditional local water harvesting or filtration methods (e.g., matka filtration).",
-        timeAndResources: "4 periods. Requires basic lab supplies, sand, charcoal, gravel.",
-        ncfCurricularArea: "Science",
-        applicableGrades: ['All Grades in Stage'],
-        groupSize: "Small groups (4-5 students) or paired work",
-        teacherPrep: "Review NCF-SE specific learning outcomes and prepare contextual materials.",
-        extensionActivity: "Peer-led presentation or complex problem-solving task.",
-        supportActivity: "Scaffolded worksheets with visual cues and bilingual support.",
-        sourceLabel: "NCF-SE 2023 & Subjects2Skills Example"
+        learningOutcome: "Explains separation of substances and applies methods to purify mixtures.",
+        essentialKnowledge: "Filtration, separation methods, variables, observation and evidence.",
+        skills: "Scientific thinking",
+        pedagogy: "Inquiry-based learning, hands-on experimentation, claims-evidence-reasoning (CER).",
+        activities: "Water Filtration Investigation: Build and test different filtration materials.",
+        evidence: "Data table, filtration prototype, evidence-based conclusion.",
+        assessmentMethod: "Uses appropriate evidence to justify a scientific conclusion.",
+        
+        // V0.3 Fields
+        primarySkillDomain: "Scientific Thinking",
+        supportingSkillDomains: ["Problem-Solving", "Collaboration"],
+        observablePerformance: "Uses a controlled investigation to compare filtration materials, records observations accurately, and uses evidence to explain which material is most effective.",
+        officialReference: [{
+          sourceType: "NCF-SE 2023",
+          title: "Science Curricular Goal S-3",
+          url: "https://ncert.nic.in/pdf/NCFSE-2023.pdf",
+          verificationStatus: "pending-review"
+        }],
+        activityStructured: {
+          title: "Water Filtration Investigation",
+          description: "Design a filtration system using sand, gravel, and cotton to clean muddy water. Measure turbidity before and after.",
+          duration: "3 periods",
+          groupSize: "Small groups (3-4)"
+        },
+        pedagogyStructured: {
+          approaches: ["Guided inquiry", "Experiential learning"]
+        },
+        inclusionStructured: {
+          accessOptions: ["Demonstration of setup, bilingual vocabulary cards (Filtration, Residue)."],
+          expressionOptions: ["Labelled diagrams, video logs, written reports."],
+          supportStrategies: ["Provide pre-made data tables, assign specific roles in groups."],
+          extensionStrategies: ["Research real-world municipal water treatment processes."]
+        },
+        evidenceStructured: {
+          studentOutputs: ["Filtration prototype", "Data observation table", "CER (Claim-Evidence-Reasoning) paragraph."]
+        },
+        assessmentStructured: {
+          criteria: ["Identification of controlled variables", "Accuracy of observation records", "Logical connection between evidence and claim."]
+        },
+        valuesAndDispositions: "Environmental responsibility, persistence in experimentation."
       },
       {
         name: "Social Science",

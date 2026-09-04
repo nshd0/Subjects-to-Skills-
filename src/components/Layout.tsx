@@ -6,6 +6,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Button } from './ui/Button';
 import { FeedbackWidget } from './FeedbackWidget';
 import { GlobalSearch } from './GlobalSearch';
+import { NavDropdown } from './NavDropdown';
 
 export function Layout() {
   const { theme, setTheme } = useTheme();
@@ -18,8 +19,7 @@ export function Layout() {
     window.scrollTo(0, 0);
   }, [location.pathname]);
 
-  const navLinks = [
-    { name: 'Home', path: '/' },
+  const stagesLinks = [
     { 
       name: 'Foundational (Pre-K–2)', 
       fullName: 'Foundational Stage (Ages 3–8 | Preschool to Grade 2)',
@@ -44,28 +44,42 @@ export function Layout() {
       badge: 'Ages 14–18',
       path: '/stage/secondary' 
     },
-    { name: 'Skill Progression', path: '/skill-progression' },
+  ];
+
+  const toolsLinks = [
+    { name: 'Resource Hub', path: '/resources' },
     { name: 'Teacher Toolkit', path: '/toolkit' },
+    { name: 'School Planner', path: '/planner' },
+    { name: 'Skill Progression', path: '/skill-progression' },
+    { name: 'Coverage', path: '/coverage' },
+  ];
+
+  const aboutLinks = [
     { name: 'About', path: '/about' },
     { name: 'Roadmap', path: '/roadmap' },
     { name: 'Audit', path: '/audit' },
   ];
 
   if (profile?.role === 'admin') {
-    navLinks.push({ name: 'Admin', path: '/admin' });
+    aboutLinks.push({ name: 'Admin', path: '/admin' });
   }
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50 flex flex-col font-sans transition-colors duration-200">
       {/* Prototype Banner */}
-      <div className="bg-indigo-600 text-white px-4 py-2 text-center text-sm font-medium flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 print:hidden">
-        <span><span className="font-bold">Subjects2Skills v0.2</span> — Live Data Platform</span>
-        <span className="hidden sm:inline opacity-50">|</span>
-        <span>Fully backed by Firestore with real-time feedback telemetry.</span>
-        <NavLink to="/roadmap" className="bg-white/20 hover:bg-white/30 transition-colors px-3 py-1 rounded-full text-xs font-semibold ml-2">View v0.3 Roadmap</NavLink>
+      <div className="bg-indigo-700 dark:bg-indigo-900 text-white px-4 py-3 text-center text-sm font-medium flex flex-col items-center justify-center gap-1 print:hidden relative">
+        <div className="flex items-center gap-2">
+          <span className="font-bold border border-white/30 px-2 py-0.5 rounded text-xs bg-white/10 tracking-wider">v0.3 PUBLIC BETA</span>
+          <span>Subjects2Skills Curriculum-Translation Framework</span>
+        </div>
+        <p className="text-indigo-100 text-xs mt-1 max-w-4xl">
+          Connecting CBSE/NCERT-aligned subject learning, skills, pedagogy, assessment and classroom practice. 
+          <span className="font-semibold block sm:inline sm:ml-1">This is not an official CBSE or NCERT portal.</span>
+        </p>
+        <NavLink to="/about-framework" className="text-white underline hover:text-indigo-200 transition-colors text-xs mt-1">About this framework</NavLink>
       </div>
 
-      <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/80 backdrop-blur dark:border-slate-800 dark:bg-slate-950/80">
+      <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/80 backdrop-blur dark:border-slate-800 dark:bg-slate-950/80 print:hidden">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             <div className="flex items-center gap-2">
@@ -76,22 +90,21 @@ export function Layout() {
 
             {/* Desktop Nav */}
             <nav className="hidden md:flex flex-wrap items-center gap-1 lg:gap-2">
-              {navLinks.map((link) => (
-                <NavLink
-                  key={link.path}
-                  to={link.path}
-                  title={link.fullName || link.name}
-                  className={({ isActive }) =>
-                    `px-2 py-2 rounded-md text-sm font-medium transition-colors ${
-                      isActive
-                        ? 'bg-slate-100 text-indigo-700 dark:bg-slate-800 dark:text-indigo-300'
-                        : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800/50 dark:hover:text-slate-50'
-                    }`
-                  }
-                >
-                  {link.name}
-                </NavLink>
-              ))}
+              <NavLink
+                to="/"
+                className={({ isActive }) =>
+                  `px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                    isActive
+                      ? 'bg-slate-100 text-indigo-700 dark:bg-slate-800 dark:text-indigo-300'
+                      : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800/50 dark:hover:text-slate-50'
+                  }`
+                }
+              >
+                Home
+              </NavLink>
+              <NavDropdown label="Stages" items={stagesLinks} />
+              <NavDropdown label="Tools & Resources" items={toolsLinks} />
+              <NavDropdown label="About" items={aboutLinks} />
             </nav>
 
             <div className="flex items-center space-x-2 md:space-x-4 ml-auto lg:ml-0">
@@ -131,23 +144,78 @@ export function Layout() {
 
         {/* Mobile Nav */}
         {isMobileMenuOpen && (
-          <div className="md:hidden border-t border-slate-200 dark:border-slate-800">
+          <div className="md:hidden border-t border-slate-200 dark:border-slate-800 max-h-[75vh] overflow-y-auto">
             <div className="space-y-1 px-4 pb-3 pt-2">
-              {navLinks.map((link) => (
-                <NavLink
-                  key={link.path}
-                  to={link.path}
-                  className={({ isActive }) =>
-                    `block px-3 py-2 rounded-md text-base font-medium ${
-                      isActive
-                        ? 'bg-slate-100 text-indigo-700 dark:bg-slate-800 dark:text-indigo-300'
-                        : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800/50 dark:hover:text-slate-50'
-                    }`
-                  }
-                >
-                  {link.fullName || link.name}
-                </NavLink>
-              ))}
+              <NavLink
+                to="/"
+                className={({ isActive }) =>
+                  `block px-3 py-2 rounded-md text-base font-medium ${
+                    isActive
+                      ? 'bg-slate-100 text-indigo-700 dark:bg-slate-800 dark:text-indigo-300'
+                      : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800/50 dark:hover:text-slate-50'
+                  }`
+                }
+              >
+                Home
+              </NavLink>
+              
+              <div className="py-2">
+                <p className="px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Stages</p>
+                {stagesLinks.map((link) => (
+                  <NavLink
+                    key={link.path}
+                    to={link.path}
+                    className={({ isActive }) =>
+                      `block px-3 py-2 rounded-md text-base font-medium ${
+                        isActive
+                          ? 'bg-slate-100 text-indigo-700 dark:bg-slate-800 dark:text-indigo-300'
+                          : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800/50 dark:hover:text-slate-50'
+                      }`
+                    }
+                  >
+                    {link.fullName || link.name}
+                  </NavLink>
+                ))}
+              </div>
+
+              <div className="py-2">
+                <p className="px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Tools & Resources</p>
+                {toolsLinks.map((link) => (
+                  <NavLink
+                    key={link.path}
+                    to={link.path}
+                    className={({ isActive }) =>
+                      `block px-3 py-2 rounded-md text-base font-medium ${
+                        isActive
+                          ? 'bg-slate-100 text-indigo-700 dark:bg-slate-800 dark:text-indigo-300'
+                          : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800/50 dark:hover:text-slate-50'
+                      }`
+                    }
+                  >
+                    {link.name}
+                  </NavLink>
+                ))}
+              </div>
+
+              <div className="py-2">
+                <p className="px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">About</p>
+                {aboutLinks.map((link) => (
+                  <NavLink
+                    key={link.path}
+                    to={link.path}
+                    className={({ isActive }) =>
+                      `block px-3 py-2 rounded-md text-base font-medium ${
+                        isActive
+                          ? 'bg-slate-100 text-indigo-700 dark:bg-slate-800 dark:text-indigo-300'
+                          : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800/50 dark:hover:text-slate-50'
+                      }`
+                    }
+                  >
+                    {link.name}
+                  </NavLink>
+                ))}
+              </div>
+
               {!loading && (
                 <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-800">
                   {user ? (
@@ -172,7 +240,7 @@ export function Layout() {
         <Outlet />
       </main>
 
-      <footer className="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 py-8 mt-12">
+      <footer className="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 py-8 mt-12 print:hidden">
         <div className="container mx-auto px-4 text-center text-sm text-slate-500 dark:text-slate-400">
           <p>A public framework demonstrating skill-centred curriculum mapping.</p>
           <p className="mt-2">For design reference only. Verify with official CBSE guidance.</p>

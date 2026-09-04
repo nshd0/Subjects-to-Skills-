@@ -2,9 +2,20 @@
 
 A modern educational web application bridging traditional subjects with 21st-century skills, designed in strict alignment with **NCF-SE 2023** and **CBSE 2026-27** curriculum guidelines.
 
-This platform (v0.2) demonstrates how knowledge domains can be reorganized around skill development and pedagogical stages, rather than rote memorization, and serves as a dynamic, cloud-backed curriculum mapping tool.
+This platform (v0.3) is a verified curriculum-translation framework connecting CBSE/NCERT-aligned subject learning, skills, pedagogy, assessment, and classroom practice.
 
 ## ✨ Key Features
+
+### 🌟 New in v0.3 (Verified Curriculum Mapping & Implementation Layer)
+*   **Standards Alignment Panel:** Explicit tracking of official curriculum references (NCF-SE 2023, CBSE) vs Subjects2Skills interpretations.
+*   **Observable Competencies:** Core skills are now translated into observable, assessable performance statements grounded in subject contexts.
+*   **Inclusive Learning Design:** Embedded access, participation, expression, support, and extension strategies in every activity.
+*   **Assessment & Moderation Toolkit:** Subject-specific rubric templates, moderation checklists, and assessment purpose selectors.
+*   **Area Coverage Dashboard:** Tracking framework mapping progress across all required curricular areas.
+*   **School Implementation Planner:** Authenticated, secure workspace for teachers to draft private implementation plans.
+*   **Stage-Specific Checklists:** Printable guides for ensuring pedagogical alignment at each developmental stage.
+*   **Enhanced Feedback Loop:** Role-based, context-specific feedback widget feeding an admin dashboard.
+
 
 ### 🚀 New in v0.2 (Data Model & Backend)
 *   **Firebase / Firestore Integration:** Fully dynamic data serving from the cloud, replacing static JSON payloads.
@@ -23,13 +34,13 @@ This platform (v0.2) demonstrates how knowledge domains can be reorganized aroun
 *   **Teacher Toolkit (Printable):** Practical resources and print-ready unit planning templates for educators.
 *   **Modern UI/UX:** Responsive, mobile-first design with beautiful editorial illustrations, fluid transitions, and a Dark/Light mode toggle.
 
-## 🛣 Roadmap to v0.3 & Beyond
+## 🛣 Roadmap to v0.4 & Beyond
 
-Subjects2Skills has transitioned from a conceptual framework (v0.1) to a fully dynamic data platform (v0.2).
+Subjects2Skills has matured into a comprehensive, teacher-ready implementation layer (v0.3).
 
 *   **v0.1 (Completed):** Structural alignment, prototyping, NCF-SE 2023 compliance auditing, and granular UI mapping.
 *   **v0.2 (Completed):** Firebase/Firestore backend integration, full CBSE syllabus data ingestion, role-based authentication, strict security rules, and curriculum versioning.
-*   **v0.3 (In Progress):** Personalized teacher dashboards, interactive lesson plan builders, and AI-assisted activity generation using the Gemini API.
+*   **v0.3 (Completed):** Verified curriculum mapping, standards alignment, inclusion mandates, and the school implementation planner.
 
 You can view the detailed baseline audit and roadmap directly within the application on the `/audit` and `/roadmap` routes.
 
@@ -96,3 +107,14 @@ This will generate optimized static files in the `dist` directory.
 ## 📝 License
 
 This project is open-source and available under the [MIT License](LICENSE).
+
+### 🔐 Security & Privacy
+*   **Firestore Rules**: The platform uses strict Firebase security rules. Public users have read-only access to curriculum data.
+*   **Private Workspace**: The School Implementation Planner creates documents in the `school_plans` collection, restricted strictly to the authenticated user ID.
+*   **Privacy Note**: Do not upload personally identifiable student information to the planner unless local school data processing policies explicitly allow it.
+
+### 🧪 Testing & Verification Checklist
+- [ ] Verify NCF-SE 2023 Links for all seeded maps (Annual task)
+- [ ] Check Firebase rules deployment (`firebase deploy --only firestore:rules`)
+- [ ] Test mobile responsiveness of the Area Coverage and Standards Alignment panels
+- [ ] Verify semantic HTML and ARIA labels via accessibility audit tools

@@ -1,24 +1,9 @@
-import { Timestamp } from 'firebase/firestore';
+const fs = require('fs');
 
-export type Stage = 'Foundational' | 'Preparatory' | 'Middle' | 'Secondary';
-export type UserRole = 'teacher' | 'admin' | 'curriculum_designer';
+const modelsTsPath = 'src/data/models.ts';
+let modelsTs = fs.readFileSync(modelsTsPath, 'utf8');
 
-export interface SubjectMappingDoc {
-  id?: string;
-  ncfCurricularArea: string;
-  subject: string;
-  stage: Stage;
-  grade: string;
-  curricularGoal: string;
-  competency: string;
-  learningOutcome: string;
-  essentialKnowledge: string;
-  skills: string;
-  pedagogy: string;
-  activities: string;
-  evidence: string;
-  assessmentMethod: string;
-
+const newFields = `
   // v0.3 NEW FIELDS (Make all optional to not break existing data)
   version?: string;
   phase?: string;
@@ -102,31 +87,14 @@ export interface SubjectMappingDoc {
   };
 
   status?: "official-reference-linked" | "subjects2skills-proposal" | "teacher-contributed" | "pilot-tested" | "requires-review";
+`;
 
-  
-  // Optional / Recommended fields based on audit
-  inclusionAndDifferentiation?: string;
-  valuesAndDispositions?: string;
-  localIndianContext?: string;
-  timeAndResources?: string;
-  groupSize?: string;
-  teacherPrep?: string;
-  extensionActivity?: string;
-  supportActivity?: string;
+modelsTs = modelsTs.replace(
+  "assessmentMethod: string;",
+  "assessmentMethod: string;\n" + newFields
+);
 
-  // Metadata
-  authorId: string;
-  isOfficial: boolean;
-  createdAt: Timestamp | number;
-  updatedAt: Timestamp | number;
-}
-
-export interface FeedbackDoc {
-  id?: string;
-  userId?: string;
-  userRole?: string;
-  content: string;
-
+const newFeedbackFields = `
   stageOrGrade?: string;
   subjectOrSkill?: string;
   mappingClear?: boolean;
@@ -136,19 +104,15 @@ export interface FeedbackDoc {
   contactConsent?: boolean;
   tags?: string[];
   adminStatus?: 'new' | 'reviewing' | 'accepted' | 'planned' | 'resolved';
+`;
 
-  createdAt: Timestamp | number;
-}
+modelsTs = modelsTs.replace(
+  "content: string;",
+  "content: string;\n" + newFeedbackFields
+);
 
-export interface UserProfileDoc {
-  id?: string;
-  role: UserRole;
-  displayName?: string;
-  email: string;
-  createdAt: Timestamp | number;
-  updatedAt: Timestamp | number;
-}
-
+// Add SchoolPlan model
+const schoolPlanModel = `
 export interface SchoolPlanDoc {
   id?: string;
   teacherId: string;
@@ -170,3 +134,9 @@ export interface SchoolPlanDoc {
   createdAt: Timestamp | number;
   updatedAt: Timestamp | number;
 }
+`;
+
+modelsTs += schoolPlanModel;
+
+fs.writeFileSync(modelsTsPath, modelsTs);
+console.log('Models updated');

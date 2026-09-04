@@ -26,7 +26,7 @@ service cloud.firestore {
 
     function isValidFeedback(data) {
       return data.keys().hasAll(['content', 'createdAt']) &&
-             data.keys().size() >= 2 && data.keys().size() <= 4 &&
+             data.keys().size() >= 2 &&
              data.content is string && data.content.size() > 0 && data.content.size() <= 2000 &&
              data.createdAt is timestamp &&
              (!('userId' in data) || (data.userId is string && data.userId.size() <= 128)) &&
@@ -103,6 +103,12 @@ service cloud.firestore {
                     );
     }
 
+    
+    match /school_plans/{planId} {
+      allow create: if isSignedIn() && request.auth.uid == incoming().teacherId;
+      allow read, update, delete: if isSignedIn() && request.auth.uid == resource.data.teacherId;
+    }
+
     match /subject_mappings/{mappingId} {
       // Anyone can read mappings
       allow read: if isValidId(mappingId);
@@ -115,12 +121,7 @@ service cloud.firestore {
       allow update: if isValidId(mappingId) && isSignedIn() && 
                     (
                        (existing().authorId == request.auth.uid && 
-                        incoming().diff(existing()).affectedKeys().hasOnly([
-                          'curricularGoal', 'competency', 'learningOutcome', 'essentialKnowledge', 'skills', 
-                          'pedagogy', 'activities', 'evidence', 'assessmentMethod', 'inclusionAndDifferentiation',
-                          'valuesAndDispositions', 'localIndianContext', 'timeAndResources', 'groupSize',
-                          'teacherPrep', 'extensionActivity', 'supportActivity', 'updatedAt'
-                        ]) &&
+                        incoming().diff(existing()).affectedKeys().hasOnly(['curricularGoal', 'competency', 'learningOutcome', 'essentialKnowledge', 'skills', 'pedagogy', 'activities', 'evidence', 'assessmentMethod', 'inclusionAndDifferentiation', 'valuesAndDispositions', 'localIndianContext', 'timeAndResources', 'groupSize', 'teacherPrep', 'extensionActivity', 'supportActivity', 'updatedAt', 'version', 'phase', 'ageRange', 'unitOrTheme', 'officialReference', 'curricularAim', 'essentialKnowledgeList', 'disciplinaryPractices', 'primarySkillDomain', 'supportingSkillDomains', 'observablePerformance', 'valuesAndDispositionsList', 'localOrIndianContextList', 'multilingualSupport', 'pedagogyStructured', 'activityStructured', 'evidenceStructured', 'assessmentStructured', 'inclusionStructured', 'implementationStructured', 'status']) &&
                         incoming().updatedAt == request.time)
                        || isAdmin()
                     );

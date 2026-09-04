@@ -1,56 +1,91 @@
-import React, { useRef } from 'react';
-import { Copy, CheckCircle2, Printer } from 'lucide-react';
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Printer, Copy, CheckCircle2, ChevronDown, ListChecks, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
-import { useReactToPrint } from 'react-to-print';
-import { motion } from 'motion/react';
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1 }
-  }
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 24 } }
-};
 
 export function TeacherToolkit() {
-  const [copied, setCopied] = React.useState(false);
-  const contentRef = useRef<HTMLDivElement>(null);
+  const [copied, setCopied] = useState(false);
+  const [copiedRubric, setCopiedRubric] = useState(false);
 
-  const handlePrint = useReactToPrint({
-    contentRef: contentRef,
-    documentTitle: 'Teacher-Toolkit-Export',
-  });
+  const handlePrint = () => {
+    window.print();
+  };
 
-  const templateText = `Unit Planning Template
-Grade and Stage:
-CBSE Subject:
-Connected Subjects:
-Essential Knowledge:
-Primary Skill:
-Supporting Skills:
+  const templateText = `Subject2Skills Unit Planning Template
+
+Grade and Stage: 
+Unit Title: 
+Duration: 
+
+1. ALIGNMENT
+Curricular Area:
+Core Subject:
+Curricular Goal (NCF):
 Learning Outcome:
-Pedagogy:
-Classroom Task:
-Evidence:
-Assessment:
-Transfer Question:`;
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(templateText);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+2. SKILL FOCUS
+Primary Skill Domain:
+Supporting Skills:
+Observable Performance: 
+
+3. PEDAGOGY & ACTIVITY
+Teacher Preparation:
+Classroom Steps (Sequence):
+Student Actions:
+
+4. INCLUSIVE DESIGN
+Access (How they receive info):
+Participation (How they join in):
+Expression (How they show learning):
+Support (Scaffolding):
+Extension (Challenge):
+
+5. ASSESSMENT & EVIDENCE
+Purpose (Diagnostic/Formative/Summative):
+Student Evidence to collect:
+Assessment Criteria:
+Next Steps / Reteach Plan:`;
+
+  const rubricText = `Subject-Specific Rubric Template
+
+Criteria: [Insert Observable Performance]
+
+Level 1: Emerging
+Student demonstrates limited understanding. Requires significant support to perform the skill.
+
+Level 2: Developing
+Student demonstrates basic understanding. Can perform the skill in familiar contexts with some support.
+
+Level 3: Proficient
+Student demonstrates clear understanding. Consistently performs the skill independently in various contexts.
+
+Level 4: Advanced
+Student demonstrates deep understanding. Applies the skill creatively, explains reasoning, and supports peers.`;
+
+  const handleCopy = (text: string, setCopiedState: any) => {
+    navigator.clipboard.writeText(text);
+    setCopiedState(true);
+    setTimeout(() => setCopiedState(false), 2000);
+  };
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1 }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
   };
 
   return (
-    <div className="pb-16" ref={contentRef}>
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl pt-12">
+    <div className="container mx-auto px-4 py-12 max-w-5xl">
+      <div className="print-content">
         <motion.div 
-          className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-4"
+          className="flex justify-between items-center mb-8"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
         >
@@ -60,45 +95,74 @@ Transfer Question:`;
             Export to PDF
           </Button>
         </motion.div>
+
         <motion.p 
           className="text-xl text-slate-600 dark:text-slate-300 mb-12"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.1 }}
         >
-          Practical resources and templates for educators to design skill-centred learning units.
+          Practical resources, templates, and checklists for educators to design inclusive, skill-centred learning units.
         </motion.p>
 
-        <motion.div 
-          className="grid md:grid-cols-2 gap-8 mb-12"
-          variants={containerVariants}
-          initial="hidden"
-          animate="show"
-        >
-          <motion.div variants={itemVariants} className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm transition-shadow hover:shadow-md">
-            <h3 className="text-lg font-bold mb-3 text-indigo-600 dark:text-indigo-400">Stage-Based Planning Guide</h3>
-            <ul className="space-y-2 text-slate-700 dark:text-slate-300 text-sm">
-              <li>1. Identify the developmental focus of the stage.</li>
-              <li>2. Select the core skill to be developed.</li>
-              <li>3. Map the skill to existing subject knowledge.</li>
-              <li>4. Choose an age-appropriate pedagogical mode.</li>
-              <li>5. Design a task that generates visible evidence.</li>
-            </ul>
-          </motion.div>
-          <motion.div variants={itemVariants} className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm transition-shadow hover:shadow-md">
-            <h3 className="text-lg font-bold mb-3 text-emerald-600 dark:text-emerald-400">Assessment Evidence Ideas</h3>
-            <ul className="space-y-2 text-slate-700 dark:text-slate-300 text-sm">
-              <li>• Oral presentations and debates</li>
-              <li>• Process journals and logs</li>
-              <li>• Physical prototypes and models</li>
-              <li>• Multimedia and digital campaigns</li>
-              <li>• Peer critique and self-reflection rubrics</li>
-            </ul>
-          </motion.div>
-        </motion.div>
-
+        {/* Assessment and Moderation Tools */}
         <motion.h2 
-          className="text-2xl font-bold mb-6 border-b border-slate-200 dark:border-slate-800 pb-2"
+          className="text-2xl font-bold mb-6 border-b border-slate-200 dark:border-slate-800 pb-2 flex items-center gap-2"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+        >
+          <ListChecks className="h-6 w-6 text-indigo-600" /> Assessment & Moderation Toolkit
+        </motion.h2>
+
+        <div className="bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-900 rounded-lg p-4 mb-8 text-sm text-blue-900 dark:text-blue-300">
+          <strong>Important:</strong> Varied evidence complements, rather than automatically replaces, written and practical assessment.
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-8 mb-12">
+          
+          <div className="space-y-6">
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-lg shadow-sm">
+              <h3 className="font-bold text-lg mb-4 flex items-center gap-2"><CheckCircle2 className="h-5 w-5 text-emerald-500"/> Moderation Checklist</h3>
+              <ul className="space-y-2 text-sm text-slate-700 dark:text-slate-300">
+                <li className="flex gap-2"><input type="checkbox" className="mt-1" /> Is the task aligned to the intended learning outcome?</li>
+                <li className="flex gap-2"><input type="checkbox" className="mt-1" /> Does the rubric assess subject knowledge and skill performance?</li>
+                <li className="flex gap-2"><input type="checkbox" className="mt-1" /> Are criteria understandable to students?</li>
+                <li className="flex gap-2"><input type="checkbox" className="mt-1" /> Are examples of expected work available?</li>
+                <li className="flex gap-2"><input type="checkbox" className="mt-1" /> Have teachers agreed on evidence standards?</li>
+                <li className="flex gap-2"><input type="checkbox" className="mt-1" /> Can students improve and resubmit where appropriate?</li>
+                <li className="flex gap-2"><input type="checkbox" className="mt-1" /> Is the activity manageable within the timetable?</li>
+              </ul>
+            </div>
+            
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-lg shadow-sm">
+              <h3 className="font-bold text-lg mb-4 flex items-center gap-2"><FileText className="h-5 w-5 text-purple-500"/> Assessment Purpose Selector</h3>
+              <ul className="space-y-3 text-sm text-slate-700 dark:text-slate-300">
+                <li><strong className="block text-slate-900 dark:text-white">Diagnostic</strong> Identifies prior knowledge before teaching.</li>
+                <li><strong className="block text-slate-900 dark:text-white">Formative</strong> Checks understanding during the learning process.</li>
+                <li><strong className="block text-slate-900 dark:text-white">Summative</strong> Evaluates learning against standards at the end of a unit.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg p-6 relative">
+            <h3 className="font-bold text-lg mb-4">Subject-Specific Rubric Builder</h3>
+            <div className="absolute top-4 right-4 print:hidden">
+              <Button variant="outline" size="sm" onClick={() => handleCopy(rubricText, setCopiedRubric)} className="gap-2 bg-white dark:bg-slate-900 transition-transform hover:scale-105 active:scale-95">
+                {copiedRubric ? <CheckCircle2 className="h-4 w-4 text-emerald-500" /> : <Copy className="h-4 w-4" />}
+                {copiedRubric ? 'Copied!' : 'Copy'}
+              </Button>
+            </div>
+            <pre className="text-sm text-slate-700 dark:text-slate-300 font-mono whitespace-pre-wrap mt-8 lg:mt-0">
+              {rubricText}
+            </pre>
+          </div>
+
+        </div>
+
+        {/* Existing Unit Planning Template */}
+        <motion.h2 
+          className="text-2xl font-bold mb-6 border-b border-slate-200 dark:border-slate-800 pb-2 mt-16"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
@@ -113,7 +177,7 @@ Transfer Question:`;
           viewport={{ once: true }}
         >
           <div className="absolute top-4 right-4 print:hidden">
-            <Button variant="outline" size="sm" onClick={handleCopy} className="gap-2 bg-white dark:bg-slate-900 transition-transform hover:scale-105 active:scale-95">
+            <Button variant="outline" size="sm" onClick={() => handleCopy(templateText, setCopied)} className="gap-2 bg-white dark:bg-slate-900 transition-transform hover:scale-105 active:scale-95">
               {copied ? <CheckCircle2 className="h-4 w-4 text-emerald-500" /> : <Copy className="h-4 w-4" />}
               {copied ? 'Copied!' : 'Copy to Clipboard'}
             </Button>
@@ -122,70 +186,69 @@ Transfer Question:`;
             {templateText}
           </pre>
         </motion.div>
-
-        <div className="mt-12 p-6 bg-amber-50 dark:bg-amber-950/30 rounded-xl border border-amber-200 dark:border-amber-900/50">
-          <h3 className="text-lg font-bold text-amber-800 dark:text-amber-400 mb-2">Reflection Prompts for Educators</h3>
-          <p className="text-amber-700 dark:text-amber-300 text-sm mb-4">Ask these questions when designing a unit:</p>
-          <ul className="list-disc pl-5 space-y-1 text-amber-800 dark:text-amber-200 text-sm">
-            <li>Does this task require students to simply recall information, or apply a skill?</li>
-            <li>How does this connect to the real world or other disciplines?</li>
-            <li>What visible evidence will tell me the student has mastered this skill?</li>
-          </ul>
-        </div>
-        <motion.div 
-          className="mt-16 print:hidden"
+        
+        {/* Stage-Specific Checklists */}
+        <motion.h2 
+          className="text-2xl font-bold mb-6 border-b border-slate-200 dark:border-slate-800 pb-2 mt-16"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-2xl font-bold mb-6 border-b border-slate-200 dark:border-slate-800 pb-2">Custom AI Agents</h2>
-          <p className="text-slate-600 dark:text-slate-300 mb-6">
-            Accelerate your planning and differentiation by using our dedicated AI assistants. Clicking these will open external custom agents.
-          </p>
-          <motion.div 
-            className="grid md:grid-cols-3 gap-6"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
-          >
-            <motion.a variants={itemVariants} whileHover={{ y: -5 }} href="#" target="_blank" rel="noopener noreferrer" className="block group">
-              <div className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm transition-all hover:border-indigo-500 dark:hover:border-indigo-400 hover:shadow-md h-full flex flex-col">
-                <h3 className="text-lg font-bold mb-2 text-indigo-700 dark:text-indigo-400 group-hover:underline">Lesson Plan Architect</h3>
-                <p className="text-slate-600 dark:text-slate-400 text-sm flex-grow">
-                  Generates complete 45-minute lesson plans aligned to the skills and pedagogies of your selected stage.
-                </p>
-                <div className="mt-4 text-indigo-600 dark:text-indigo-400 text-sm font-medium flex items-center">
-                  Open Agent <span className="ml-1 group-hover:translate-x-1 transition-transform">→</span>
-                </div>
-              </div>
-            </motion.a>
-            
-            <motion.a variants={itemVariants} whileHover={{ y: -5 }} href="#" target="_blank" rel="noopener noreferrer" className="block group">
-              <div className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm transition-all hover:border-emerald-500 dark:hover:border-emerald-400 hover:shadow-md h-full flex flex-col">
-                <h3 className="text-lg font-bold mb-2 text-emerald-700 dark:text-emerald-400 group-hover:underline">Inclusive Differentiation Engine</h3>
-                <p className="text-slate-600 dark:text-slate-400 text-sm flex-grow">
-                  Adapts activities and provides specific scaffolding for visual, kinesthetic, and support-needs learners.
-                </p>
-                <div className="mt-4 text-emerald-600 dark:text-emerald-400 text-sm font-medium flex items-center">
-                  Open Agent <span className="ml-1 group-hover:translate-x-1 transition-transform">→</span>
-                </div>
-              </div>
-            </motion.a>
+          Stage-Specific Implementation Checklists
+        </motion.h2>
 
-            <motion.a variants={itemVariants} whileHover={{ y: -5 }} href="#" target="_blank" rel="noopener noreferrer" className="block group">
-              <div className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm transition-all hover:border-rose-500 dark:hover:border-rose-400 hover:shadow-md h-full flex flex-col">
-                <h3 className="text-lg font-bold mb-2 text-rose-700 dark:text-rose-400 group-hover:underline">Assessment Rubric Generator</h3>
-                <p className="text-slate-600 dark:text-slate-400 text-sm flex-grow">
-                  Translates generic core competency rubrics into project-specific grading criteria instantly.
-                </p>
-                <div className="mt-4 text-rose-600 dark:text-rose-400 text-sm font-medium flex items-center">
-                  Open Agent <span className="ml-1 group-hover:translate-x-1 transition-transform">→</span>
-                </div>
-              </div>
-            </motion.a>
-          </motion.div>
-        </motion.div>
+        <div className="grid md:grid-cols-2 gap-6 mb-12">
+          
+          <div className="border border-slate-200 dark:border-slate-700 rounded-lg p-5">
+            <h3 className="font-bold text-lg mb-3">Foundational</h3>
+            <ul className="list-disc pl-5 text-sm space-y-1.5 text-slate-700 dark:text-slate-300">
+              <li>Learning is play-, story-, activity-, movement- and interaction-rich</li>
+              <li>Foundational literacy and numeracy are visible</li>
+              <li>Observation and conversation are prioritised over test-heavy assessment</li>
+              <li>Home/local language is supported</li>
+              <li>Art, movement, well-being and social-emotional development are integrated</li>
+              <li>Developmental diversity is accommodated</li>
+            </ul>
+          </div>
+          
+          <div className="border border-slate-200 dark:border-slate-700 rounded-lg p-5">
+            <h3 className="font-bold text-lg mb-3">Preparatory</h3>
+            <ul className="list-disc pl-5 text-sm space-y-1.5 text-slate-700 dark:text-slate-300">
+              <li>Learning moves from concrete experience toward representation and abstraction</li>
+              <li>Activity is followed by discussion and concept consolidation</li>
+              <li>Students explain their thinking</li>
+              <li>The World Around Us remains connected to local environment and community</li>
+              <li>Reading, writing and numeracy progression are explicit</li>
+              <li>Teacher guidance remains strong</li>
+            </ul>
+          </div>
+          
+          <div className="border border-slate-200 dark:border-slate-700 rounded-lg p-5">
+            <h3 className="font-bold text-lg mb-3">Middle</h3>
+            <ul className="list-disc pl-5 text-sm space-y-1.5 text-slate-700 dark:text-slate-300">
+              <li>Subject knowledge and disciplinary methods are explicit</li>
+              <li>Inquiry, experimentation, discussion, fieldwork and projects are balanced</li>
+              <li>Vocational / Kaushal Bodh experiences are represented</li>
+              <li>Digital and AI literacy includes verification, ethics, privacy and bias</li>
+              <li>Projects require meaningful contribution from each subject</li>
+              <li>Students use evidence to support claims</li>
+            </ul>
+          </div>
+
+          <div className="border border-slate-200 dark:border-slate-700 rounded-lg p-5">
+            <h3 className="font-bold text-lg mb-3">Secondary</h3>
+            <ul className="list-disc pl-5 text-sm space-y-1.5 text-slate-700 dark:text-slate-300">
+              <li>Subject depth is protected</li>
+              <li>Academic, arts, vocational and skill pathways are not treated as rigid hierarchies</li>
+              <li>Students have opportunities for analysis, research, application and career exploration</li>
+              <li>General Studies, Health and Physical Education, and wellbeing are represented</li>
+              <li>Subject choice and pathway guidance are visible</li>
+              <li>Assessment combines knowledge, practical work, application and reflection</li>
+            </ul>
+          </div>
+
+        </div>
+
       </div>
     </div>
   );
