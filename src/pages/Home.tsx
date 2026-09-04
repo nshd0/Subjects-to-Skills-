@@ -36,19 +36,23 @@ export function Home() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, ease: 'easeOut' }}
             >
-              <Badge className="mb-6" variant="secondary">Public Educational Framework</Badge>
+              <Badge className="mb-6" variant="secondary">Subjects2Skills v0.2 — Preparing for v0.3</Badge>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-6 leading-tight">
                 From Subjects to <span className="text-indigo-600 dark:text-indigo-400">Skills</span>
               </h1>
-              <p className="text-xl text-slate-600 dark:text-slate-300 mb-10 leading-relaxed">
-                A public framework showing how existing CBSE subjects can be mapped through pedagogy stages into a skill-centred curriculum model.
+              <p className="text-xl text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
+                An evolving public framework connecting subject knowledge, skills, pedagogy, classroom activities, assessment evidence and teacher-ready resources.
               </p>
+              <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/50 p-4 rounded-lg mb-10 text-amber-800 dark:text-amber-300 text-sm">
+                <span className="font-semibold block mb-1">Status Update:</span>
+                Subjects2Skills is currently expanding into grade-wise curriculum maps. Some grades and resources are still in development and will be reviewed before public publication.
+              </div>
               <div className="flex flex-col sm:flex-row items-center gap-4">
                 <Button asChild size="lg" className="w-full sm:w-auto transition-transform hover:scale-105">
-                  <a href="#stages">Explore by Stage <ArrowRight className="ml-2 h-4 w-4" /></a>
+                  <Link to="/grades">Explore by Grade <ArrowRight className="ml-2 h-4 w-4" /></Link>
                 </Button>
                 <Button asChild variant="outline" size="lg" className="w-full sm:w-auto transition-transform hover:scale-105">
-                  <Link to="/skill-progression">View Skill Progression</Link>
+                  <a href="#stages">Explore by Stage</a>
                 </Button>
               </div>
             </motion.div>

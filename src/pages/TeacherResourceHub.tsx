@@ -135,7 +135,7 @@ _________________________________________________________________`;
       <div className="bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900/50 rounded-lg p-4 mb-8 text-sm text-amber-800 dark:text-amber-200 flex items-start gap-3">
         <Lightbulb className="h-5 w-5 shrink-0 mt-0.5" />
         <p>
-          <strong>Note on external tools:</strong> External open-source and free resources are curated for utility, but do not imply official CBSE endorsement. Teachers should review all external tools and links for suitability, age-appropriateness, privacy, and school policy compliance before classroom use.
+          <strong>Note on external tools:</strong> External open-source and free resources are curated for utility, but do not imply official CBSE endorsement. Teachers should review all external tools, resources and links for age-appropriateness, accessibility, privacy, safety and school-policy compliance before classroom use.
         </p>
       </div>
 

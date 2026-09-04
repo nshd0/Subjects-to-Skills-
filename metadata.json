@@ -1,6 +1,6 @@
 {
   "name": "Subjects2Skills",
-  "description": "A modern curriculum mapping tool aligned with NCF-SE 2023 and CBSE 2026-27, bridging traditional subjects with 21st-century skills.",
+  "description": "Subjects2Skills is a public framework that connects CBSE subjects, skills, pedagogy stages, classroom activities, assessment evidence and teacher-ready resources.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

@@ -1,9 +1,8 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { GitPullRequest, Database, Bot, Users, LayoutDashboard, Target, BookOpen, Clock } from 'lucide-react';
-import { Badge } from '@/components/ui/Badge';
+import { Database, Target, Clock, FileSearch, Layers, ShieldAlert, GitPullRequest, CheckCircle2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { FileSearch } from 'lucide-react';
+import { gradesData } from '@/data/grades';
 
 export function Roadmap() {
   const containerVariants = {
@@ -19,133 +18,279 @@ export function Roadmap() {
     visible: { opacity: 1, y: 0 }
   };
 
+  const getStatusBadge = (status: string) => {
+    switch (status) {
+      case 'published': return 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300 border-emerald-300';
+      case 'reviewed': return 'bg-teal-100 text-teal-800 dark:bg-teal-900/40 dark:text-teal-300 border-teal-300';
+      case 'teacher-pilot': return 'bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300 border-amber-300';
+      case 'in-development': return 'bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300 border-blue-300';
+      case 'planned': return 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 border-slate-300';
+      case 'needs-update': return 'bg-rose-100 text-rose-800 dark:bg-rose-900/40 dark:text-rose-300 border-rose-300';
+      default: return 'bg-slate-100 text-slate-800 border-slate-200';
+    }
+  };
+
+  const formatStatus = (status: string) => {
+    return status.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+  };
+
+  // Detailed roadmap matrix data with requested columns
+  const roadmapMatrix = gradesData.map(g => {
+    const isAnchor = ['grade-3', 'grade-6', 'grade-7', 'grade-8', 'grade-9'].includes(g.id);
+    let focus = 'Foundational framework scoping';
+    let milestone = 'v0.4 Scoping';
+    let reviewerStatus = 'Not yet reviewed';
+
+    if (g.id === 'grade-3') {
+      focus = 'Language, Mathematics, The World Around Us & Computational Thinking';
+      milestone = 'Classroom pilot verification';
+      reviewerStatus = 'Teacher pilot in progress';
+    } else if (g.id === 'grade-6') {
+      focus = 'Transition to Middle Stage, Inquiry, Communication & Vocational Exposure';
+      milestone = 'Subject-specific review';
+      reviewerStatus = 'Teacher pilot in progress';
+    } else if (g.id === 'grade-7') {
+      focus = 'Scientific Reasoning, Data Literacy & Prototyping';
+      milestone = 'Lab activity refinement';
+      reviewerStatus = 'Teacher pilot in progress';
+    } else if (g.id === 'grade-8') {
+      focus = 'AI Literacy, Algorithmic Bias, Privacy & Interdisciplinary Projects';
+      milestone = 'Ethics canvas benchmarking';
+      reviewerStatus = 'Teacher pilot in progress';
+    } else if (g.id === 'grade-9') {
+      focus = 'Disciplinary Depth, Secondary Research & Evidence-Based Policy Brief';
+      milestone = 'Curriculum designer review';
+      reviewerStatus = 'Teacher pilot in progress';
+    } else if (g.status === 'in-development') {
+      focus = 'Subject-to-skill draft mapping';
+      milestone = 'Starter content publication';
+      reviewerStatus = 'In internal review';
+    } else {
+      focus = 'Stage competency alignment';
+      milestone = 'Subsequent release';
+      reviewerStatus = 'Not yet reviewed';
+    }
+
+    return {
+      ...g,
+      currentFocus: focus,
+      nextMilestone: milestone,
+      reviewerStatus: reviewerStatus,
+      isAnchor
+    };
+  });
+
   const milestones = [
     {
       phase: "Phase 1",
       status: "Completed",
       title: "v0.1: Structural Alignment & Prototyping",
-      date: "Current",
+      date: "Past",
       icon: <Target className="h-5 w-5 text-emerald-500" />,
       features: [
-        "Establish 5+3+3+4 Stage Architecture",
+        "Established 5+3+3+4 Stage Architecture",
         "Subject-to-Skill Core Philosophy",
-        "NCF-SE 2023 Compliance Auditing",
-        "Granular Grade-Level Mapping",
-        "Standard Learning Hierarchy UI"
+        "NCF-SE Alignment & Stage Bridges",
+        "Initial Curricular Mappings"
       ]
     },
     {
       phase: "Phase 2",
-      status: "Completed",
-      title: "v0.2: Database Integration & Data Model",
-      date: "Coming Soon",
+      status: "Current Release",
+      title: "v0.2: Preparation for Grade-wise Architecture",
+      date: "September 2026",
       icon: <Database className="h-5 w-5 text-indigo-500" />,
       features: [
-        "Firestore Backend Integration",
-        "Complete CBSE Syllabus Data Ingestion",
-        "Dynamic Grade-by-Grade Content Serving",
-        "User Authentication (Teachers & Admins)",
-        "Curriculum Versioning System"
+        "Grade Navigator and Dashboards (Pre-K to 12)",
+        "Unified 21-Level Subject-to-Skill Data Hierarchy",
+        "Rich Flagship Activities for Anchor Grades (3, 6, 7, 8, 9)",
+        "4-Level Observable Skill Progression Rubrics",
+        "Educator Content Review Panel & Governance",
+        "Triangulated Assessment Hub (Knowledge, Performance, Reflection)"
       ]
     },
     {
       phase: "Phase 3",
-      status: "In Progress",
-      title: "v0.3: Teacher Workspaces & AI Assistance",
-      date: "Future",
-      icon: <Bot className="h-5 w-5 text-amber-500" />,
+      status: "Target Release",
+      title: "v0.3: Grade-wise Curriculum Implementation",
+      date: "Upcoming",
+      icon: <Layers className="h-5 w-5 text-amber-500" />,
       features: [
-        "Personalized Teacher Dashboards",
-        "Interactive Lesson Plan Builder",
-        "AI-Assisted Activity Generation (Gemini API)",
-        "Save & Share Custom Frameworks",
-        "Automated Formative Assessment Prompts"
+        "Complete Subject-to-Skill Mapping across all 15 Grades",
+        "Expanded Classroom Activity Bank with Community Contributions",
+        "Downloadable Assessment Worksheets & Rubrics",
+        "Multilingual Vernacular Support & Regional Curriculum Bridges"
       ]
     }
   ];
 
   return (
-    <div className="max-w-4xl mx-auto py-12 px-4 sm:px-6">
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="space-y-12"
-      >
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 pb-20 pt-8">
+      <div className="container mx-auto px-4 max-w-6xl space-y-12">
         
-        <div className="text-center space-y-4">
-          <Badge className="bg-indigo-100 text-indigo-800 dark:bg-indigo-900/30 dark:text-indigo-400 hover:bg-indigo-100 border-none">
-            The Journey to v1.0
-          </Badge>
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
-            Development Roadmap
+        {/* Header */}
+        <div className="text-center space-y-3 max-w-3xl mx-auto">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-800 dark:bg-indigo-950/60 dark:text-indigo-300">
+            <Clock className="w-3.5 h-3.5" />
+            Release Roadmap
+          </span>
+          <h1 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+            v0.3 Content Roadmap
           </h1>
-          <p className="text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-            See what we've accomplished and where we're heading next in our mission to build a fully NCF-SE 2023 & CBSE 2026-27 compliant curriculum mapping tool.
+          <p className="text-base text-slate-600 dark:text-slate-400">
+            Tracking the transition from a stage-based conceptual framework to grade-wise curriculum implementation across Indian K–12.
           </p>
-          <div className="pt-4 flex justify-center">
-            <Link to="/audit" className="inline-flex items-center justify-center rounded-lg text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 h-11 px-6 py-2 shadow-sm border border-transparent">
-              <FileSearch className="mr-2 h-5 w-5" />
-              Read the v0.2 Baseline Audit Report
-            </Link>
+        </div>
+
+        {/* Mandatory Roadmap Callout */}
+        <div className="p-6 rounded-2xl bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-900/60 text-indigo-950 dark:text-indigo-200 shadow-xs flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="space-y-1">
+            <span className="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
+              Roadmap Commitment
+            </span>
+            <h3 className="text-lg font-bold">
+              "v0.3 will focus on quality-checked grade-wise maps, starting with anchor grades and expanding through teacher feedback."
+            </h3>
+            <p className="text-xs text-indigo-800 dark:text-indigo-300">
+              We never fabricate full coverage metrics. Each grade advances through transparent, verified review stages.
+            </p>
+          </div>
+          <Link
+            to="/grades"
+            className="shrink-0 px-4 py-2.5 rounded-xl bg-indigo-600 text-white font-semibold text-xs hover:bg-indigo-700 transition-colors shadow-sm"
+          >
+            Explore Grade Dashboards →
+          </Link>
+        </div>
+
+        {/* Mandatory Trust Statement */}
+        <div className="p-4 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/40 text-xs text-amber-900 dark:text-amber-200 flex items-start gap-3">
+          <ShieldAlert className="w-4.5 h-4.5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
+          <p className="leading-relaxed">
+            <strong>Trust & Quality Statement:</strong> Content-status labels describe the maturity of Subjects2Skills material. 
+            They do not represent approval, endorsement, or certification by CBSE, NCERT, or any government body.
+          </p>
+        </div>
+
+        {/* RESPONSIVE MATRIX: Stage → Grade → Current Content Status → Current Focus → Next Milestone → Reviewer Status → Last Updated */}
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-xs">
+          <div className="p-6 border-b border-slate-100 dark:border-slate-800">
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-1">
+              Curriculum Matrix & Maturity Dashboard
+            </h2>
+            <p className="text-xs text-slate-500">
+              Comprehensive stage-wise and grade-wise implementation progression.
+            </p>
+          </div>
+
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse text-xs">
+              <thead>
+                <tr className="bg-slate-50 dark:bg-slate-800/60 text-slate-600 dark:text-slate-300 border-b border-slate-200 dark:border-slate-800">
+                  <th className="p-3.5 font-bold">Stage</th>
+                  <th className="p-3.5 font-bold">Grade</th>
+                  <th className="p-3.5 font-bold">Current Content Status</th>
+                  <th className="p-3.5 font-bold min-w-[200px]">Current Focus</th>
+                  <th className="p-3.5 font-bold min-w-[150px]">Next Milestone</th>
+                  <th className="p-3.5 font-bold">Reviewer Status</th>
+                  <th className="p-3.5 font-bold">Last Updated</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+                {roadmapMatrix.map((item) => (
+                  <tr 
+                    key={item.id} 
+                    className={`hover:bg-slate-50/70 dark:hover:bg-slate-800/40 transition-colors ${
+                      item.isAnchor ? 'bg-indigo-50/20 dark:bg-indigo-950/10 font-medium' : ''
+                    }`}
+                  >
+                    <td className="p-3.5 font-semibold text-slate-600 dark:text-slate-400">
+                      {item.stage}
+                    </td>
+                    <td className="p-3.5 font-bold text-slate-900 dark:text-white">
+                      <Link 
+                        to={`/grade/${item.id}`} 
+                        className="text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1"
+                      >
+                        {item.name}
+                        {item.isAnchor && (
+                          <span className="text-[10px] px-1.5 py-0.2 rounded bg-indigo-100 text-indigo-800 dark:bg-indigo-900/50 dark:text-indigo-300 ml-1">
+                            Anchor
+                          </span>
+                        )}
+                      </Link>
+                    </td>
+                    <td className="p-3.5">
+                      <span className={`px-2.5 py-1 rounded text-[11px] font-bold uppercase tracking-wider border ${getStatusBadge(item.status)}`}>
+                        {formatStatus(item.status)}
+                      </span>
+                    </td>
+                    <td className="p-3.5 text-slate-700 dark:text-slate-300">
+                      {item.currentFocus}
+                    </td>
+                    <td className="p-3.5 text-slate-600 dark:text-slate-400">
+                      {item.nextMilestone}
+                    </td>
+                    <td className="p-3.5 font-medium text-slate-700 dark:text-slate-300">
+                      {item.reviewerStatus}
+                    </td>
+                    <td className="p-3.5 text-slate-500">
+                      {item.lastUpdated}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
 
-
-        <div className="relative border-l-2 border-slate-200 dark:border-slate-800 ml-4 md:ml-6 mt-16 space-y-12 pb-8">
-          {milestones.map((milestone, index) => (
-            <motion.div key={index} variants={itemVariants} className="relative pl-8 md:pl-12">
-              {/* Timeline dot */}
-              <div className="absolute -left-[13px] top-1.5 h-6 w-6 rounded-full border-4 border-slate-50 dark:border-slate-950 bg-white dark:bg-slate-900 flex items-center justify-center shadow-sm">
-                <div className={`h-2.5 w-2.5 rounded-full ${milestone.status === 'Completed' ? 'bg-emerald-500' : milestone.status === 'In Progress' ? 'bg-indigo-500 animate-pulse' : 'bg-slate-300 dark:bg-slate-700'}`} />
-              </div>
-
-              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 md:p-8 shadow-sm">
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-6 border-b border-slate-100 dark:border-slate-800">
-                  <div>
-                    <div className="flex items-center gap-3 mb-2">
-                      <span className="text-sm font-bold text-slate-400 uppercase tracking-wider">{milestone.phase}</span>
-                      <Badge variant="outline" className={
-                        milestone.status === 'Completed' ? 'text-emerald-600 border-emerald-200 bg-emerald-50 dark:bg-emerald-950/30 dark:border-emerald-900/50 dark:text-emerald-400' :
-                        milestone.status === 'In Progress' ? 'text-indigo-600 border-indigo-200 bg-indigo-50 dark:bg-indigo-950/30 dark:border-indigo-900/50 dark:text-indigo-400' :
-                        'text-slate-600 border-slate-200 bg-slate-50 dark:bg-slate-900 dark:border-slate-800 dark:text-slate-400'
-                      }>
-                        {milestone.status}
-                      </Badge>
-                    </div>
-                    <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 flex items-center gap-3">
-                      {milestone.icon}
-                      {milestone.title}
-                    </h3>
+        {/* Milestone Progression Cards */}
+        <div className="space-y-6">
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white">
+            Architecture & Release Roadmap
+          </h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            {milestones.map((milestone, index) => (
+              <div 
+                key={index}
+                className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-xs space-y-4 flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center justify-between gap-2 mb-2">
+                    <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">{milestone.phase}</span>
+                    <span className={`px-2 py-0.5 rounded text-xs font-semibold ${
+                      milestone.status === 'Completed' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-300' :
+                      milestone.status === 'Current Release' ? 'bg-indigo-100 text-indigo-800 dark:bg-indigo-950/40 dark:text-indigo-300' :
+                      'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300'
+                    }`}>
+                      {milestone.status}
+                    </span>
                   </div>
-                  <div className="flex items-center gap-2 text-slate-500 text-sm font-medium bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-lg">
-                    <Clock className="h-4 w-4" />
-                    {milestone.date}
-                  </div>
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    {milestone.icon}
+                    {milestone.title}
+                  </h3>
+                  <span className="text-xs text-slate-500 block mt-1">{milestone.date}</span>
+
+                  <ul className="space-y-2 mt-4 text-xs text-slate-600 dark:text-slate-400">
+                    {milestone.features.map((feat, fIdx) => (
+                      <li key={fIdx} className="flex items-start gap-2">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-indigo-500 shrink-0 mt-0.5" />
+                        <span>{feat}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
 
-                <ul className="grid sm:grid-cols-2 gap-y-3 gap-x-6">
-                  {milestone.features.map((feature, fIndex) => (
-                    <li key={fIndex} className="flex items-start gap-2 text-slate-700 dark:text-slate-300">
-                      <div className={`mt-1 h-1.5 w-1.5 rounded-full shrink-0 ${milestone.status === 'Completed' ? 'bg-emerald-500' : 'bg-indigo-500'}`} />
-                      <span className="text-sm">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
+                <div className="pt-4 border-t border-slate-100 dark:border-slate-800 text-xs text-slate-500">
+                  {milestone.status === 'Current Release' ? 'Active preview release under community review' : 'Scheduled iteration'}
+                </div>
               </div>
-            </motion.div>
-          ))}
+            ))}
+          </div>
         </div>
 
-        <motion.div variants={itemVariants} className="bg-indigo-50 dark:bg-indigo-950/30 border border-indigo-100 dark:border-indigo-900/30 rounded-2xl p-8 text-center mt-12">
-          <GitPullRequest className="h-12 w-12 text-indigo-500 mx-auto mb-4" />
-          <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-2">Want to contribute to v0.2?</h3>
-          <p className="text-slate-600 dark:text-slate-400 mb-6 max-w-xl mx-auto">
-            We are actively looking for feedback from curriculum designers, teachers, and school leaders. Use the feedback button in the bottom right to share your thoughts.
-          </p>
-        </motion.div>
-
-      </motion.div>
+      </div>
     </div>
   );
 }
