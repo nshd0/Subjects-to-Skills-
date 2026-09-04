@@ -7,6 +7,7 @@ import { useProgress } from '@/contexts/ProgressContext';
 import { Button } from './ui/Button';
 import { FeedbackWidget } from './FeedbackWidget';
 import { GlobalSearch } from './GlobalSearch';
+
 import { NavDropdown } from './NavDropdown';
 import { BookmarksDrawer } from './BookmarksDrawer';
 import { gradesData } from '@/data/grades';
@@ -147,6 +148,7 @@ export function Layout() {
               <NavLink to="/resources" className={navLinkClass}>Teacher Resource Hub</NavLink>
               <NavLink to="/toolkit" className={navLinkClass}>Teacher Toolkit</NavLink>
               <NavLink to="/roadmap" className={navLinkClass}>Content Roadmap</NavLink>
+              <button onClick={() => window.dispatchEvent(new Event("open-feedback"))} className={`px-2.5 py-1.5 rounded-lg text-xs lg:text-sm font-medium transition-colors whitespace-nowrap text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800/50 dark:hover:text-slate-50`}>Feedback</button>
               <NavLink to="/about" className={navLinkClass}>About</NavLink>
             </nav>
 
@@ -248,6 +250,7 @@ export function Layout() {
               <NavLink to="/resources" className={navLinkClass}>Teacher Resource Hub</NavLink>
               <NavLink to="/toolkit" className={navLinkClass}>Teacher Toolkit</NavLink>
               <NavLink to="/roadmap" className={navLinkClass}>v0.3 Content Roadmap</NavLink>
+              <button onClick={() => window.dispatchEvent(new Event("open-feedback"))} className={`w-full text-left px-2.5 py-1.5 rounded-lg text-xs lg:text-sm font-medium transition-colors whitespace-nowrap text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800/50 dark:hover:text-slate-50`}>Feedback</button>
               <NavLink to="/about" className={navLinkClass}>About & Governance</NavLink>
 
               <div className="py-2 border-t border-slate-100 dark:border-slate-800">
@@ -366,6 +369,7 @@ export function Layout() {
       </footer>
 
       <FeedbackWidget />
+      
       <BookmarksDrawer isOpen={isBookmarksOpen} onClose={() => setIsBookmarksOpen(false)} />
     </div>
   );

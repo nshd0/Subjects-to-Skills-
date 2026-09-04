@@ -36,16 +36,19 @@ export function Home() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, ease: 'easeOut' }}
             >
-              <Badge className="mb-6" variant="secondary">Subjects2Skills v0.2 — Preparing for v0.3</Badge>
+              <Badge className="mb-6" variant="secondary">Subjects2Skills v0.3</Badge>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-6 leading-tight">
                 From Subjects to <span className="text-indigo-600 dark:text-indigo-400">Skills</span>
               </h1>
-              <p className="text-xl text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
+              <p className="text-xl font-medium text-slate-700 dark:text-slate-200 mb-2">
+                Grade-Wise Learning Maps for Classroom Practice
+              </p>
+              <p className="text-lg text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
                 An evolving public framework connecting subject knowledge, skills, pedagogy, classroom activities, assessment evidence and teacher-ready resources.
               </p>
               <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/50 p-4 rounded-lg mb-10 text-amber-800 dark:text-amber-300 text-sm">
                 <span className="font-semibold block mb-1">Status Update:</span>
-                Subjects2Skills is currently expanding into grade-wise curriculum maps. Some grades and resources are still in development and will be reviewed before public publication.
+                v0.3 introduces a scalable grade-wise structure linking learning areas, subject knowledge, competencies, activities, evidence, assessment and teacher-ready resources. Content is released progressively and transparently through educator review.
               </div>
               <div className="flex flex-col sm:flex-row items-center gap-4">
                 <Button asChild size="lg" className="w-full sm:w-auto transition-transform hover:scale-105">

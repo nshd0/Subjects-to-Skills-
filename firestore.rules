@@ -111,7 +111,7 @@ service cloud.firestore {
 
     match /subject_mappings/{mappingId} {
       // Anyone can read mappings
-      allow read: if isValidId(mappingId);
+      allow read: if true;
       
       // Only authenticated users can create mappings
       allow create: if isValidId(mappingId) && isSignedIn() && isValidSubjectMapping(incoming()) &&

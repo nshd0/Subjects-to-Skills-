@@ -11,13 +11,13 @@ export function About() {
         <div className="text-center space-y-4 max-w-2xl mx-auto">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-800 dark:bg-indigo-950/60 dark:text-indigo-300">
             <Sparkles className="w-3.5 h-3.5" />
-            Subjects2Skills v0.2 — Preparing for v0.3
+            Subjects2Skills v0.3
           </div>
           <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">
             About Subjects2Skills
           </h1>
           <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
-            A public educational framework demonstrating how existing CBSE subjects can be connected to skills, pedagogy stages, classroom activities, assessment evidence, teacher support, and free/open resources.
+            Subjects2Skills is an evolving public framework designed to support curriculum exploration, teacher planning and educational discussion. Schools should align all use with applicable CBSE, NCERT, state, school, safeguarding and assessment requirements.
           </p>
         </div>
 
@@ -67,7 +67,7 @@ export function About() {
               The Purpose of this Upgrade
             </h2>
             <p>
-              This release represents the preparation and architectural upgrade for <strong>v0.3</strong>, an upcoming grade-wise curriculum implementation covering Pre-school to Grade 12. We provide transparent starter structures and full flagship activities for priority anchor grades (Grades 3, 6, 7, 8, and 9) while inviting educators across India to review, test, and contribute feedback.
+              This release represents <strong>v0.3</strong>, a scalable grade-wise curriculum implementation covering Pre-school to Grade 12. We provide transparent starter structures and full flagship activities for priority anchor grades (Grades 3, 6, 7, 8, and 9) while inviting educators across India to review, test, and contribute feedback.
             </p>
           </section>
 
@@ -102,7 +102,7 @@ export function About() {
               Official Endorsement & Content Maturity Disclaimer
             </div>
             <p className="text-xs leading-relaxed">
-              <strong>Content-status labels describe the maturity of Subjects2Skills material. They do not represent approval, endorsement, or certification by CBSE, NCERT, or any government body.</strong>
+              <strong>Content-status labels describe the maturity of Subjects2Skills material. They do not represent approval, endorsement or certification by CBSE, NCERT or any government body.</strong>
             </p>
             <p className="text-xs leading-relaxed opacity-90">
               Subjects2Skills is an independent open educational framework designed for reference, research, and collaborative professional development. Educators should always review statutory curriculum syllabi issued directly by the relevant exam boards.

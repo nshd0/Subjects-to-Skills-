@@ -138,7 +138,18 @@ export function Roadmap() {
             v0.3 Content Roadmap
           </h1>
           <p className="text-base text-slate-600 dark:text-slate-400">
-            Tracking the transition from a stage-based conceptual framework to grade-wise curriculum implementation across Indian K–12.
+            v0.3 expands through quality-checked grade-wise learning maps, beginning with anchor grades and improving through educator feedback.
+          </p>
+        </div>
+
+        {/* Mandatory Disclaimer */}
+        <div className="p-5 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/40 text-amber-900 dark:text-amber-200 space-y-2">
+          <div className="flex items-center gap-2 font-bold text-sm">
+            <ShieldAlert className="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0" />
+            Platform Disclaimer
+          </div>
+          <p className="text-xs leading-relaxed opacity-90">
+            Subjects2Skills is an evolving public framework designed to support curriculum exploration, teacher planning and educational discussion. Schools should align all use with applicable CBSE, NCERT, state, school, safeguarding and assessment requirements.
           </p>
         </div>
 
@@ -149,7 +160,7 @@ export function Roadmap() {
               Roadmap Commitment
             </span>
             <h3 className="text-lg font-bold">
-              "v0.3 will focus on quality-checked grade-wise maps, starting with anchor grades and expanding through teacher feedback."
+              v0.3 expands through quality-checked grade-wise learning maps, beginning with anchor grades and improving through educator feedback.
             </h3>
             <p className="text-xs text-indigo-800 dark:text-indigo-300">
               We never fabricate full coverage metrics. Each grade advances through transparent, verified review stages.
@@ -168,7 +179,7 @@ export function Roadmap() {
           <ShieldAlert className="w-4.5 h-4.5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
           <p className="leading-relaxed">
             <strong>Trust & Quality Statement:</strong> Content-status labels describe the maturity of Subjects2Skills material. 
-            They do not represent approval, endorsement, or certification by CBSE, NCERT, or any government body.
+            They do not represent approval, endorsement or certification by CBSE, NCERT or any government body.
           </p>
         </div>
 
