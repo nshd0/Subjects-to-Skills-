@@ -4,8 +4,20 @@ import { useProgress } from '@/contexts/ProgressContext';
 import { 
   Clock, Users, CheckCircle, Copy, Check, Printer, ChevronDown, 
   ChevronUp, Sparkles, BookOpen, AlertCircle, Home, Compass, 
-  Cpu, Award, MessageSquare, Bookmark, FileCode
+  Cpu, Award, MessageSquare, Bookmark, FileCode, Layers, Eye,
+  FileText
 } from 'lucide-react';
+import { VisualActivityGuide } from '@/components/activities/VisualActivityGuide';
+import { priorityScenesData } from '@/data/learningScenesData';
+import { 
+  ScenarioIllustration, 
+  ActivityStepIllustration, 
+  LearningEvidenceIllustration,
+  ProcessFlowDiagram,
+  InclusionCallout,
+  SafetyCallout,
+  MaterialIconSet
+} from '@/components/illustrations';
 
 interface ActivityCardProps {
   key?: React.Key;
@@ -17,8 +29,12 @@ export function ActivityCard({ activity, isFlagship = false }: ActivityCardProps
   const [isExpanded, setIsExpanded] = useState(isFlagship);
   const [copiedPlan, setCopiedPlan] = useState(false);
   const [copiedTemplate, setCopiedTemplate] = useState(false);
+  const [viewMode, setViewMode] = useState<'all' | 'visual' | 'text'>('text');
+  const [activeStepTab, setActiveStepTab] = useState<number>(1);
   const { isBookmarked, toggleBookmark } = useProgress();
 
+  const sceneData = priorityScenesData[activity.id];
+  const hasNewVisuals = !!activity.visuals;
   const isSaved = isBookmarked(activity.id);
 
   const handleToggleBookmark = () => {
@@ -53,24 +69,24 @@ LOGISTICS:
 - Duration: ${activity.duration}
 - Group Size: ${activity.groupSize || 'Flexible'}
 - Classroom Setup: ${activity.setup}
-- Materials Required: ${activity.materials.join(', ')}
+- Materials Required: ${(activity.materials || []).join(', ')}
 - Low-Resource Alternative: ${activity.lowResourceAlternative || 'Usable with chalkboard and slates'}
 
 STEP-BY-STEP TEACHER INSTRUCTIONS:
-${activity.steps.map((s, idx) => `${idx + 1}. ${s}`).join('\n')}
+${(activity.steps || []).map((s, idx) => `${idx + 1}. ${s}`).join('\n')}
 
 STUDENT INSTRUCTIONS:
 ${activity.studentInstructions ? activity.studentInstructions.map((s, idx) => `${idx + 1}. ${s}`).join('\n') : 'Follow guided steps'}
 
 TEACHER PROMPTS:
-${activity.teacherPrompts.map(p => `- "${p}"`).join('\n')}
+${(activity.teacherPrompts || []).map(p => `- "${p}"`).join('\n')}
 
 STUDENT OUTPUT:
 ${activity.studentOutput}
 
 EVIDENCE & ASSESSMENT:
 Criteria:
-${activity.assessmentCriteria.map(c => `- ${c}`).join('\n')}
+${(activity.assessmentCriteria || []).map(c => `- ${c}`).join('\n')}
 
 Reflection Prompt: ${activity.reflectionPrompt || 'What did you discover today?'}
 
@@ -189,6 +205,12 @@ ${activity.homeConnection}
             <span className="text-xs font-medium px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300">
               {activity.status === 'in-development' ? 'In Development (Pilot Ready)' : 'Active Plan'}
             </span>
+            {sceneData && (
+              <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-teal-100 text-teal-900 dark:bg-teal-900/50 dark:text-teal-200 flex items-center gap-1 border border-teal-200 dark:border-teal-800 shadow-2xs">
+                <Layers className="w-3 h-3 text-teal-700 dark:text-teal-300" />
+                Learning Scene
+              </span>
+            )}
           </div>
 
           {/* Action Buttons */}
@@ -310,139 +332,279 @@ ${activity.homeConnection}
         <div className={`pt-4 border-t border-slate-200 dark:border-slate-800 space-y-6 ${
           isExpanded ? 'block' : 'hidden print:!block'
         }`}>
-          
-          {/* Essential Knowledge & Setup */}
-          <div className="grid md:grid-cols-2 gap-4">
-            {activity.essentialKnowledge && (
-              <div className="p-3.5 rounded-lg bg-amber-50/60 dark:bg-amber-950/20 border border-amber-200/50 dark:border-amber-900/30 text-xs print:bg-white print:border-slate-300">
-                <span className="font-bold uppercase tracking-wider text-amber-800 dark:text-amber-300 block mb-1.5 print:text-black">
-                  Essential Knowledge Required
-                </span>
-                <ul className="list-disc list-inside space-y-1 text-slate-700 dark:text-slate-300 print:text-black">
-                  {activity.essentialKnowledge.map((k, i) => (
-                    <li key={i}>{k}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
 
-            <div className="p-3.5 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/50 text-xs space-y-2 print:bg-white print:border-slate-300">
-              <div>
-                <span className="font-bold uppercase tracking-wider text-slate-500 block mb-1 print:text-black">
-                  Classroom Setup
-                </span>
-                <p className="text-slate-700 dark:text-slate-300 print:text-black">{activity.setup}</p>
+          {/* View Mode Selector for Illustrated Activities */}
+          {(sceneData || hasNewVisuals) && (
+            <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-slate-200 dark:border-slate-800 print:hidden">
+              <div className="flex items-center gap-1 p-1 bg-slate-100 dark:bg-slate-800 rounded-lg text-xs font-semibold">
+                <button
+                  type="button"
+                  onClick={() => setViewMode('all')}
+                  className={`px-3 py-1.5 rounded-md transition-all ${
+                    viewMode === 'all'
+                      ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-2xs font-bold'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                  }`}
+                >
+                  Complete Plan
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setViewMode('visual')}
+                  className={`px-3 py-1.5 rounded-md transition-all flex items-center gap-1.5 ${
+                    viewMode === 'visual'
+                      ? 'bg-teal-700 text-white shadow-2xs font-bold'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                  }`}
+                >
+                  <Layers className="w-3.5 h-3.5" />
+                  Visual Step Guide
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setViewMode('text')}
+                  className={`px-3 py-1.5 rounded-md transition-all flex items-center gap-1.5 ${
+                    viewMode === 'text'
+                      ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-2xs font-bold'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                  }`}
+                >
+                  <FileText className="w-3.5 h-3.5" />
+                  Text Plan Only
+                </button>
               </div>
+
+              <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
+                Subjects2Skills Learning Scenes Visual Language
+              </span>
+            </div>
+          )}
+
+          {/* ================= INSTRUCTIONAL VISUAL SYSTEM ================= */}
+          {(hasNewVisuals && (viewMode === 'all' || viewMode === 'visual')) && (
+            <VisualActivityGuide activity={activity} className="mb-6" />
+          )}
+
+          {!hasNewVisuals && sceneData && (viewMode === 'all' || viewMode === 'visual') && (
+            <div className="space-y-6 pt-1">
+              {/* 1. Classroom Scenario Overview Illustration */}
               <div>
-                <span className="font-bold uppercase tracking-wider text-slate-500 block mb-1 print:text-black">
-                  Materials Required
-                </span>
-                <p className="text-slate-700 dark:text-slate-300 print:text-black">{activity.materials.join(', ')}</p>
-              </div>
-              {activity.lowResourceAlternative && (
-                <div>
-                  <span className="font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 block mb-1 print:text-black">
-                    Low-Resource Alternative
+                <div className="flex items-center justify-between mb-2">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 flex items-center gap-1.5">
+                    <Eye className="w-4 h-4 text-teal-600 dark:text-teal-400" />
+                    Classroom Learning Scene & Roles
+                  </h4>
+                  <span className="text-[11px] font-medium text-teal-700 dark:text-teal-400 bg-teal-50 dark:bg-teal-950/40 px-2 py-0.5 rounded border border-teal-200 dark:border-teal-800">
+                    Smartboard Projectable
                   </span>
-                  <p className="text-slate-700 dark:text-slate-300 print:text-black">{activity.lowResourceAlternative}</p>
                 </div>
+                <ScenarioIllustration scene={sceneData} />
+              </div>
+
+              {/* 2. Physical Materials & Low-Resource Kit */}
+              <MaterialIconSet materials={sceneData.materials} />
+
+              {/* 3. Pedagogical Workflow & Sequenced Steps */}
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 flex items-center gap-1.5">
+                    <Compass className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+                    Sequenced Step-by-Step Instructional Visuals
+                  </h4>
+                  <span className="text-[11px] text-slate-400">
+                    {sceneData.steps.length} Sequenced Phases
+                  </span>
+                </div>
+
+                <ProcessFlowDiagram 
+                  steps={sceneData.steps} 
+                  activeStep={activeStepTab} 
+                  onStepClick={(s) => setActiveStepTab(s)} 
+                  className="mb-4"
+                />
+
+                <div className="space-y-4">
+                  {sceneData.steps.map((step) => (
+                    <ActivityStepIllustration 
+                      key={step.stepNumber} 
+                      step={step} 
+                      totalSteps={sceneData.steps.length} 
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* 4. Benchmark Evidence of Learning Artifact */}
+              <div>
+                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 flex items-center gap-1.5 mb-2">
+                  <Award className="w-4 h-4 text-amber-500" />
+                  Evidence of Learning: Benchmark Student Output
+                </h4>
+                <LearningEvidenceIllustration 
+                  evidence={sceneData.evidence} 
+                  activityId={activity.id} 
+                />
+              </div>
+
+              {/* 5. Inclusions and Safety Notes */}
+              {sceneData.inclusion && (
+                <InclusionCallout inclusion={sceneData.inclusion} />
+              )}
+              {sceneData.safety && (
+                <SafetyCallout safety={sceneData.safety} />
               )}
             </div>
-          </div>
-
-          {/* Step-by-Step Teacher Instructions */}
-          <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5 mb-2 print:text-black">
-              <Compass className="w-4 h-4 text-indigo-500 print:hidden" />
-              Step-by-Step Teacher Instructions
-            </span>
-            <ol className="space-y-2 text-sm text-slate-700 dark:text-slate-300 print:text-black">
-              {activity.steps.map((step, idx) => (
-                <li key={idx} className="flex items-start gap-2.5 p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/40 print:p-1">
-                  <span className="w-5 h-5 rounded-full bg-indigo-100 text-indigo-800 dark:bg-indigo-900/60 dark:text-indigo-300 text-xs font-bold flex items-center justify-center shrink-0 mt-0.5 print:bg-slate-200 print:text-black">
-                    {idx + 1}
+          )}
+          
+          {/* ================= TEXT CURRICULAR PLAN ================= */}
+          {(!(sceneData || hasNewVisuals) || viewMode === 'all' || viewMode === 'text') && (
+            <div className="space-y-6 pt-2">
+              {/* Section divider when in 'all' view with visuals above */}
+              {sceneData && viewMode === 'all' && (
+                <div className="pt-4 border-t border-slate-200 dark:border-slate-800">
+                  <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5 mb-4">
+                    <FileText className="w-4 h-4 text-slate-500" />
+                    Curriculum Standards, Prompts & Differentiation Details
                   </span>
-                  <span className="leading-relaxed">{step}</span>
-                </li>
-              ))}
-            </ol>
-          </div>
+                </div>
+              )}
 
-          {/* Student Instructions */}
-          {activity.studentInstructions && activity.studentInstructions.length > 0 && (
-            <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block mb-2 print:text-black">
-                Student Instructions (To Read or Share on Board)
-              </span>
-              <div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-200 dark:border-slate-800 space-y-2 text-sm print:bg-white print:border-slate-300">
-                {activity.studentInstructions.map((inst, idx) => (
-                  <div key={idx} className="flex items-start gap-2 text-slate-700 dark:text-slate-300 print:text-black">
-                    <span className="text-indigo-500 font-bold">•</span>
-                    <span>{inst}</span>
+              {/* Essential Knowledge & Setup */}
+              <div className="grid md:grid-cols-2 gap-4">
+                {activity.essentialKnowledge && (
+                  <div className="p-3.5 rounded-lg bg-amber-50/60 dark:bg-amber-950/20 border border-amber-200/50 dark:border-amber-900/30 text-xs print:bg-white print:border-slate-300">
+                    <span className="font-bold uppercase tracking-wider text-amber-800 dark:text-amber-300 block mb-1.5 print:text-black">
+                      Essential Knowledge Required
+                    </span>
+                    <ul className="list-disc list-inside space-y-1 text-slate-700 dark:text-slate-300 print:text-black">
+                      {activity.essentialKnowledge.map((k, i) => (
+                        <li key={i}>{k}</li>
+                      ))}
+                    </ul>
                   </div>
-                ))}
-              </div>
-            </div>
-          )}
+                )}
 
-          {/* Teacher Prompts */}
-          {activity.teacherPrompts && activity.teacherPrompts.length > 0 && (
-            <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5 mb-2 print:text-black">
-                <MessageSquare className="w-4 h-4 text-teal-500 print:hidden" />
-                Teacher Prompts for Formative Questioning
-              </span>
-              <div className="grid sm:grid-cols-2 gap-2 print:grid-cols-1">
-                {activity.teacherPrompts.map((p, idx) => (
-                  <div key={idx} className="p-2.5 rounded-lg bg-teal-50/50 dark:bg-teal-950/20 border border-teal-200/50 dark:border-teal-900/30 text-xs text-teal-950 dark:text-teal-200 italic print:bg-slate-50 print:text-black print:border-slate-200">
-                    "{p}"
+                <div className="p-3.5 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/50 text-xs space-y-2 print:bg-white print:border-slate-300">
+                  <div>
+                    <span className="font-bold uppercase tracking-wider text-slate-500 block mb-1 print:text-black">
+                      Classroom Setup
+                    </span>
+                    <p className="text-slate-700 dark:text-slate-300 print:text-black">{activity.setup}</p>
                   </div>
-                ))}
+                  <div>
+                    <span className="font-bold uppercase tracking-wider text-slate-500 block mb-1 print:text-black">
+                      Materials Required
+                    </span>
+                    <p className="text-slate-700 dark:text-slate-300 print:text-black">{(activity.materials || []).join(', ')}</p>
+                  </div>
+                  {activity.lowResourceAlternative && (
+                    <div>
+                      <span className="font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 block mb-1 print:text-black">
+                        Low-Resource Alternative
+                      </span>
+                      <p className="text-slate-700 dark:text-slate-300 print:text-black">{activity.lowResourceAlternative}</p>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-          )}
 
-          {/* Assessment Criteria & Evidence */}
-          <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 space-y-3 print:bg-white print:border-slate-300">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5 print:text-black">
-              <CheckCircle className="w-4 h-4 text-emerald-500 print:hidden" />
-              Assessment Criteria (What to Observe)
-            </span>
-            <ul className="space-y-1.5 text-xs text-slate-700 dark:text-slate-300 list-disc list-inside print:text-black">
-              {activity.assessmentCriteria.map((crit, idx) => (
-                <li key={idx}>{crit}</li>
-              ))}
-            </ul>
-
-            {activity.reflectionPrompt && (
-              <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-700 text-xs">
-                <strong className="text-slate-700 dark:text-slate-300 print:text-black">Reflection Prompt: </strong>
-                <span className="italic text-slate-600 dark:text-slate-400 print:text-black">"{activity.reflectionPrompt}"</span>
+              {/* Step-by-Step Teacher Instructions */}
+              {(!hasNewVisuals || viewMode === "text") && (
+              <div>
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5 mb-2 print:text-black">
+                  <Compass className="w-4 h-4 text-indigo-500 print:hidden" />
+                  Step-by-Step Teacher Instructions
+                </span>
+                <ol className="space-y-2 text-sm text-slate-700 dark:text-slate-300 print:text-black">
+                  {(activity.steps || []).map((step, idx) => (
+                    <li key={idx} className="flex items-start gap-2.5 p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/40 print:p-1">
+                      <span className="w-5 h-5 rounded-full bg-indigo-100 text-indigo-800 dark:bg-indigo-900/60 dark:text-indigo-300 text-xs font-bold flex items-center justify-center shrink-0 mt-0.5 print:bg-slate-200 print:text-black">
+                        {idx + 1}
+                      </span>
+                      <span className="leading-relaxed">{step}</span>
+                    </li>
+                  ))}
+                </ol>
               </div>
-            )}
-          </div>
+              )}
 
-          {/* Differentiation, Inclusion & Home Connection */}
-          <div className="grid sm:grid-cols-2 gap-3 text-xs">
-            <div className="p-3 rounded-lg border border-slate-200 dark:border-slate-800 space-y-1 print:border-slate-300">
-              <span className="font-bold text-slate-700 dark:text-slate-300 block print:text-black">Scaffold & Extension</span>
-              <p className="text-slate-600 dark:text-slate-400 print:text-black"><strong>Scaffold:</strong> {activity.scaffold || 'Use simplified tally or sentence starters'}</p>
-              <p className="text-slate-600 dark:text-slate-400 print:text-black"><strong>Extension:</strong> {activity.extension}</p>
+              {/* Student Instructions */}
+              {activity.studentInstructions && activity.studentInstructions.length > 0 && (
+                <div>
+                  <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block mb-2 print:text-black">
+                    Student Instructions (To Read or Share on Board)
+                  </span>
+                  <div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-200 dark:border-slate-800 space-y-2 text-sm print:bg-white print:border-slate-300">
+                    {(activity.studentInstructions || []).map((inst, idx) => (
+                      <div key={idx} className="flex items-start gap-2 text-slate-700 dark:text-slate-300 print:text-black">
+                        <span className="text-indigo-500 font-bold">•</span>
+                        <span>{inst}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Teacher Prompts */}
+              {activity.teacherPrompts && activity.teacherPrompts.length > 0 && (
+                <div>
+                  <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5 mb-2 print:text-black">
+                    <MessageSquare className="w-4 h-4 text-teal-500 print:hidden" />
+                    Teacher Prompts for Formative Questioning
+                  </span>
+                  <div className="grid sm:grid-cols-2 gap-2 print:grid-cols-1">
+                    {(activity.teacherPrompts || []).map((p, idx) => (
+                      <div key={idx} className="p-2.5 rounded-lg bg-teal-50/50 dark:bg-teal-950/20 border border-teal-200/50 dark:border-teal-900/30 text-xs text-teal-950 dark:text-teal-200 italic print:bg-slate-50 print:text-black print:border-slate-200">
+                        "{p}"
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Assessment Criteria & Evidence */}
+              <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 space-y-3 print:bg-white print:border-slate-300">
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5 print:text-black">
+                  <CheckCircle className="w-4 h-4 text-emerald-500 print:hidden" />
+                  Assessment Criteria (What to Observe)
+                </span>
+                <ul className="space-y-1.5 text-xs text-slate-700 dark:text-slate-300 list-disc list-inside print:text-black">
+                  {(activity.assessmentCriteria || []).map((crit, idx) => (
+                    <li key={idx}>{crit}</li>
+                  ))}
+                </ul>
+
+                {activity.reflectionPrompt && (
+                  <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-700 text-xs">
+                    <strong className="text-slate-700 dark:text-slate-300 print:text-black">Reflection Prompt: </strong>
+                    <span className="italic text-slate-600 dark:text-slate-400 print:text-black">"{activity.reflectionPrompt}"</span>
+                  </div>
+                )}
+              </div>
+
+              {/* Differentiation, Inclusion & Home Connection */}
+              <div className="grid sm:grid-cols-2 gap-3 text-xs">
+                <div className="p-3 rounded-lg border border-slate-200 dark:border-slate-800 space-y-1 print:border-slate-300">
+                  <span className="font-bold text-slate-700 dark:text-slate-300 block print:text-black">Scaffold & Extension</span>
+                  <p className="text-slate-600 dark:text-slate-400 print:text-black"><strong>Scaffold:</strong> {activity.scaffold || 'Use simplified tally or sentence starters'}</p>
+                  <p className="text-slate-600 dark:text-slate-400 print:text-black"><strong>Extension:</strong> {activity.extension}</p>
+                </div>
+
+                <div className="p-3 rounded-lg border border-slate-200 dark:border-slate-800 space-y-1 print:border-slate-300">
+                  <span className="font-bold text-slate-700 dark:text-slate-300 block flex items-center gap-1 print:text-black">
+                    <Home className="w-3.5 h-3.5 text-blue-500 print:hidden" /> Home Connection
+                  </span>
+                  <p className="text-slate-600 dark:text-slate-400 print:text-black">{activity.homeConnection}</p>
+                </div>
+              </div>
+
+              {/* Local Context Adaptation Note */}
+              {activity.localAdaptation && (
+                <p className="text-xs italic text-slate-500 dark:text-slate-400 border-l-2 border-amber-400 pl-2 print:text-black">
+                  Indian Context Note: {activity.localAdaptation}
+                </p>
+              )}
             </div>
-
-            <div className="p-3 rounded-lg border border-slate-200 dark:border-slate-800 space-y-1 print:border-slate-300">
-              <span className="font-bold text-slate-700 dark:text-slate-300 block flex items-center gap-1 print:text-black">
-                <Home className="w-3.5 h-3.5 text-blue-500 print:hidden" /> Home Connection
-              </span>
-              <p className="text-slate-600 dark:text-slate-400 print:text-black">{activity.homeConnection}</p>
-            </div>
-          </div>
-
-          {/* Local Context Adaptation Note */}
-          {activity.localAdaptation && (
-            <p className="text-xs italic text-slate-500 dark:text-slate-400 border-l-2 border-amber-400 pl-2 print:text-black">
-              Indian Context Note: {activity.localAdaptation}
-            </p>
           )}
 
         </div>

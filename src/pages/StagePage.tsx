@@ -104,7 +104,7 @@ function StageGuidanceSection({ guidance }: { guidance?: StageGuidance }) {
             Facilitation Tips
           </h3>
           <ul className="space-y-3">
-            {guidance.activityTips.map((tip, idx) => (
+            {(guidance.activityTips || []).map((tip, idx) => (
               <li key={idx} className="flex gap-3 text-sm text-slate-700 dark:text-slate-300">
                 <CheckCircle2 className="h-4 w-4 shrink-0 text-indigo-500 mt-0.5" />
                 <span className="leading-relaxed">{tip}</span>
@@ -120,7 +120,7 @@ function StageGuidanceSection({ guidance }: { guidance?: StageGuidance }) {
             Core Competency Rubrics
           </h3>
           <div className="space-y-4">
-            {guidance.rubrics.map((rubric, idx) => (
+            {(guidance.rubrics || []).map((rubric, idx) => (
               <div key={idx} className="border border-slate-200 dark:border-slate-800 rounded-lg overflow-hidden bg-white dark:bg-slate-900">
                 <div className="bg-slate-50 dark:bg-slate-800/50 px-4 py-3 border-b border-slate-200 dark:border-slate-800">
                   <h4 className="font-medium text-slate-900 dark:text-slate-100">{rubric.criteria}</h4>
@@ -623,7 +623,7 @@ function SecondaryStagePage() {
                   <h3 className="font-bold text-lg text-slate-900 dark:text-slate-100 mb-2">{pathway.name}</h3>
                   <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">{pathway.description}</p>
                   <div className="flex flex-wrap gap-2">
-                    {pathway.subjects.map((sub: string, j: number) => (
+                    {(pathway.subjects || []).map((sub: string, j: number) => (
                       <Badge key={j} variant="secondary" className="bg-slate-100 dark:bg-slate-800">{sub}</Badge>
                     ))}
                   </div>

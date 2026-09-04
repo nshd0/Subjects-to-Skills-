@@ -106,6 +106,14 @@ export type Activity = {
   status: ContentStatus | string;
   activityType?: ActivityType | string;
   localAdaptation?: string;
+  visuals?: {
+    scenarioId?: string;
+    materialIconIds?: string[];
+    stepVisualIds?: string[];
+    evidenceVisualId?: string;
+    safetyVisualId?: string;
+    altText?: string;
+  };
 };
 
 export type RubricLevel = "Emerging" | "Developing" | "Proficient" | "Transfer";

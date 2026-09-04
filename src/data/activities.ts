@@ -227,7 +227,15 @@ export const activitiesData: Activity[] = [
     sourceType: "suggested-activity",
     status: "in-development",
     activityType: "Project",
-    localAdaptation: "Connect with traditional Indian water storage (baolis, tankas, johads) and discuss traditional sand-pot filtration methods."
+    localAdaptation: "Connect with traditional Indian water storage (baolis, tankas, johads) and discuss traditional sand-pot filtration methods.",
+    visuals: {
+      scenarioId: "g7-water-scenario",
+      materialIconIds: ["bottle", "cloth", "sand", "gravel", "measuring_cup", "clipboard", "pencil", "chart", "safety_alert"],
+      stepVisualIds: ["g7-water-step-1", "g7-water-step-2", "g7-water-step-3", "g7-water-step-4", "g7-water-step-5"],
+      evidenceVisualId: "g7-water-evidence",
+      safetyVisualId: "g7-water-safety",
+      altText: "Visual guide for Water Audit and Filtration Challenge"
+    }
   },
 
   // ================= GRADE 8 =================
