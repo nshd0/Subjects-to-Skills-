@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { collection, query, orderBy, limit, getDocs } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { FeedbackDoc } from '@/data/models';
 import { useAuth } from '@/contexts/AuthContext';
-import { Shield, ShieldAlert, CheckCircle, Clock, Database, Loader2 } from 'lucide-react';
+import { Shield, ShieldAlert, CheckCircle, Clock, Database, Loader2, FileCheck } from 'lucide-react';
 import { stages, secondaryStage } from '@/data/curriculum';
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/Card';
@@ -108,7 +109,7 @@ export function AdminDashboard() {
 
   return (
     <div className="container mx-auto px-4 py-12 max-w-5xl">
-      <div className="mb-8 flex items-center justify-between">
+      <div className="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold flex items-center gap-2">
             <Shield className="w-8 h-8 text-indigo-600" />
@@ -116,6 +117,13 @@ export function AdminDashboard() {
           </h1>
           <p className="text-slate-600 dark:text-slate-400 mt-2">Review educator feedback and manage SubjectMapping data (v0.2 Phase 4).</p>
         </div>
+        <Link
+          to="/audit-v0-3"
+          className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-100 dark:hover:bg-indigo-900/50 text-xs font-semibold transition-colors"
+        >
+          <FileCheck className="w-4 h-4" />
+          <span>v0.3 Audit Report</span>
+        </Link>
       </div>
 
       

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Printer, Copy, CheckCircle2, ChevronDown, ListChecks, FileText } from 'lucide-react';
+import { Printer, Copy, CheckCircle2, ChevronDown, ListChecks, FileText, ShieldCheck, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 
 export function TeacherToolkit() {
@@ -97,13 +98,42 @@ Student demonstrates deep understanding. Applies the skill creatively, explains 
         </motion.div>
 
         <motion.p 
-          className="text-xl text-slate-600 dark:text-slate-300 mb-12"
+          className="text-xl text-slate-600 dark:text-slate-300 mb-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.1 }}
         >
           Practical resources, templates, and checklists for educators to design inclusive, skill-centred learning units.
         </motion.p>
+
+        {/* Technical Quality & Audit Reference Banner */}
+        <motion.div 
+          className="mb-10 p-4 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-900/60 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15 }}
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-lg bg-indigo-600 text-white flex items-center justify-center shrink-0">
+              <ShieldCheck className="w-5 h-5" />
+            </div>
+            <div>
+              <span className="font-bold text-slate-900 dark:text-white block text-sm">
+                Framework Integrity & Technical Audit
+              </span>
+              <span className="text-slate-600 dark:text-slate-400">
+                Review the newly verified v0.3 technical self-audit covering routing, grade completeness, and SPA fallback readiness.
+              </span>
+            </div>
+          </div>
+          <Link
+            to="/audit-v0-3"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold shrink-0 transition-colors"
+          >
+            <span>View v0.3 Audit</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </motion.div>
 
         {/* Assessment and Moderation Tools */}
         <motion.h2 

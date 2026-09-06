@@ -66,12 +66,14 @@ export function Layout() {
     { name: 'Teacher Resource Hub', path: '/resources' },
     { name: 'Teacher Toolkit', path: '/toolkit' },
     { name: 'School Planner', path: '/planner' },
-    { name: 'Baseline Audit Report', path: '/audit' },
+    { name: 'v0.3 Audit Report', path: '/audit-v0-3' },
+    { name: 'Baseline Audit Report (v0.2)', path: '/audit' },
   ];
 
   const aboutLinks = [
     { name: 'About Subjects2Skills', path: '/about' },
     { name: 'v0.3 Content Roadmap', path: '/roadmap' },
+    { name: 'v0.3 Self-Audit Report', path: '/audit-v0-3' },
     { name: 'Pedagogical Framework', path: '/about-framework' },
     { name: 'Changelog', path: '/changelog' },
   ];
@@ -88,21 +90,21 @@ export function Layout() {
     }`;
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50 flex flex-col font-sans transition-colors duration-200">
+    <div className="min-h-screen overflow-x-hidden bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50 flex flex-col font-sans transition-colors duration-200">
       
-      {/* Target Version Banner: v0.2 — Preparing for v0.3 */}
+      {/* Target Version Banner: v0.3 — Milestone 1 Live */}
       <div className="bg-indigo-900 text-white px-4 py-2.5 text-xs font-medium border-b border-indigo-800 print:hidden relative">
         <div className="container mx-auto flex flex-col md:flex-row items-center justify-between gap-2 text-center md:text-left">
           <div className="flex flex-wrap items-center justify-center md:justify-start gap-2">
             <span className="font-bold border border-indigo-400/50 px-2 py-0.5 rounded text-[11px] bg-indigo-800/80 tracking-wider flex items-center gap-1 text-indigo-200">
               <Sparkles className="w-3 h-3 text-amber-300" />
-              v0.2 — Preparing for v0.3
+              v0.3 · Milestone 1 Live
             </span>
             <span className="text-slate-200 font-medium hidden sm:inline">
               Subjects organise knowledge. Skills organise capability.
             </span>
             <span className="text-indigo-300 text-[11px]">
-              (Grade-wise curriculum preparation: Pre-school to Grade 12)
+              (Explore by Grade: Pre-school to Grade 12 Active)
             </span>
           </div>
 
@@ -140,8 +142,8 @@ export function Layout() {
             {/* Main Navigation (Preserved and complete) */}
             <nav className="hidden xl:flex items-center gap-1">
               <NavLink to="/" className={navLinkClass}>Home</NavLink>
-              <NavDropdown label="Explore by Stage" items={stagesLinks} />
-              <NavDropdown label="Explore by Grade" items={gradesLinks} />
+              <NavDropdown label="Explore by Stage" to="/stage/foundational" items={stagesLinks} />
+              <NavDropdown label="Explore by Grade" to="/grades" items={gradesLinks} />
               <NavLink to="/skill-progression" className={navLinkClass}>Skills</NavLink>
               <NavLink to="/activities" className={navLinkClass}>Activities</NavLink>
               <NavLink to="/assessment" className={navLinkClass}>Assessment</NavLink>
@@ -155,15 +157,16 @@ export function Layout() {
             {/* Compact Nav for Mid-Sized Screens */}
             <nav className="hidden md:flex xl:hidden items-center gap-1">
               <NavLink to="/" className={navLinkClass}>Home</NavLink>
-              <NavDropdown label="Stages" items={stagesLinks} />
-              <NavDropdown label="Grades" items={gradesLinks} />
+              <NavDropdown label="Stages" to="/stage/foundational" items={stagesLinks} />
+              <NavDropdown label="Explore by Grade" to="/grades" items={gradesLinks} />
               <NavLink to="/activities" className={navLinkClass}>Activities</NavLink>
               <NavLink to="/assessment" className={navLinkClass}>Assessment</NavLink>
               <NavDropdown label="More" items={[
                 { name: 'Skill Progression', path: '/skill-progression' },
                 { name: 'Teacher Resource Hub', path: '/resources' },
                 { name: 'Teacher Toolkit', path: '/toolkit' },
-                { name: 'Content Roadmap', path: '/roadmap' },
+                { name: 'v0.3 Content Roadmap', path: '/roadmap' },
+                { name: 'v0.3 Audit Report', path: '/audit-v0-3' },
                 { name: 'About Subjects2Skills', path: '/about' },
               ]} />
             </nav>
@@ -215,7 +218,13 @@ export function Layout() {
               </Button>
 
               <div className="md:hidden">
-                <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="w-8 h-8">
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
+                  className="w-8 h-8"
+                  aria-label="Toggle navigation menu"
+                >
                   {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
                 </Button>
               </div>
@@ -243,13 +252,14 @@ export function Layout() {
                   </span>
                 )}
               </button>
-              <NavLink to="/grades" className={navLinkClass}>Explore All 15 Grades</NavLink>
+              <NavLink to="/grades" className={navLinkClass}>Explore by Grade</NavLink>
               <NavLink to="/skill-progression" className={navLinkClass}>Skills Progression</NavLink>
               <NavLink to="/activities" className={navLinkClass}>Classroom Activities</NavLink>
               <NavLink to="/assessment" className={navLinkClass}>Evidence & Assessment Hub</NavLink>
               <NavLink to="/resources" className={navLinkClass}>Teacher Resource Hub</NavLink>
               <NavLink to="/toolkit" className={navLinkClass}>Teacher Toolkit</NavLink>
               <NavLink to="/roadmap" className={navLinkClass}>v0.3 Content Roadmap</NavLink>
+              <NavLink to="/audit-v0-3" className={navLinkClass}>v0.3 Technical Audit Report</NavLink>
               <button onClick={() => window.dispatchEvent(new Event("open-feedback"))} className={`w-full text-left px-2.5 py-1.5 rounded-lg text-xs lg:text-sm font-medium transition-colors whitespace-nowrap text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800/50 dark:hover:text-slate-50`}>Feedback</button>
               <NavLink to="/about" className={navLinkClass}>About & Governance</NavLink>
 
@@ -306,7 +316,7 @@ export function Layout() {
                 A public educational framework demonstrating how existing CBSE subjects can be connected to skills, pedagogy stages, classroom activities, assessment evidence, and free open resources.
               </p>
               <div className="inline-block px-2 py-1 rounded bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 font-bold text-[10px]">
-                v0.2 — Preparing for v0.3
+                v0.3 · Milestone 1 Live
               </div>
             </div>
 
@@ -338,6 +348,7 @@ export function Layout() {
               <ul className="space-y-1.5 text-slate-600 dark:text-slate-400">
                 <li><Link to="/about" className="hover:underline">About & Core Principles</Link></li>
                 <li><Link to="/roadmap" className="hover:underline">v0.3 Content Roadmap</Link></li>
+                <li><Link to="/audit-v0-3" className="hover:underline text-indigo-600 dark:text-indigo-400 font-semibold">v0.3 Technical Audit Report</Link></li>
                 <li><Link to="/audit" className="hover:underline">v0.2 Baseline Audit Report</Link></li>
                 <li><Link to="/about#feedback" className="hover:underline">Submit Educator Feedback</Link></li>
               </ul>

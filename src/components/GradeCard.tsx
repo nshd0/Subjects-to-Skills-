@@ -38,6 +38,12 @@ export function GradeCard({ grade, isAnchor }: GradeCardProps) {
           classes: 'bg-blue-100 text-blue-800 dark:bg-blue-950/60 dark:text-blue-300 border-blue-200 dark:border-blue-800',
           icon: Clock,
         };
+      case 'needs-update':
+        return {
+          label: 'Needs Update',
+          classes: 'bg-rose-100 text-rose-800 dark:bg-rose-950/60 dark:text-rose-300 border-rose-200 dark:border-rose-800',
+          icon: AlertCircle,
+        };
       case 'planned':
       default:
         return {
@@ -65,9 +71,15 @@ export function GradeCard({ grade, isAnchor }: GradeCardProps) {
           {/* Header row: Age Band + Status Badge */}
           <div className="flex justify-between items-start gap-2 mb-3">
             <div>
-              <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 block mb-0.5">
-                Age {grade.ageRange}
-              </span>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-xs font-semibold text-indigo-600 dark:text-indigo-400">
+                  {grade.stage} Stage
+                </span>
+                <span className="text-slate-300 dark:text-slate-600">·</span>
+                <span className="text-xs text-slate-500 dark:text-slate-400">
+                  Ages {grade.ageRange}
+                </span>
+              </div>
               <div className="flex items-center gap-2">
                 <h3 className="text-2xl font-bold text-slate-900 dark:text-white">
                   {gradeDisplayName}
@@ -80,6 +92,7 @@ export function GradeCard({ grade, isAnchor }: GradeCardProps) {
               </div>
             </div>
             <span
+              title={`Status: ${statusInfo.label} — Subjects2Skills content maturity`}
               className={`px-2.5 py-1 rounded-full text-[11px] font-bold tracking-wide border flex items-center gap-1 shrink-0 ${statusInfo.classes}`}
             >
               <StatusIcon className="w-3 h-3" />
@@ -92,13 +105,13 @@ export function GradeCard({ grade, isAnchor }: GradeCardProps) {
             {grade.learningPurpose}
           </p>
 
-          {/* Priority Skills */}
+          {/* Priority Skills (3 to 5 tags) */}
           <div className="mb-4">
             <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 block mb-1.5">
               Priority Skills
             </span>
             <div className="flex flex-wrap gap-1.5">
-              {grade.prioritySkills.slice(0, 3).map((skill) => (
+              {grade.prioritySkills.slice(0, 5).map((skill) => (
                 <span
                   key={skill}
                   className="bg-slate-50 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 text-xs px-2.5 py-1 rounded-md border border-slate-200 dark:border-slate-700/60 font-medium"
@@ -106,11 +119,6 @@ export function GradeCard({ grade, isAnchor }: GradeCardProps) {
                   {skill}
                 </span>
               ))}
-              {grade.prioritySkills.length > 3 && (
-                <span className="bg-slate-50 dark:bg-slate-800 text-slate-500 text-xs px-2 py-1 rounded-md border border-slate-200 dark:border-slate-700">
-                  +{grade.prioritySkills.length - 3}
-                </span>
-              )}
             </div>
           </div>
         </div>
@@ -137,7 +145,7 @@ export function GradeCard({ grade, isAnchor }: GradeCardProps) {
                 : 'bg-indigo-50 hover:bg-indigo-100 text-indigo-700 dark:bg-indigo-950/50 dark:hover:bg-indigo-900/60 dark:text-indigo-300 border border-indigo-100 dark:border-indigo-900/40'
             }`}
           >
-            <span>Explore {gradeDisplayName}</span>
+            <span>Explore Grade</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>

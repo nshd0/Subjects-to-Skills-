@@ -1,4 +1,12 @@
-export type ContentStatus = "planned" | "in-development" | "teacher-pilot" | "reviewed" | "published" | "needs-update";
+export type GradeStatus = 
+  | "planned" 
+  | "in-development" 
+  | "teacher-pilot" 
+  | "reviewed" 
+  | "published" 
+  | "needs-update";
+
+export type ContentStatus = GradeStatus;
 
 export type ContentReviewStatus = 
   | "not-yet-reviewed"
@@ -9,19 +17,33 @@ export type ContentReviewStatus =
 
 export type GradeProfile = {
   id: string;
+  slug: string;
+  grade: string;
+  name?: string;
   stage: string;
   stageId: string;
-  grade: string;
   ageRange: string;
-  developmentalFocus: string[];
   learningPurpose: string;
+  developmentalFocus: string[];
   prioritySkills: string[];
   pedagogy: string[];
-  previousGradeBridge: string[];
-  nextGradeBridge: string[];
-  status: ContentStatus;
-  lastUpdated: string;
-  feedbackEnabled: boolean;
+  intendedLearningAreas: string[];
+  status: GradeStatus;
+  lastUpdated?: string;
+  previousGrade?: string;
+  nextGrade?: string;
+  stageRoute: string;
+  previousGradeBridge?: string[];
+  nextGradeBridge?: string[];
+  bringFromPrevious?: string;
+  readyForNext?: string;
+  feedbackEnabled?: boolean;
+  currentFocus?: string;
+  nextMilestone?: string;
+  reviewStatus?: string;
+  recommendedPedagogy?: string[];
+  flagshipProject?: { title: string; description: string };
+  isFlagship?: boolean;
 };
 
 export type SubjectSkillMap = {

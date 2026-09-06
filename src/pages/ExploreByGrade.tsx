@@ -22,29 +22,33 @@ export function ExploreByGrade() {
     { 
       id: 'foundational', 
       name: 'Foundational Stage', 
-      grades: 'Pre-school to Grade 2',
-      ageSpan: 'Ages 3–8',
+      ageSpan: '3–8',
+      grades: 'Pre-school, Grade 1, Grade 2',
+      pedagogy: 'Play, stories, movement, art, exploration, conversation and guided activity.',
       anchor: 'Grade 1' 
     },
     { 
       id: 'preparatory', 
       name: 'Preparatory Stage', 
-      grades: 'Grades 3–5',
-      ageSpan: 'Ages 8–11',
+      ageSpan: '8–11',
+      grades: 'Grade 3, Grade 4, Grade 5',
+      pedagogy: 'Activity, discovery, discussion, concrete-to-abstract learning, guided inquiry and collaboration.',
       anchor: 'Grade 3' 
     },
     { 
       id: 'middle', 
       name: 'Middle Stage', 
-      grades: 'Grades 6–8',
-      ageSpan: 'Ages 11–14',
+      ageSpan: '11–14',
+      grades: 'Grade 6, Grade 7, Grade 8',
+      pedagogy: 'Inquiry, experimentation, fieldwork, projects, debate, making and design challenges.',
       anchor: 'Grade 6' 
     },
     { 
       id: 'secondary', 
       name: 'Secondary Stage', 
-      grades: 'Grades 9–12',
-      ageSpan: 'Ages 14–18',
+      ageSpan: '14–18',
+      grades: 'Grade 9, Grade 10, Grade 11, Grade 12',
+      pedagogy: 'Disciplinary depth, analysis, research, application, portfolio development and career-linked learning.',
       anchor: 'Grade 9' 
     }
   ];
@@ -67,15 +71,23 @@ export function ExploreByGrade() {
           <div className="text-center space-y-4">
             <span className="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/60 px-3 py-1 rounded-full border border-indigo-100 dark:border-indigo-900/40 inline-flex items-center gap-1.5">
               <Layers className="w-3.5 h-3.5" />
-              NCF 5+3+3+4 Pedagogical Structure
+              NCF 5+3+3+4 Pedagogical Framework
             </span>
             <h1 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-              Explore by Grade (Pre-school to Grade 12)
+              Explore by Grade
             </h1>
-            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
-              Navigate curriculum maps, observable skills, and classroom lesson plans across all 4 pedagogical stages.
-              Content is rolled out transparently with verified quality gates.
+            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed">
+              Explore the Subjects2Skills framework through grade-wise learning pathways, subject knowledge, skills, pedagogy, activities and teacher support.
             </p>
+
+            {/* Introductory Note & Public Trust Statement */}
+            <div className="max-w-3xl mx-auto space-y-3 pt-2 text-left">
+              <div className="p-4 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-100 dark:border-indigo-900/50 text-xs text-indigo-950 dark:text-indigo-200">
+                <p className="leading-relaxed">
+                  <strong>Grade-wise content is being developed progressively.</strong> Status labels indicate the maturity of Subjects2Skills content and do not represent official approval, endorsement or certification by CBSE, NCERT or any government body.
+                </p>
+              </div>
+            </div>
 
             {/* Stage Filter Buttons */}
             <div className="flex flex-wrap justify-center gap-2 pt-2">
@@ -87,7 +99,7 @@ export function ExploreByGrade() {
                     : 'bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/60'
                 }`}
               >
-                All Stages (K–12)
+                All Stages
               </button>
               {stages.map(st => (
                 <button
@@ -104,19 +116,19 @@ export function ExploreByGrade() {
               ))}
             </div>
 
-            {/* Status Legend Callout */}
+            {/* Status Legend */}
             <div className="flex flex-wrap items-center justify-center gap-4 text-xs pt-1 text-slate-500 dark:text-slate-400">
               <span className="font-semibold text-slate-700 dark:text-slate-300">Content Status:</span>
               <span className="flex items-center gap-1.5">
                 <span className="w-2.5 h-2.5 rounded-full bg-blue-500 inline-block"></span>
-                <span>In Development (Anchor Grades)</span>
+                <span>In Development</span>
               </span>
               <span className="flex items-center gap-1.5">
                 <span className="w-2.5 h-2.5 rounded-full bg-slate-400 inline-block"></span>
-                <span>Planned (v0.3 Roadmap)</span>
+                <span>Planned</span>
               </span>
               <Link to="/roadmap" className="text-indigo-600 dark:text-indigo-400 hover:underline font-medium inline-flex items-center gap-1 ml-2">
-                <span>View Full Roadmap</span>
+                <span>View v0.3 Roadmap</span>
                 <ArrowRight className="w-3 h-3" />
               </Link>
             </div>
@@ -129,32 +141,32 @@ export function ExploreByGrade() {
 
             return (
               <div key={stage.id} className="space-y-6">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
-                  <div>
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200 dark:border-slate-800 pb-4">
+                  <div className="space-y-1">
                     <div className="flex items-center gap-2">
                       <h2 className="text-2xl font-bold text-slate-900 dark:text-white">
                         {stage.name}
                       </h2>
                       <span className="text-xs px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-medium">
-                        {stage.ageSpan}
+                        Ages {stage.ageSpan}
                       </span>
                     </div>
-                    <p className="text-xs text-slate-500 mt-0.5">
-                      Covers {stage.grades} · Primary Anchor Grade: <strong className="text-indigo-600 dark:text-indigo-400">{stage.anchor}</strong>
+                    <p className="text-xs text-slate-600 dark:text-slate-400">
+                      <strong>Pedagogy:</strong> {stage.pedagogy}
                     </p>
                   </div>
                   <Link 
                     to={`/stage/${stage.id}`}
                     className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1 self-start sm:self-auto min-h-[44px]"
                   >
-                    <span>View Stage Curriculum</span>
+                    <span>View Stage Overview</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
 
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {stageGrades.map(grade => {
-                    const isAnchor = grade.name === stage.anchor || (grade as any).flagshipProject;
+                    const isAnchor = grade.status === 'in-development';
 
                     return (
                       <motion.div key={grade.id} variants={itemVariants}>

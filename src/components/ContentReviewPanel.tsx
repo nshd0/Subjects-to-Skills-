@@ -87,7 +87,7 @@ export function ContentReviewPanel({
               {gradeName} Content Status & Educator Review
             </h3>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-              Last updated: {lastUpdated} · Public review cycle v0.2 → v0.3
+              Last updated: {lastUpdated} · Public review cycle: Version 0.3
             </p>
           </div>
 

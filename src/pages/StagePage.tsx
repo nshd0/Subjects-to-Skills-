@@ -13,6 +13,7 @@ import { CompliancePanel } from '@/components/CompliancePanel';
 import { SubjectMappingCard } from '@/components/SubjectMappingCard';
 import { fetchSubjectMappings } from '@/lib/db';
 import { SubjectMapping } from '@/data/curriculum';
+import { Breadcrumbs } from '@/components/Breadcrumbs';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -218,15 +219,14 @@ export function StagePage() {
       {/* Breadcrumbs & Header */}
       <div className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 pt-8 pb-12 relative overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl relative z-10">
-          <motion.nav 
-            className="flex items-center text-sm text-slate-500 mb-6"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
-            <Link to="/" className="hover:text-indigo-600 transition-colors">Home</Link>
-            <ChevronRight className="h-4 w-4 mx-2" />
-            <span className="text-slate-900 dark:text-slate-100 font-medium">{stage.title}</span>
-          </motion.nav>
+          <div className="mb-6">
+            <Breadcrumbs 
+              items={[
+                { label: 'Explore by Grade', path: '/grades' },
+                { label: stage.title }
+              ]} 
+            />
+          </div>
           
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <motion.div
@@ -474,15 +474,14 @@ function SecondaryStagePage() {
     <div className="pb-16">
       <div className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 pt-8 pb-12 relative overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl relative z-10">
-          <motion.nav 
-            className="flex items-center text-sm text-slate-500 mb-6"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
-            <Link to="/" className="hover:text-indigo-600 transition-colors">Home</Link>
-            <ChevronRight className="h-4 w-4 mx-2" />
-            <span className="text-slate-900 dark:text-slate-100 font-medium">{stage.title}</span>
-          </motion.nav>
+          <div className="mb-6">
+            <Breadcrumbs 
+              items={[
+                { label: 'Explore by Grade', path: '/grades' },
+                { label: stage.title }
+              ]} 
+            />
+          </div>
           
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <motion.div
