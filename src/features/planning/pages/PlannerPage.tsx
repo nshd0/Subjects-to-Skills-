@@ -7,7 +7,7 @@ import { UnitDetailPanel } from '../components/UnitDetailPanel';
 import { CreateUnitForm } from '../components/CreateUnitForm';
 import { PlusCircle, Target, Clock, ArrowRight } from 'lucide-react';
 
-function UnitCard({ unit, onClick }: { unit: Unit, onClick: () => void }) {
+const UnitCard: React.FC<{ unit: Unit, onClick: () => void }> = ({ unit, onClick }) => {
   return (
     <div 
       onClick={onClick}
@@ -91,13 +91,14 @@ export function PlannerPage() {
           <div className="space-y-6">
             <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row sm:items-center gap-4 justify-between">
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
+                <label htmlFor="gradeSelector" className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
                   Select Grade Level
                 </label>
                 <select 
+                  id="gradeSelector"
                   value={selectedGradeId || ''} 
                   onChange={e => setSelectedGradeId(e.target.value)}
-                  className="w-full sm:w-64 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white font-medium focus:ring-2 focus:ring-indigo-500 focus:outline-hidden appearance-none"
+                  className="w-full sm:w-64 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white font-medium focus:ring-2 focus:ring-indigo-500 focus:outline-hidden appearance-none min-h-[44px]"
                 >
                   <option value="" disabled>Choose a grade...</option>
                   {gradesData.map(g => (

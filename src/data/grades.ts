@@ -45,6 +45,14 @@ export const gradesData: (GradeProfile & {
       "Aesthetic & Cultural Expression"
     ],
     status: "planned",
+    cbseSubjects: ["Mathematics", "Science", "Social Science", "English", "Hindi"],
+    ncrtBooks: [
+      { subject: "Mathematics", title: "NCERT Mathematics", url: "https://ncert.nic.in/textbook.php" },
+      { subject: "Science", title: "NCERT Science", url: "https://ncert.nic.in/textbook.php" },
+      { subject: "Social Science", title: "NCERT Social Science", url: "https://ncert.nic.in/textbook.php" }
+    ],
+    lastUpdated: "2025-09",
+    sources: ["CBSE Curriculum 2025–26", "NCERT Textbooks 2025–26", "NCF 2023 – Competency Framework"],
     stageRoute: "/stage/foundational",
     nextGrade: "grade-1",
     previousGradeBridge: [],
@@ -97,6 +105,14 @@ export const gradesData: (GradeProfile & {
       "Physical Well-being & Hygiene"
     ],
     status: "planned",
+    cbseSubjects: ["Mathematics", "Science", "Social Science", "English", "Hindi"],
+    ncrtBooks: [
+      { subject: "Mathematics", title: "NCERT Mathematics", url: "https://ncert.nic.in/textbook.php" },
+      { subject: "Science", title: "NCERT Science", url: "https://ncert.nic.in/textbook.php" },
+      { subject: "Social Science", title: "NCERT Social Science", url: "https://ncert.nic.in/textbook.php" }
+    ],
+    lastUpdated: "2025-09",
+    sources: ["CBSE Curriculum 2025–26", "NCERT Textbooks 2025–26", "NCF 2023 – Competency Framework"],
     stageRoute: "/stage/foundational",
     previousGrade: "pre-school",
     nextGrade: "grade-2",
@@ -153,6 +169,14 @@ export const gradesData: (GradeProfile & {
       "Physical Education & Games"
     ],
     status: "planned",
+    cbseSubjects: ["Mathematics", "Science", "Social Science", "English", "Hindi"],
+    ncrtBooks: [
+      { subject: "Mathematics", title: "NCERT Mathematics", url: "https://ncert.nic.in/textbook.php" },
+      { subject: "Science", title: "NCERT Science", url: "https://ncert.nic.in/textbook.php" },
+      { subject: "Social Science", title: "NCERT Social Science", url: "https://ncert.nic.in/textbook.php" }
+    ],
+    lastUpdated: "2025-09",
+    sources: ["CBSE Curriculum 2025–26", "NCERT Textbooks 2025–26", "NCF 2023 – Competency Framework"],
     stageRoute: "/stage/foundational",
     previousGrade: "grade-1",
     nextGrade: "grade-3",
@@ -210,6 +234,14 @@ export const gradesData: (GradeProfile & {
       "Physical Education & Yoga"
     ],
     status: "in-development",
+    cbseSubjects: ["Mathematics", "Science", "Social Science", "English", "Hindi"],
+    ncrtBooks: [
+      { subject: "Mathematics", title: "NCERT Mathematics", url: "https://ncert.nic.in/textbook.php" },
+      { subject: "Science", title: "NCERT Science", url: "https://ncert.nic.in/textbook.php" },
+      { subject: "Social Science", title: "NCERT Social Science", url: "https://ncert.nic.in/textbook.php" }
+    ],
+    lastUpdated: "2025-09",
+    sources: ["CBSE Curriculum 2025–26", "NCERT Textbooks 2025–26", "NCF 2023 – Competency Framework"],
     stageRoute: "/stage/preparatory",
     previousGrade: "grade-2",
     nextGrade: "grade-4",
@@ -270,6 +302,14 @@ export const gradesData: (GradeProfile & {
       "Physical Education & Team Sports"
     ],
     status: "planned",
+    cbseSubjects: ["Mathematics", "Science", "Social Science", "English", "Hindi"],
+    ncrtBooks: [
+      { subject: "Mathematics", title: "NCERT Mathematics", url: "https://ncert.nic.in/textbook.php" },
+      { subject: "Science", title: "NCERT Science", url: "https://ncert.nic.in/textbook.php" },
+      { subject: "Social Science", title: "NCERT Social Science", url: "https://ncert.nic.in/textbook.php" }
+    ],
+    lastUpdated: "2025-09",
+    sources: ["CBSE Curriculum 2025–26", "NCERT Textbooks 2025–26", "NCF 2023 – Competency Framework"],
     stageRoute: "/stage/preparatory",
     previousGrade: "grade-3",
     nextGrade: "grade-5",
@@ -325,6 +365,14 @@ export const gradesData: (GradeProfile & {
       "Physical Education & Health Habits"
     ],
     status: "planned",
+    cbseSubjects: ["Mathematics", "Science", "Social Science", "English", "Hindi"],
+    ncrtBooks: [
+      { subject: "Mathematics", title: "NCERT Mathematics", url: "https://ncert.nic.in/textbook.php" },
+      { subject: "Science", title: "NCERT Science", url: "https://ncert.nic.in/textbook.php" },
+      { subject: "Social Science", title: "NCERT Social Science", url: "https://ncert.nic.in/textbook.php" }
+    ],
+    lastUpdated: "2025-09",
+    sources: ["CBSE Curriculum 2025–26", "NCERT Textbooks 2025–26", "NCF 2023 – Competency Framework"],
     stageRoute: "/stage/preparatory",
     previousGrade: "grade-4",
     nextGrade: "grade-6",
@@ -384,6 +432,14 @@ export const gradesData: (GradeProfile & {
       "Art & Physical Education"
     ],
     status: "in-development",
+    cbseSubjects: ["Mathematics", "Science", "Social Science", "English", "Hindi"],
+    ncrtBooks: [
+      { subject: "Mathematics", title: "NCERT Mathematics", url: "https://ncert.nic.in/textbook.php" },
+      { subject: "Science", title: "NCERT Science", url: "https://ncert.nic.in/textbook.php" },
+      { subject: "Social Science", title: "NCERT Social Science", url: "https://ncert.nic.in/textbook.php" }
+    ],
+    lastUpdated: "2025-09",
+    sources: ["CBSE Curriculum 2025–26", "NCERT Textbooks 2025–26", "NCF 2023 – Competency Framework"],
     stageRoute: "/stage/middle",
     previousGrade: "grade-5",
     nextGrade: "grade-7",
@@ -446,6 +502,14 @@ export const gradesData: (GradeProfile & {
       "Art & Physical Education"
     ],
     status: "in-development",
+    cbseSubjects: ["Mathematics", "Science", "Social Science", "English", "Hindi"],
+    ncrtBooks: [
+      { subject: "Mathematics", title: "NCERT Mathematics", url: "https://ncert.nic.in/textbook.php" },
+      { subject: "Science", title: "NCERT Science", url: "https://ncert.nic.in/textbook.php" },
+      { subject: "Social Science", title: "NCERT Social Science", url: "https://ncert.nic.in/textbook.php" }
+    ],
+    lastUpdated: "2025-09",
+    sources: ["CBSE Curriculum 2025–26", "NCERT Textbooks 2025–26", "NCF 2023 – Competency Framework"],
     stageRoute: "/stage/middle",
     previousGrade: "grade-6",
     nextGrade: "grade-8",
@@ -508,6 +572,14 @@ export const gradesData: (GradeProfile & {
       "Vocational Arts & Technology"
     ],
     status: "in-development",
+    cbseSubjects: ["Mathematics", "Science", "Social Science", "English", "Hindi"],
+    ncrtBooks: [
+      { subject: "Mathematics", title: "NCERT Mathematics", url: "https://ncert.nic.in/textbook.php" },
+      { subject: "Science", title: "NCERT Science", url: "https://ncert.nic.in/textbook.php" },
+      { subject: "Social Science", title: "NCERT Social Science", url: "https://ncert.nic.in/textbook.php" }
+    ],
+    lastUpdated: "2025-09",
+    sources: ["CBSE Curriculum 2025–26", "NCERT Textbooks 2025–26", "NCF 2023 – Competency Framework"],
     stageRoute: "/stage/middle",
     previousGrade: "grade-7",
     nextGrade: "grade-9",
@@ -571,6 +643,14 @@ export const gradesData: (GradeProfile & {
       "Art & Physical Education"
     ],
     status: "in-development",
+    cbseSubjects: ["Mathematics", "Science", "Social Science", "English", "Hindi"],
+    ncrtBooks: [
+      { subject: "Mathematics", title: "NCERT Mathematics", url: "https://ncert.nic.in/textbook.php" },
+      { subject: "Science", title: "NCERT Science", url: "https://ncert.nic.in/textbook.php" },
+      { subject: "Social Science", title: "NCERT Social Science", url: "https://ncert.nic.in/textbook.php" }
+    ],
+    lastUpdated: "2025-09",
+    sources: ["CBSE Curriculum 2025–26", "NCERT Textbooks 2025–26", "NCF 2023 – Competency Framework"],
     stageRoute: "/stage/secondary",
     previousGrade: "grade-8",
     nextGrade: "grade-10",
@@ -632,6 +712,14 @@ export const gradesData: (GradeProfile & {
       "Health & Physical Well-being"
     ],
     status: "planned",
+    cbseSubjects: ["Mathematics", "Science", "Social Science", "English", "Hindi"],
+    ncrtBooks: [
+      { subject: "Mathematics", title: "NCERT Mathematics", url: "https://ncert.nic.in/textbook.php" },
+      { subject: "Science", title: "NCERT Science", url: "https://ncert.nic.in/textbook.php" },
+      { subject: "Social Science", title: "NCERT Social Science", url: "https://ncert.nic.in/textbook.php" }
+    ],
+    lastUpdated: "2025-09",
+    sources: ["CBSE Curriculum 2025–26", "NCERT Textbooks 2025–26", "NCF 2023 – Competency Framework"],
     stageRoute: "/stage/secondary",
     previousGrade: "grade-9",
     nextGrade: "grade-11",
@@ -688,6 +776,14 @@ export const gradesData: (GradeProfile & {
       "Interdisciplinary Project & Vocational Internship"
     ],
     status: "planned",
+    cbseSubjects: ["Mathematics", "Science", "Social Science", "English", "Hindi"],
+    ncrtBooks: [
+      { subject: "Mathematics", title: "NCERT Mathematics", url: "https://ncert.nic.in/textbook.php" },
+      { subject: "Science", title: "NCERT Science", url: "https://ncert.nic.in/textbook.php" },
+      { subject: "Social Science", title: "NCERT Social Science", url: "https://ncert.nic.in/textbook.php" }
+    ],
+    lastUpdated: "2025-09",
+    sources: ["CBSE Curriculum 2025–26", "NCERT Textbooks 2025–26", "NCF 2023 – Competency Framework"],
     stageRoute: "/stage/secondary",
     previousGrade: "grade-10",
     nextGrade: "grade-12",
@@ -744,6 +840,14 @@ export const gradesData: (GradeProfile & {
       "Capstone Portfolio & Real-World Application"
     ],
     status: "planned",
+    cbseSubjects: ["Mathematics", "Science", "Social Science", "English", "Hindi"],
+    ncrtBooks: [
+      { subject: "Mathematics", title: "NCERT Mathematics", url: "https://ncert.nic.in/textbook.php" },
+      { subject: "Science", title: "NCERT Science", url: "https://ncert.nic.in/textbook.php" },
+      { subject: "Social Science", title: "NCERT Social Science", url: "https://ncert.nic.in/textbook.php" }
+    ],
+    lastUpdated: "2025-09",
+    sources: ["CBSE Curriculum 2025–26", "NCERT Textbooks 2025–26", "NCF 2023 – Competency Framework"],
     stageRoute: "/stage/secondary",
     previousGrade: "grade-11",
     previousGradeBridge: [

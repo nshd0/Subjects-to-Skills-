@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { 
   ArrowRight, BookOpen, Layers, Users, Activity, 
-  Sparkles, CheckCircle2, Compass, Target, Award, Calendar 
+  Sparkles, CheckCircle2, Compass, Target, Award, Calendar, ShieldCheck 
 } from 'lucide-react';
 import { motion } from 'motion/react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/Card';
@@ -89,11 +89,21 @@ export function Home() {
               </p>
 
               {/* Status Notice Banner */}
-              <div className="bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/80 p-4 rounded-xl text-xs text-slate-700 dark:text-slate-300 leading-relaxed max-w-2xl space-y-1">
-                <span className="font-bold text-slate-900 dark:text-white block">Milestone Status:</span>
-                <p>
-                  v0.3 features all 13 grade profiles (Pre-school → Grade 12) with transparent content maturity tracking. v0.4 foundations are in preparation for lesson planners, skill pathways, and rubric builders.
-                </p>
+              <div className="bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/80 p-4 rounded-xl text-xs text-slate-700 dark:text-slate-300 leading-relaxed max-w-2xl space-y-3">
+                <div>
+                  <span className="font-bold text-slate-900 dark:text-white flex items-center gap-1.5 mb-1">
+                    <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                    v0.4.3 Content Upgrade Live
+                  </span>
+                  <p>
+                    All 13 grade profiles (Pre-school → Grade 12) are now explicitly aligned with CBSE (2025–26) subjects, NCERT textbooks, and NCF 2023 competencies. 
+                  </p>
+                </div>
+                <div className="pt-2 border-t border-slate-200 dark:border-slate-700">
+                  <Link to="/about-content" className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline flex items-center gap-1">
+                    Read our alignment methodology <ArrowRight className="w-3 h-3" />
+                  </Link>
+                </div>
               </div>
 
               {/* Primary CTA Buttons */}

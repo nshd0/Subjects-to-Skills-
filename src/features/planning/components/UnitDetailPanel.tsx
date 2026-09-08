@@ -3,10 +3,10 @@ import { Unit, Lesson } from '@/types';
 import { Clock, Target, Printer, LayoutList } from 'lucide-react';
 // Minimal inline LessonRow for MVP
 // In the future this can be expanded or we can reuse a global component if it fits
-function LessonRow({ lesson }: { lesson: Lesson }) {
+const LessonRow: React.FC<{ lesson: Lesson }> = ({ lesson }) => {
   return (
-    <div className="flex flex-col sm:flex-row gap-4 p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm relative pl-6">
-      <div className="absolute left-0 top-0 bottom-0 w-1.5 rounded-l-xl bg-indigo-500"></div>
+    <div className="flex flex-col sm:flex-row gap-4 p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm print:shadow-none print:border-slate-300 relative pl-6">
+      <div className="absolute left-0 top-0 bottom-0 w-1.5 rounded-l-xl bg-indigo-500 print:bg-slate-400"></div>
       
       <div className="shrink-0 w-16 pt-1">
         <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Lesson</span>
@@ -49,24 +49,24 @@ interface UnitDetailPanelProps {
 export function UnitDetailPanel({ unit, lessons, onPrint, onBack }: UnitDetailPanelProps) {
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 print:hidden">
         <button 
           onClick={onBack}
-          className="px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-sm font-semibold transition-colors"
+          className="px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-sm font-semibold transition-colors min-h-[44px] focus:ring-2 focus:ring-slate-500 focus:outline-hidden"
         >
           &larr; Back to Units
         </button>
         <div className="flex-1"></div>
         <button 
           onClick={onPrint}
-          className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold flex items-center gap-2 transition-colors"
+          className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold flex items-center gap-2 transition-colors min-h-[44px] focus:ring-2 focus:ring-indigo-500 focus:outline-hidden focus:ring-offset-2 dark:focus:ring-offset-slate-900"
         >
           <Printer className="w-4 h-4" />
           <span>Print Unit Plan</span>
         </button>
       </div>
 
-      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6">
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 sm:p-8 shadow-sm print:shadow-none print:border-slate-300 space-y-6">
         <div>
           <div className="flex items-center gap-2 mb-2">
             <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${

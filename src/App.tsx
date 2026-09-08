@@ -26,6 +26,7 @@ import { AreaCoverage } from './pages/AreaCoverage';
 import { SchoolPlanner } from './pages/SchoolPlanner';
 import { Changelog } from './pages/Changelog';
 import { AboutFramework } from './pages/AboutFramework';
+import { AboutContent } from './pages/AboutContent';
 import { ExploreByGrade } from './pages/ExploreByGrade';
 import { ActivitiesPage } from './pages/ActivitiesPage';
 import { AssessmentHub } from './pages/AssessmentHub';
@@ -66,6 +67,7 @@ function AppContent() {
         <Route path="pathways" element={<SkillPathwaysRoute />} />
         <Route path="changelog" element={<Changelog />} />
         <Route path="about-framework" element={<AboutFramework />} />
+        <Route path="about-content" element={<AboutContent />} />
         <Route path="health" element={<Health />} />
         {/* SPA 404 Catch-All Route */}
         <Route path="*" element={<NotFound />} />

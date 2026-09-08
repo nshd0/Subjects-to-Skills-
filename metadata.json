@@ -1,6 +1,6 @@
 {
   "name": "Subjects2Skills",
-  "description": "Subjects2Skills is a public framework that connects CBSE subjects, skills, pedagogy stages, classroom activities, assessment evidence and teacher-ready resources.",
+  "description": "Subjects2Skills is a public competency-based curriculum framework aligned with CBSE 2025-26 and NCF 2023. It features 13 grade profiles, a lesson planner, assessment mappings, and a verified teacher resource hub.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

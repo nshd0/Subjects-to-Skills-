@@ -48,6 +48,11 @@ export type GradeProfile = {
   sampleUnits?: string[];
   sampleProjects?: string[];
   crossSubjectConnections?: string[];
+  
+  // CBSE/NCERT/NCF Extensions
+  cbseSubjects?: string[];
+  ncrtBooks?: { subject: string; title: string; url: string }[];
+  sources?: string[];
 };
 
 export type SubjectSkillMap = {
@@ -198,6 +203,13 @@ export type Resource = {
   offlineFriendly: boolean;
   IndianClassroomNotes: string;
   sourceStatus: string;
+  
+  // v0.4.3 Open Resources Extensions
+  gradeIds?: string[];
+  subject?: string;
+  license?: string;
+  resourceType?: "textbook" | "video" | "interactive" | "lesson-plan" | "assessment" | "other" | string;
+  lastVerified?: string;
 };
 
 // ============================================================================
@@ -231,6 +243,11 @@ export interface Unit {
   status: "draft" | "published" | "archived";
   sampleProjects?: string[];
   lessons?: Lesson[];
+  
+  // CBSE/NCERT Alignment Extensions
+  ncrtReferences?: { chapter: string; title: string }[];
+  cbseCompetencies?: string[];
+  lastUpdated?: string;
 }
 
 /**
@@ -259,6 +276,11 @@ export interface AssessmentTask {
   timeRequired: string;
   rubricRefId?: string;
   evidenceProduced?: string[];
+  
+  // CBSE/NCF Alignment Extensions
+  cbseCompetencies?: string[];
+  ncfReferences?: string[];
+  lastUpdated?: string;
 }
 
 /**

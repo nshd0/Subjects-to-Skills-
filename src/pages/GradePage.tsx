@@ -4,7 +4,7 @@ import {
   ArrowLeft, ArrowRight, BookOpen, Layers, Target, 
   Sparkles, Award, ShieldAlert, CheckCircle2, Clock, 
   AlertCircle, MessageSquare, PlusCircle, Flag, X, 
-  ExternalLink, Compass, Check
+  ExternalLink, Compass, Check, ShieldCheck, Calendar
 } from 'lucide-react';
 import { gradesData } from '@/data/grades';
 import { stages } from '@/data/curriculum';
@@ -243,9 +243,26 @@ export function GradePage() {
           </div>
 
           <div>
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-              {grade.name} Learning Profile
-            </h1>
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-2">
+              <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                {grade.name} Learning Profile
+              </h1>
+              
+              {/* Trust/Alignment Badge */}
+              <div className="group relative inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 dark:text-emerald-400 dark:bg-emerald-950/30 dark:border-emerald-800/50 px-3 py-1 rounded-full cursor-default w-max">
+                <ShieldCheck className="w-3.5 h-3.5" />
+                CBSE/NCERT Aligned
+                
+                <div className="invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all absolute top-full mt-2 left-0 sm:left-auto w-64 bg-slate-900 dark:bg-slate-800 text-white p-3 rounded-lg text-[11px] leading-relaxed shadow-xl z-50 font-medium">
+                  Aligned to CBSE 2025–26, NCERT textbooks, and NCF 2023.
+                  {grade.lastUpdated && (
+                    <div className="mt-2 pt-2 border-t border-slate-700 flex items-center gap-1 text-slate-300">
+                      <Calendar className="w-3 h-3" /> Last updated: {grade.lastUpdated}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
             <p className="text-base sm:text-lg text-slate-700 dark:text-slate-300 mt-2 leading-relaxed">
               {grade.learningPurpose}
             </p>
@@ -331,6 +348,70 @@ export function GradePage() {
             ))}
           </div>
         </section>
+
+        {/* SECTION: CBSE/NCERT ALIGNMENT */}
+        {(grade.cbseSubjects || grade.ncrtBooks || grade.sources) && (
+          <section className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-xs space-y-4">
+            <div className="border-b border-slate-100 dark:border-slate-800 pb-3">
+              <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <ShieldCheck className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                Curriculum Alignment
+              </h2>
+              <p className="text-xs text-slate-500">
+                Official CBSE 2025–26 subjects and NCERT textbook references
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8">
+              {grade.cbseSubjects && grade.cbseSubjects.length > 0 && (
+                <div>
+                  <h3 className="text-sm font-bold text-slate-800 dark:text-slate-200 mb-3 uppercase tracking-wider">
+                    CBSE Core Subjects
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {grade.cbseSubjects.map((subject, idx) => (
+                      <span key={idx} className="px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded-lg border border-slate-200 dark:border-slate-700">
+                        {subject}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {grade.ncrtBooks && grade.ncrtBooks.length > 0 && (
+                <div>
+                  <h3 className="text-sm font-bold text-slate-800 dark:text-slate-200 mb-3 uppercase tracking-wider">
+                    NCERT Textbooks
+                  </h3>
+                  <ul className="space-y-2">
+                    {grade.ncrtBooks.map((book, idx) => (
+                      <li key={idx} className="flex flex-wrap items-center gap-2 text-xs">
+                        <BookOpen className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                        <span className="font-semibold text-slate-700 dark:text-slate-300">{book.subject}:</span>
+                        <a href={book.url} target="_blank" rel="noopener noreferrer" className="text-indigo-600 dark:text-indigo-400 hover:underline inline-flex items-center gap-1">
+                          {book.title} <ExternalLink className="w-3 h-3" />
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+            
+            {grade.sources && grade.sources.length > 0 && (
+              <div className="pt-4 border-t border-slate-100 dark:border-slate-800">
+                 <h3 className="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Primary Sources</h3>
+                 <div className="flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-slate-500">
+                    {grade.sources.map((source, idx) => (
+                      <span key={idx} className="flex items-center gap-1">
+                        <CheckCircle2 className="w-3 h-3 text-emerald-500" /> {source}
+                      </span>
+                    ))}
+                 </div>
+              </div>
+            )}
+          </section>
+        )}
 
         {/* SECTION: INTENDED LEARNING AREAS */}
         <section className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-xs space-y-4">

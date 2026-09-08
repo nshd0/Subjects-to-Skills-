@@ -1,62 +1,37 @@
 # Subjects2Skills 🎓
 
-A modern educational web application bridging traditional subjects with 21st-century skills, designed in strict alignment with **NCF-SE 2023** and **CBSE 2026-27** curriculum guidelines.
+A modern educational web application bridging traditional subjects with 21st-century skills, designed in strict alignment with **NCF 2023** and **CBSE 2025–26** curriculum guidelines.
 
-This platform (v0.3) is a verified curriculum-translation framework connecting CBSE/NCERT-aligned subject learning, skills, pedagogy, assessment, and classroom practice.
+This platform (v0.4.3) is a verified curriculum-translation framework connecting CBSE/NCERT-aligned subject learning, skills, pedagogy, assessment, and classroom practice.
 
 ## ✨ Key Features
 
-### 🌟 New in v0.3 (Verified Curriculum Mapping & Implementation Layer)
-*   **Standards Alignment Panel:** Explicit tracking of official curriculum references (NCF-SE 2023, CBSE) vs Subjects2Skills interpretations.
-*   **Observable Competencies:** Core skills are now translated into observable, assessable performance statements grounded in subject contexts.
-*   **Inclusive Learning Design:** Embedded access, participation, expression, support, and extension strategies in every activity.
-*   **Assessment & Moderation Toolkit:** Subject-specific rubric templates, moderation checklists, and assessment purpose selectors.
-*   **Area Coverage Dashboard:** Tracking framework mapping progress across all required curricular areas.
-*   **School Implementation Planner:** Authenticated, secure workspace for teachers to draft private implementation plans.
-*   **Stage-Specific Checklists:** Printable guides for ensuring pedagogical alignment at each developmental stage.
-*   **Enhanced Feedback Loop:** Role-based, context-specific feedback widget feeding an admin dashboard.
+### 🌟 New in v0.4.x (Planning, Assessments, and Official Alignment)
+*   **v0.4.3 Professional Content Upgrade:** Comprehensive mapping of all 13 grade profiles to the latest CBSE syllabus (2025-26) and NCERT textbooks. Includes a verified Open Resource Hub featuring DIKSHA, Khan Academy, and PhET.
+*   **v0.4.2 Assessment Mapper:** Dynamically generates summative and formative assessment tasks explicitly linked to competency skills. Features 4-tier graduated rubrics (Emerging → Transfer) for evaluating student evidence.
+*   **v0.4.1 Unit & Lesson Planner:** A robust builder enabling teachers to construct actionable, classroom-ready units by referencing official skills and pedagogical guidelines. Features a print-ready export view.
 
-
-### 🚀 New in v0.2 (Data Model & Backend)
-*   **Firebase / Firestore Integration:** Fully dynamic data serving from the cloud, replacing static JSON payloads.
-*   **Role-Based Access Control (RBAC):** Secure authentication system supporting specific roles (`admin`, `teacher`, `curriculum_designer`).
-*   **Admin Dashboard & Migration:** Secure admin portal to run database migrations, ingest static curriculum data into Firestore, and review platform telemetry.
-*   **Strict Security Rules:** Hardened `firestore.rules` validating curriculum schemas (payload limits, regex-enforced document IDs) and preventing unauthorized writes.
-*   **Updated Stage Nomenclature:** Pedagogical stages now explicitly integrate developmental age groups and grade bands across the UI (e.g., *Foundational Stage (Ages 3–8 | Preschool to Grade 2)*).
-*   **Live Telemetry:** Real-time feedback collection system integrated directly into the database.
-
-### 🏗️ Core Architecture (Established in v0.1)
+### 🌟 Core Framework (v0.3 & earlier)
+*   **13 Grade Profiles:** Granular profiles from Pre-school to Grade 12 covering learning areas, priority skills, and developmental pedagogy.
+*   **Standards Alignment Panel:** Explicit tracking of official curriculum references (NCF 2023, CBSE) vs Subjects2Skills interpretations.
+*   **Observable Competencies:** Core skills translated into observable, assessable performance statements grounded in subject contexts.
 *   **5+3+3+4 Stage Architecture:** Explore curriculum tailored to specific developmental stages (Foundational, Preparatory, Middle, Secondary).
-*   **Granular Grade-Level Mapping:** Subject maps are broken down grade-by-grade, adhering to the NCF-SE structure.
-*   **Strict Standards Alignment:** Every subject mapping follows the official NCF-SE sequence: *Curricular Area → Subject → Stage → Grade → Curricular Goal → Competency → Learning Outcome*.
-*   **Classroom Implementation Panels:** Detailed, actionable activity panes including Duration, Group Size, Teacher Preparation, Assessment & Evidence, Support (Scaffolding), Extension (Advanced), and Accessibility & Inclusion.
-*   **Compliance Dashboard:** A public audit view demonstrating mapping status for NCF-SE 2023 cross-cutting mandates.
-*   **Teacher Toolkit (Printable):** Practical resources and print-ready unit planning templates for educators.
-*   **Modern UI/UX:** Responsive, mobile-first design with beautiful editorial illustrations, fluid transitions, and a Dark/Light mode toggle.
-
-## 🛣 Roadmap to v0.4 & Beyond
-
-Subjects2Skills has matured into a comprehensive, teacher-ready implementation layer (v0.3).
-
-*   **v0.1 (Completed):** Structural alignment, prototyping, NCF-SE 2023 compliance auditing, and granular UI mapping.
-*   **v0.2 (Completed):** Firebase/Firestore backend integration, full CBSE syllabus data ingestion, role-based authentication, strict security rules, and curriculum versioning.
-*   **v0.3 (Completed):** Verified curriculum mapping, standards alignment, inclusion mandates, and the school implementation planner.
-
-You can view the detailed baseline audit and roadmap directly within the application on the `/audit` and `/roadmap` routes.
+*   **Role-Based Access Control (RBAC):** Secure authentication system supporting specific roles (`admin`, `teacher`, `curriculum_designer`) via Firebase.
+*   **Admin Dashboard & Migration:** Secure admin portal to run database migrations and review platform telemetry.
 
 ## 🛠 Tech Stack
-
 *   **Framework:** [React 18](https://react.dev/) + [Vite](https://vitejs.dev/)
+*   **Language:** [TypeScript](https://www.typescriptlang.org/)
 *   **Backend:** [Firebase Authentication & Firestore](https://firebase.google.com/)
-*   **Styling:** [Tailwind CSS](https://tailwindcss.com/)
-*   **Routing:** [React Router](https://reactrouter.com/)
+*   **Styling:** [Tailwind CSS v4](https://tailwindcss.com/)
+*   **Routing:** [React Router v7](https://reactrouter.com/)
 *   **Icons:** [Lucide React](https://lucide.dev/)
-*   **Animations:** [Framer Motion](https://www.framer.com/motion/)
+*   **Animations:** [Motion](https://motion.dev/)
 
 ## 🚀 Getting Started
 
 ### Prerequisites
-*   [Node.js](https://nodejs.org/) installed on your machine.
+*   [Node.js](https://nodejs.org/) (v18+ recommended)
 *   A Firebase project with Firestore and Authentication (Google Auth / Email/Password) enabled.
 
 ### Installation
@@ -73,7 +48,7 @@ You can view the detailed baseline audit and roadmap directly within the applica
     ```
 
 3.  **Configure Firebase:**
-    Rename `.env.example` to `.env` (or create a `.env` file) and fill in your Firebase configuration variables:
+    Copy `.env.example` to `.env` (or create a `.env` file) and fill in your Firebase configuration variables:
     ```env
     VITE_FIREBASE_API_KEY=your_api_key
     VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain
@@ -83,8 +58,8 @@ You can view the detailed baseline audit and roadmap directly within the applica
     VITE_FIREBASE_APP_ID=your_app_id
     ```
 
-4.  **Deploy Firestore Rules (Optional but highly recommended):**
-    If you have the Firebase CLI installed, you can deploy the secure database rules included in the repository:
+4.  **Deploy Firestore Rules (Optional but recommended):**
+    If using Firebase CLI:
     ```bash
     firebase deploy --only firestore:rules
     ```
@@ -93,28 +68,24 @@ You can view the detailed baseline audit and roadmap directly within the applica
     ```bash
     npm run dev
     ```
+
 6.  Open `http://localhost:3000` to view the app. 
-    *Note: The first user to log in via the configured admin email (see `AuthContext.tsx`) will receive the `admin` role and can run the initial curriculum data migration directly from the Admin Dashboard.*
 
 ### Building for Production
-
 To create a production-ready build:
 ```bash
 npm run build
 ```
-This will generate optimized static files in the `dist` directory.
+This generates optimized static files in the `dist` directory.
+
+## 📚 Curriculum Documentation
+*   **CBSE & NCERT Alignment:** View our methodology in `docs/content-alignment.md` or the `/about-content` route within the application.
+*   **Annual Audits:** Curriculum mappings and open educational resource (OER) links are verified annually before the academic cycle.
 
 ## 📝 License
-
 This project is open-source and available under the [MIT License](LICENSE).
 
 ### 🔐 Security & Privacy
 *   **Firestore Rules**: The platform uses strict Firebase security rules. Public users have read-only access to curriculum data.
-*   **Private Workspace**: The School Implementation Planner creates documents in the `school_plans` collection, restricted strictly to the authenticated user ID.
+*   **Private Workspace**: The School Implementation Planner creates documents restricted strictly to the authenticated user ID.
 *   **Privacy Note**: Do not upload personally identifiable student information to the planner unless local school data processing policies explicitly allow it.
-
-### 🧪 Testing & Verification Checklist
-- [ ] Verify NCF-SE 2023 Links for all seeded maps (Annual task)
-- [ ] Check Firebase rules deployment (`firebase deploy --only firestore:rules`)
-- [ ] Test mobile responsiveness of the Area Coverage and Standards Alignment panels
-- [ ] Verify semantic HTML and ARIA labels via accessibility audit tools

@@ -1,86 +1,46 @@
 import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { BookOpen, Search, Filter, ExternalLink, Lightbulb, CheckCircle2, Copy, Leaf, Smartphone, Clock } from 'lucide-react';
+import { BookOpen, Search, Filter, ExternalLink, ShieldCheck, CheckCircle2 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
-import { teacherResources, ResourceType, Stage, ResourceCost } from '@/data/resources';
+import { openResources } from '@/data/resources';
+import { Resource } from '@/types';
 
 export function TeacherResourceHub() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedStage, setSelectedStage] = useState<Stage | 'All'>('All');
-  const [selectedType, setSelectedType] = useState<ResourceType | 'All'>('All');
-  const [selectedCost, setSelectedCost] = useState<ResourceCost | 'All'>('All');
-  const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [selectedSubject, setSelectedSubject] = useState('All');
+  const [selectedType, setSelectedType] = useState('All');
 
   const filteredResources = useMemo(() => {
-    return teacherResources.filter(res => {
+    return openResources.filter(res => {
       const matchesSearch = res.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                            res.whatItIs.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                            res.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+                            res.description.toLowerCase().includes(searchTerm.toLowerCase());
       
-      const matchesStage = selectedStage === 'All' || 
-                           (Array.isArray(res.stage) ? res.stage.includes(selectedStage) : res.stage === selectedStage || res.stage === 'All Stages');
-                           
-      const matchesType = selectedType === 'All' || res.type === selectedType;
-      const matchesCost = selectedCost === 'All' || res.cost === selectedCost;
+      const matchesSubject = selectedSubject === 'All' || 
+                             (res.subject && res.subject.includes(selectedSubject)) ||
+                             (res.subjects && res.subjects.includes(selectedSubject));
+                             
+      const matchesType = selectedType === 'All' || 
+                          (res.resourceType === selectedType || res.type === selectedType);
 
-      return matchesSearch && matchesStage && matchesType && matchesCost;
+      return matchesSearch && matchesSubject && matchesType;
     });
-  }, [searchTerm, selectedStage, selectedType, selectedCost]);
+  }, [searchTerm, selectedSubject, selectedType]);
 
-  const stages: (Stage | 'All')[] = ['All', 'Foundational', 'Preparatory', 'Middle', 'Secondary'];
-  const types: (ResourceType | 'All')[] = ['All', 'Activity', 'Support Guide', 'Template', 'Official Resource', 'Open Educational Resource', 'Tool'];
-  const costs: (ResourceCost | 'All')[] = ['All', 'Free', 'Open Source', 'Free with sign-in', 'Official public resource'];
-
-  const handleCopy = (text: string, id: string) => {
-    navigator.clipboard.writeText(text);
-    setCopiedId(id);
-    setTimeout(() => setCopiedId(null), 2000);
-  };
-
-  const getTemplateContent = (id: string) => {
-    if (id === 'tpl-1') {
-      return `Universal Lesson Planning Template
-Date: ______________  Subject: ______________  Grade: ______________
-1. Skill Focus:
-2. Learning Objective:
-3. Assessment / Evidence of Learning:
-4. Activity Sequence:
-   - Hook / Intro (____ mins):
-   - Main Activity (____ mins):
-   - Wrap-up / Reflection (____ mins):
-5. Inclusion & Differentiation:
-   - Access (How to present):
-   - Expression (How students show learning):`;
-    }
-    if (id === 'tpl-2') {
-      return `TAG Peer Feedback Form
-Reviewer Name: _________________  Author Name: _________________
-
-T - Tell something you like:
-_________________________________________________________________
-
-A - Ask a question:
-_________________________________________________________________
-
-G - Give a suggestion:
-_________________________________________________________________`;
-    }
-    return 'Template content here...';
-  };
+  const subjects = ['All', 'Science', 'Mathematics', 'Social Science', 'Languages', 'STEM'];
+  const types = ['All', 'textbook', 'video', 'interactive', 'curriculum-reference'];
 
   return (
     <div className="container mx-auto px-4 py-8 lg:py-12 max-w-7xl">
-      {/* Header section */}
       <motion.div 
         className="mb-10 text-center max-w-3xl mx-auto"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
       >
         <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900 dark:text-white mb-4">
-          Teacher Resource Hub
+          Curated Free & Open Resources
         </h1>
         <p className="text-lg text-slate-600 dark:text-slate-300">
-          Curated classroom activities, pedagogical guides, templates, and free tools to implement the Subjects2Skills framework in your classroom.
+          A carefully vetted collection of free, open-source, and official tools directly aligned with the CBSE syllabus and NCF 2023.
         </p>
       </motion.div>
 
@@ -91,10 +51,10 @@ _________________________________________________________________`;
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
             <input 
               type="text" 
-              placeholder="Search resources, activities, tools..." 
+              placeholder="Search by title, topic, provider..." 
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full pl-10 pr-4 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 min-h-[44px]"
             />
           </div>
         </div>
@@ -106,37 +66,21 @@ _________________________________________________________________`;
           </div>
           
           <select 
-            value={selectedStage} 
-            onChange={(e) => setSelectedStage(e.target.value as any)}
-            className="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            value={selectedSubject} 
+            onChange={(e) => setSelectedSubject(e.target.value)}
+            className="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 min-h-[44px] focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
-            {stages.map(s => <option key={s} value={s}>{s === 'All' ? 'All Stages' : s}</option>)}
+            {subjects.map(s => <option key={s} value={s}>{s === 'All' ? 'All Subjects' : s}</option>)}
           </select>
 
           <select 
             value={selectedType} 
-            onChange={(e) => setSelectedType(e.target.value as any)}
-            className="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            onChange={(e) => setSelectedType(e.target.value)}
+            className="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 min-h-[44px] focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
-            {types.map(t => <option key={t} value={t}>{t === 'All' ? 'All Types' : t}</option>)}
-          </select>
-
-          <select 
-            value={selectedCost} 
-            onChange={(e) => setSelectedCost(e.target.value as any)}
-            className="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          >
-            {costs.map(c => <option key={c} value={c}>{c === 'All' ? 'All Costs' : c}</option>)}
+            {types.map(t => <option key={t} value={t}>{t === 'All' ? 'All Types' : t.charAt(0).toUpperCase() + t.slice(1)}</option>)}
           </select>
         </div>
-      </div>
-
-      {/* Trust banner */}
-      <div className="bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900/50 rounded-lg p-4 mb-8 text-sm text-amber-800 dark:text-amber-200 flex items-start gap-3">
-        <Lightbulb className="h-5 w-5 shrink-0 mt-0.5" />
-        <p>
-          <strong>Note on external tools:</strong> External open-source and free resources are curated for utility, but do not imply official CBSE endorsement. Teachers should review all external tools, resources and links for suitability, age-appropriateness, accessibility, privacy, safety and school-policy compliance before classroom use.
-        </p>
       </div>
 
       {/* Results */}
@@ -145,127 +89,67 @@ _________________________________________________________________`;
           <BookOpen className="h-12 w-12 mx-auto mb-4 opacity-20" />
           <h3 className="text-lg font-medium">No resources found</h3>
           <p>Try adjusting your filters or search terms.</p>
-          <Button variant="outline" className="mt-4" onClick={() => {
-            setSearchTerm(''); setSelectedStage('All'); setSelectedType('All'); setSelectedCost('All');
+          <Button variant="outline" className="mt-4 min-h-[44px]" onClick={() => {
+            setSearchTerm(''); setSelectedSubject('All'); setSelectedType('All');
           }}>Clear Filters</Button>
         </div>
       ) : (
-        <div className="grid md:grid-cols-2 gap-8 lg:gap-10">
-          {filteredResources.map((res, idx) => (
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          {filteredResources.map((res: Resource, idx) => (
             <motion.article 
               key={res.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.05 }}
-              className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden flex flex-col shadow-[0_2px_10px_-3px_rgba(6,81,237,0.1)] transition-shadow hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] dark:hover:shadow-[0_8px_30px_rgba(255,255,255,0.05)]"
+              className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl flex flex-col overflow-hidden shadow-[0_2px_10px_-3px_rgba(6,81,237,0.1)] transition-shadow hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] dark:hover:shadow-[0_8px_30px_rgba(255,255,255,0.05)]"
             >
-              <div className="p-6 md:p-8 flex-grow flex flex-col">
-                <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
-                  <span className={`text-xs font-bold px-2.5 py-1 rounded-md uppercase tracking-wider
-                    ${res.type === 'Activity' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300' : 
-                      res.type === 'Support Guide' ? 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900/40 dark:text-indigo-300' :
-                      res.type === 'Template' ? 'bg-orange-100 text-orange-800 dark:bg-orange-900/40 dark:text-orange-300' :
-                      'bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300'}`}
-                  >
-                    {res.type}
+              <div className="p-6 flex-grow flex flex-col">
+                <div className="flex justify-between items-start mb-4 gap-2">
+                  <span className="text-xs font-bold px-2.5 py-1 rounded-md uppercase tracking-wider bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300">
+                    {res.resourceType || res.type}
                   </span>
-                  
-                  <div className="flex items-center gap-2">
-                    {res.lowResourceFriendly && (
-                      <span className="flex items-center gap-1 text-[11px] font-semibold bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-400 px-2 py-1 rounded-md border border-green-200 dark:border-green-800/50" title="Works in low-resource classrooms">
-                        <Leaf className="h-3 w-3" /> Low-Resource
+                  {res.lastVerified && (
+                    <span className="group relative flex items-center gap-1 text-[10px] font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/30 px-2 py-1 rounded-full border border-emerald-100 dark:border-emerald-800/50 cursor-default">
+                      <ShieldCheck className="h-3 w-3" /> 
+                      Verified
+                      <span className="invisible group-hover:visible opacity-0 group-hover:opacity-100 transition absolute bottom-full mb-1 right-0 w-32 bg-slate-800 text-white text-xs rounded p-1.5 text-center shadow-lg pointer-events-none z-10">
+                        Last verified: {res.lastVerified}
                       </span>
-                    )}
-                    {res.mobileFriendly && (
-                      <span className="flex items-center gap-1 text-[11px] font-semibold bg-sky-50 text-sky-700 dark:bg-sky-900/30 dark:text-sky-400 px-2 py-1 rounded-md border border-sky-200 dark:border-sky-800/50" title="Mobile friendly">
-                        <Smartphone className="h-3 w-3" /> Mobile
-                      </span>
-                    )}
-                  </div>
+                    </span>
+                  )}
                 </div>
                 
-                <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2 leading-tight font-serif">{res.title}</h3>
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1 leading-tight">{res.title}</h3>
                 
-                <div className="flex flex-wrap gap-x-4 gap-y-2 text-sm text-slate-500 dark:text-slate-400 mb-6">
-                  {res.subject && <span><strong>Subject:</strong> {res.subject}</span>}
-                  {res.timeRequired && <span className="flex items-center gap-1"><Clock className="h-3.5 w-3.5"/> {res.timeRequired}</span>}
-                  <span className="font-medium text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded">{res.cost}</span>
+                <div className="text-sm font-medium text-indigo-600 dark:text-indigo-400 mb-4 flex items-center gap-1.5">
+                  {res.provider} <span className="text-slate-300 dark:text-slate-600">•</span> <span className="text-slate-500 dark:text-slate-400 text-xs">{res.license || 'Free'}</span>
                 </div>
                 
-                <div className="space-y-6 text-[15px] leading-relaxed flex-grow">
-                  {/* WHAT IT IS */}
-                  <div>
-                    <h4 className="text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-1">What it is</h4>
-                    <p className="text-slate-800 dark:text-slate-200 font-medium">{res.whatItIs}</p>
+                <p className="text-sm text-slate-600 dark:text-slate-400 mb-4 line-clamp-3">
+                  {res.description}
+                </p>
+                
+                <div className="mt-auto space-y-2 text-xs">
+                  <div className="flex gap-2">
+                    <span className="font-semibold text-slate-700 dark:text-slate-300 min-w-[60px]">Grades:</span>
+                    <span className="text-slate-500">{Array.isArray(res.grades) ? res.grades.map(g => g.replace('grade-', 'G')).join(', ') : 'All'}</span>
                   </div>
-
-                  {/* WHY IT MATTERS */}
-                  {res.whyItMatters && (
-                    <div>
-                      <h4 className="text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-1">Why it matters</h4>
-                      <p className="text-slate-600 dark:text-slate-400">{res.whyItMatters}</p>
-                    </div>
-                  )}
-
-                  {/* HOW TO USE IT */}
-                  {res.howToUse && (
-                    <div>
-                      <h4 className="text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-1">How to use it</h4>
-                      {Array.isArray(res.howToUse) ? (
-                        <ol className="list-decimal pl-5 text-slate-600 dark:text-slate-400 space-y-1.5 marker:text-slate-400">
-                          {res.howToUse.map((step, i) => <li key={i} className="pl-1">{step}</li>)}
-                        </ol>
-                      ) : (
-                        <p className="text-slate-600 dark:text-slate-400">{res.howToUse}</p>
-                      )}
-                    </div>
-                  )}
-
-                  {/* WHAT STUDENTS PRODUCE */}
-                  {res.whatStudentsProduce && (
-                    <div className="pt-2">
-                      <h4 className="text-xs font-bold uppercase tracking-widest text-indigo-400 dark:text-indigo-500 mb-2 flex items-center gap-1.5">
-                        <CheckCircle2 className="h-4 w-4" /> What students produce
-                      </h4>
-                      <div className="bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-100 dark:border-indigo-800/50 rounded-lg p-3 text-indigo-800 dark:text-indigo-300 font-medium">
-                        {res.whatStudentsProduce}
-                      </div>
-                    </div>
-                  )}
+                  <div className="flex gap-2">
+                    <span className="font-semibold text-slate-700 dark:text-slate-300 min-w-[60px]">Subject:</span>
+                    <span className="text-slate-500">{res.subject || res.subjects?.join(', ')}</span>
+                  </div>
                 </div>
               </div>
               
-              {/* Action Area */}
-              <div className="bg-slate-50 dark:bg-slate-900/50 border-t border-slate-100 dark:border-slate-800 p-4 md:px-8 md:py-5 mt-auto">
-                {res.url ? (
-                  <a 
-                    href={res.url} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 w-full bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-200 text-white dark:text-slate-900 py-2.5 px-4 rounded-lg text-sm font-semibold transition-colors shadow-sm"
-                  >
-                    Open Resource <ExternalLink className="h-4 w-4" />
-                  </a>
-                ) : res.type === 'Template' ? (
-                  <Button 
-                    className="w-full gap-2 shadow-sm font-semibold"
-                    onClick={() => handleCopy(getTemplateContent(res.id), res.id)}
-                  >
-                    {copiedId === res.id ? <CheckCircle2 className="h-4 w-4 text-emerald-400" /> : <Copy className="h-4 w-4" />}
-                    {copiedId === res.id ? 'Copied to clipboard' : 'Copy Template Text'}
-                  </Button>
-                ) : (
-                  <div className="flex flex-wrap gap-2">
-                    {res.skillsSupported?.slice(0, 3).map((skill, i) => (
-                      <span key={i} className="text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 px-2 py-1 rounded-full">
-                        {skill}
-                      </span>
-                    ))}
-                    {res.skillsSupported && res.skillsSupported.length > 3 && (
-                      <span className="text-xs text-slate-400 px-1 py-1">+{res.skillsSupported.length - 3} more</span>
-                    )}
-                  </div>
-                )}
+              <div className="p-4 border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50">
+                <a 
+                  href={res.url} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 w-full bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-200 text-white dark:text-slate-900 py-3 px-4 rounded-xl text-sm font-semibold transition-colors min-h-[44px]"
+                >
+                  Open Resource <ExternalLink className="h-4 w-4" />
+                </a>
               </div>
             </motion.article>
           ))}

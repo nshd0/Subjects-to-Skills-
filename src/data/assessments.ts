@@ -6,66 +6,61 @@ import { AssessmentTask, SkillRubric } from '@/types';
  */
 export const assessmentTasks: AssessmentTask[] = [
   {
-    id: "task-g6-water-audit",
-    gradeId: "grade-6",
-    skillId: "empirical-investigation",
-    title: "School Water Flow & Wastage Investigation",
-    type: "performance task",
-    description: "Students work in pairs to measure tap drip rates across 3 school drinking water stations using calibrated measuring beakers and stopwatches, extrapolating daily lost volume.",
-    subjectArea: "Science & Mathematics",
-    timeRequired: "45 minutes",
-    rubricRefId: "rubric-g6-investigation",
-    evidenceProduced: [
-      "Calibrated drip rate tally sheet with 3 timed trials per station",
-      "Mathematical extrapolation calculation of litres lost per 8-hour school day",
-      "Written recommendation note for school maintenance staff"
-    ]
-  },
-  {
-    id: "task-g7-market-stall",
-    gradeId: "grade-7",
-    skillId: "budget-modeling",
-    title: "Haat Bazaar Stall Profit & Loss Ledger Evaluation",
-    type: "project",
-    description: "Students prepare a complete financial ledger for a mock seasonal fruit stall, accounting for wholesale mandi procurement, transportation overhead, spoil allowance, and customer pricing.",
-    subjectArea: "Mathematics & Social Studies",
-    timeRequired: "2 class periods (90 mins)",
-    rubricRefId: "rubric-g7-financial",
-    evidenceProduced: [
-      "Itemised unit-cost and retail price table with percentage markup calculations",
-      "Reconciled transaction ledger with receipts and final net profit calculation",
-      "Short reflection on pricing fairness for low-income buyers"
-    ]
-  },
-  {
-    id: "task-g3-species-tally",
+    id: "task-g3-ps-1",
     gradeId: "grade-3",
-    skillId: "categorical-observation",
-    title: "School Garden Living Species Tally & Sketch",
-    type: "question set",
-    description: "Students complete a guided field sheet counting frequency of 4 distinct garden creatures (ants, sparrows, butterflies, squirrels) and produce an annotated morphological drawing of one organism.",
-    subjectArea: "Environmental Studies (EVS)",
-    timeRequired: "35 minutes",
-    rubricRefId: "rubric-g3-observation",
+    skillId: "Problem Solving",
+    title: "Neighborhood Resource Mapping",
+    type: "project",
+    description: "Students work in small groups to map available resources (water sources, parks, shops) in their neighborhood and identify one local problem they can solve using these resources.",
+    subjectArea: "Environmental Studies / Mathematics",
+    timeRequired: "2 Hours",
     evidenceProduced: [
-      "Field tally sheet with accurate grouping marks",
-      "Labelled botanical or zoological drawing with at least 3 body parts named"
+      "A hand-drawn map with a legend",
+      "A short presentation identifying the problem and proposed solution",
+      "Group reflection on teamwork"
     ]
   },
   {
-    id: "task-g8-data-critique",
-    gradeId: "grade-8",
-    skillId: "data-literacy",
-    title: "Media Graph Critique: Identifying Misleading Visual Scales",
-    type: "investigation",
-    description: "Students inspect two published news charts featuring truncated y-axes and non-uniform increments, identifying the visual distortion and reconstructing an honest proportional graph.",
-    subjectArea: "Mathematics & Media Studies",
-    timeRequired: "50 minutes",
-    rubricRefId: "rubric-g8-data",
+    id: "task-g3-ps-2",
+    gradeId: "grade-3",
+    skillId: "Problem Solving",
+    title: "Fraction Scavenger Hunt",
+    type: "performance task",
+    description: "Students find objects in the classroom that can be divided into equal parts and document how they represent different fractions.",
+    subjectArea: "Mathematics",
+    timeRequired: "45 Minutes",
     evidenceProduced: [
-      "Annotated side-by-side comparison highlighting misleading visual features",
-      "Re-plotted Cartesian graph with uniform axis scales and proper labelling",
-      "Three-sentence summary of why accurate data visualization matters in a democracy"
+      "Completed scavenger hunt worksheet",
+      "Visual models of fractions using classroom objects"
+    ]
+  },
+  {
+    id: "task-g6-si-1",
+    gradeId: "grade-6",
+    skillId: "Scientific Inquiry",
+    title: "Local Water Quality Testing",
+    type: "investigation",
+    description: "Students collect water samples from different local sources (tap, pond, rain) and test them for basic properties like pH and clarity.",
+    subjectArea: "Science",
+    timeRequired: "3 Hours",
+    evidenceProduced: [
+      "Lab notebook with hypothesis, procedure, and data",
+      "Bar chart comparing pH levels",
+      "Conclusion paragraph summarizing findings"
+    ]
+  },
+  {
+    id: "task-g6-si-2",
+    gradeId: "grade-6",
+    skillId: "Scientific Inquiry",
+    title: "Plant Growth Variables",
+    type: "project",
+    description: "Students design an experiment changing one variable (light, water, soil type) to see its effect on seed germination over two weeks.",
+    subjectArea: "Science",
+    timeRequired: "2 Weeks (intermittent)",
+    evidenceProduced: [
+      "Daily observation log with measurements",
+      "Final scientific poster detailing the experiment setup and results"
     ]
   }
 ];
@@ -76,115 +71,77 @@ export const assessmentTasks: AssessmentTask[] = [
  */
 export const skillRubrics: SkillRubric[] = [
   {
-    skillId: "empirical-investigation",
-    gradeId: "grade-6",
-    levels: [
-      {
-        level: "Emerging",
-        criteria: [
-          "Follows simple lab steps only when given constant step-by-step adult prompts",
-          "Records single raw measurement values without noting units or repeating trials",
-          "Struggles to isolate a single independent variable during testing"
-        ]
-      },
-      {
-        level: "Developing",
-        criteria: [
-          "Carries out assigned experimental procedures with occasional scaffolding from peers",
-          "Records measurements with correct metric units in pre-formatted tables",
-          "Attempts to keep conditions uniform but overlooks minor confounding factors"
-        ]
-      },
-      {
-        level: "Proficient",
-        criteria: [
-          "Autonomously sets up controlled investigation with calibrated timing apparatus",
-          "Conducts multiple repeated trials and calculates arithmetic averages accurately",
-          "Explains how anomalous measurements arise and can suggest sensible adjustments"
-        ]
-      },
-      {
-        level: "Transfer",
-        criteria: [
-          "Adapts testing protocols independently to novel, real-world schoolyard problems",
-          "Formulates original hypotheses and designs rigorous control mechanisms without teacher intervention",
-          "Clearly articulates sources of experimental uncertainty in written and oral presentations"
-        ]
-      }
-    ]
-  },
-  {
-    skillId: "budget-modeling",
-    gradeId: "grade-7",
-    levels: [
-      {
-        level: "Emerging",
-        criteria: [
-          "Calculates simple addition of expenditure items but omits hidden costs or tax",
-          "Requires teacher guidance to distinguish between total revenue and net profit",
-          "Struggles to calculate percentage markups without pre-computed conversion tables"
-        ]
-      },
-      {
-        level: "Developing",
-        criteria: [
-          "Builds a basic ledger with columns for expenses, sales, and balance",
-          "Applies percentage markup correctly in straightforward single-product scenarios",
-          "Accounts for major overheads like transport, but forgets inventory spoilage"
-        ]
-      },
-      {
-        level: "Proficient",
-        criteria: [
-          "Constructs comprehensive multi-product ledger balancing wholesale cost and retail margins",
-          "Accurately calculates break-even sales volume including realistic spoilage rates",
-          "Justifies pricing decisions based on affordability and target profit margins"
-        ]
-      },
-      {
-        level: "Transfer",
-        criteria: [
-          "Models dynamic pricing strategies responding to fluctuating seasonal wholesale supply",
-          "Analyzes trade-offs between profit maximization, volume turnover, and community accessibility",
-          "Designs an exportable, reusable spreadsheet/ledger template usable by local school cooperatives"
-        ]
-      }
-    ]
-  },
-  {
-    skillId: "categorical-observation",
+    skillId: "Problem Solving",
     gradeId: "grade-3",
     levels: [
       {
         level: "Emerging",
         criteria: [
-          "Notices salient organisms but loses count or repeatedly tallies the same individual",
-          "Groups specimens using subjective impressions (e.g. 'nice' or 'scary') rather than physical traits",
-          "Produces sketches missing key observable body structures"
+          "Identifies a problem with teacher assistance.",
+          "Suggests one basic solution.",
+          "Requires support to execute a plan."
         ]
       },
       {
         level: "Developing",
         criteria: [
-          "Maintains accurate tally count with occasional reminders to check bounding borders",
-          "Groups specimens using one clear physical attribute (e.g. number of legs or wings)",
-          "Sketches capture basic outlines and identifiable colours"
+          "Identifies a problem independently.",
+          "Suggests multiple potential solutions.",
+          "Begins to execute a plan but may need help troubleshooting."
         ]
       },
       {
         level: "Proficient",
         criteria: [
-          "Systematically sweeps observation zones recording discrete tally marks without duplication",
-          "Classifies specimens across multiple distinct environmental categories accurately",
-          "Creates neat, labelled sketches noting distinguishing physical adaptations"
+          "Clearly defines a problem and its context.",
+          "Evaluates possible solutions and chooses the most logical one.",
+          "Executes the plan and checks if the solution worked."
         ]
       },
       {
         level: "Transfer",
         criteria: [
-          "Formulates observational inquiries comparing species density across contrasting micro-habitats",
-          "Invents intuitive, standardized classification codes for unrecorded species",
-          "Mentors younger peers in respectful, non-disruptive wildlife observation protocols"
+          "Anticipates potential problems before they occur.",
+          "Applies problem-solving strategies to new, unfamiliar situations.",
+          "Modifies the plan based on continuous feedback."
+        ]
+      }
+    ]
+  },
+  {
+    skillId: "Scientific Inquiry",
+    gradeId: "grade-6",
+    levels: [
+      {
+        level: "Emerging",
+        criteria: [
+          "Follows a provided experimental procedure.",
+          "Records data sporadically.",
+          "States a simple conclusion without referencing data."
+        ]
+      },
+      {
+        level: "Developing",
+        criteria: [
+          "Helps design basic steps of an experiment.",
+          "Records data in a structured table.",
+          "Draws a conclusion that references some data points."
+        ]
+      },
+      {
+        level: "Proficient",
+        criteria: [
+          "Designs a controlled experiment with clear variables.",
+          "Accurately collects and organizes data using charts.",
+          "Draws a logical conclusion fully supported by evidence."
+        ]
+      },
+      {
+        level: "Transfer",
+        criteria: [
+          "Identifies sources of error and suggests improvements.",
+          "Applies the scientific method to self-generated questions.",
+          "Connects findings to broader scientific principles."
         ]
       }
     ]
