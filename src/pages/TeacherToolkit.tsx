@@ -127,10 +127,10 @@ Student demonstrates deep understanding. Applies the skill creatively, explains 
             </div>
           </div>
           <Link
-            to="/audit-v0-3"
+            to="/audit-status"
             className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold shrink-0 transition-colors"
           >
-            <span>View v0.3 Audit</span>
+            <span>v0.3 Audit & Status</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </motion.div>

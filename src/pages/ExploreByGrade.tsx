@@ -93,7 +93,7 @@ export function ExploreByGrade() {
             <div className="flex flex-wrap justify-center gap-2 pt-2">
               <button
                 onClick={() => setSelectedStage('all')}
-                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all min-h-[44px] ${
+                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all min-h-[44px] focus:ring-2 focus:ring-indigo-500 focus:outline-hidden ${
                   selectedStage === 'all'
                     ? 'bg-indigo-600 text-white shadow-xs'
                     : 'bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/60'
@@ -105,7 +105,7 @@ export function ExploreByGrade() {
                 <button
                   key={st.id}
                   onClick={() => setSelectedStage(st.id)}
-                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-all min-h-[44px] ${
+                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-all min-h-[44px] focus:ring-2 focus:ring-indigo-500 focus:outline-hidden ${
                     selectedStage === st.id
                       ? 'bg-indigo-600 text-white shadow-xs'
                       : 'bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/60'
@@ -164,12 +164,12 @@ export function ExploreByGrade() {
                   </Link>
                 </div>
 
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className={`grid grid-cols-1 sm:grid-cols-2 ${stageGrades.length >= 4 ? 'lg:grid-cols-4' : 'lg:grid-cols-3'} gap-5`}>
                   {stageGrades.map(grade => {
                     const isAnchor = grade.status === 'in-development';
 
                     return (
-                      <motion.div key={grade.id} variants={itemVariants}>
+                      <motion.div key={grade.id} variants={itemVariants} className="h-full">
                         <GradeCard 
                           grade={grade} 
                           isAnchor={isAnchor} 

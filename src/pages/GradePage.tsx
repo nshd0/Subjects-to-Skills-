@@ -142,11 +142,78 @@ export function GradePage() {
         { label: grade.name }
       ];
 
+  const currentIndex = useMemo(() => {
+    if (!grade) return -1;
+    return gradesData.findIndex(g => g.id === grade.id);
+  }, [grade]);
+
+  const prevGrade = currentIndex > 0 ? gradesData[currentIndex - 1] : null;
+  const nextGrade = currentIndex >= 0 && currentIndex < gradesData.length - 1 ? gradesData[currentIndex + 1] : null;
+
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 pb-24 pt-4">
       {/* Top Breadcrumb Navigation */}
-      <div className="container mx-auto px-4 max-w-5xl mb-6">
+      <div className="container mx-auto px-4 max-w-5xl mb-4">
         <Breadcrumbs items={breadcrumbItems} />
+      </div>
+
+      {/* Top Grade Navigator Bar (Previous / Next Grade) */}
+      <div className="container mx-auto px-4 max-w-5xl mb-6">
+        <nav aria-label="Grade progression navigation" className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-2.5 sm:p-3 shadow-xs flex items-center justify-between gap-2">
+          {prevGrade ? (
+            <Link
+              to={`/grade/${prevGrade.id}`}
+              className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-300 hover:bg-indigo-50 hover:text-indigo-700 dark:hover:bg-slate-800 dark:hover:text-indigo-300 transition-colors min-h-[44px] focus:ring-2 focus:ring-indigo-500"
+            >
+              <ArrowLeft className="w-4 h-4 text-indigo-600 dark:text-indigo-400 shrink-0" />
+              <div className="text-left">
+                <span className="text-[10px] text-slate-400 block uppercase tracking-wider font-semibold">Previous</span>
+                <span className="font-bold text-slate-900 dark:text-white">{prevGrade.name}</span>
+              </div>
+            </Link>
+          ) : (
+            <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 text-xs text-slate-400 dark:text-slate-600 opacity-60 min-h-[44px]">
+              <ArrowLeft className="w-4 h-4 shrink-0" />
+              <div className="text-left">
+                <span className="text-[10px] block uppercase tracking-wider font-semibold">Start</span>
+                <span className="font-medium">Foundational</span>
+              </div>
+            </div>
+          )}
+
+          <div className="hidden md:flex items-center gap-2 text-xs">
+            <span className="px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-semibold">
+              Grade {currentIndex + 1} of {gradesData.length}
+            </span>
+            <Link
+              to="/grades"
+              className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline px-2.5 py-1 rounded-lg hover:bg-indigo-50 dark:hover:bg-slate-800 transition-colors"
+            >
+              All Grades
+            </Link>
+          </div>
+
+          {nextGrade ? (
+            <Link
+              to={`/grade/${nextGrade.id}`}
+              className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-300 hover:bg-indigo-50 hover:text-indigo-700 dark:hover:bg-slate-800 dark:hover:text-indigo-300 transition-colors min-h-[44px] focus:ring-2 focus:ring-indigo-500 text-right"
+            >
+              <div className="text-right">
+                <span className="text-[10px] text-slate-400 block uppercase tracking-wider font-semibold">Next</span>
+                <span className="font-bold text-slate-900 dark:text-white">{nextGrade.name}</span>
+              </div>
+              <ArrowRight className="w-4 h-4 text-indigo-600 dark:text-indigo-400 shrink-0" />
+            </Link>
+          ) : (
+            <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 text-xs text-slate-400 dark:text-slate-600 opacity-60 min-h-[44px]">
+              <div className="text-right">
+                <span className="text-[10px] block uppercase tracking-wider font-semibold">End</span>
+                <span className="font-medium">Grade 12 Complete</span>
+              </div>
+              <ArrowRight className="w-4 h-4 shrink-0" />
+            </div>
+          )}
+        </nav>
       </div>
 
       <div className="container mx-auto px-4 max-w-5xl space-y-10">
@@ -245,7 +312,7 @@ export function GradePage() {
             </div>
             <Link
               to="/skill-progression"
-              className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1 self-start sm:self-auto min-h-[36px]"
+              className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1 self-start sm:self-auto min-h-[44px] focus:ring-2 focus:ring-indigo-500 focus:outline-hidden rounded-lg px-2 py-1"
             >
               <span>View All 21 Skills</span>
               <ArrowRight className="w-3 h-3" />
@@ -373,7 +440,7 @@ export function GradePage() {
               </div>
               <Link
                 to="/activities"
-                className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1 self-start sm:self-auto min-h-[36px]"
+                className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1 self-start sm:self-auto min-h-[44px] focus:ring-2 focus:ring-indigo-500 focus:outline-hidden rounded-lg px-2 py-1"
               >
                 <span>Browse All Activities</span>
                 <ArrowRight className="w-3 h-3" />
@@ -608,7 +675,7 @@ export function GradePage() {
                 <div className="flex justify-end gap-2 pt-1">
                   <button
                     onClick={() => setFeedbackAction(null)}
-                    className="px-3.5 py-2 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors font-medium min-h-[38px]"
+                    className="px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors font-medium min-h-[44px] focus:ring-2 focus:ring-indigo-500 focus:outline-hidden"
                   >
                     Close
                   </button>

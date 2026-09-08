@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SkillRubricData, RubricLevel } from '@/types';
+import { SkillRubricData, RubricTier } from '@/types';
 import { useProgress } from '@/contexts/ProgressContext';
 import { Copy, Check, Printer, Award, HelpCircle, Bookmark, FileCode } from 'lucide-react';
 
@@ -11,7 +11,7 @@ interface SkillRubricProps {
 export function SkillRubric({ rubric }: SkillRubricProps) {
   const [copiedRubric, setCopiedRubric] = useState(false);
   const [copiedTemplate, setCopiedTemplate] = useState(false);
-  const [selectedLevels, setSelectedLevels] = useState<Record<string, RubricLevel>>({});
+  const [selectedLevels, setSelectedLevels] = useState<Record<string, RubricTier>>({});
   const { isBookmarked, toggleBookmark } = useProgress();
 
   const isSaved = isBookmarked(rubric.id);
@@ -28,7 +28,7 @@ export function SkillRubric({ rubric }: SkillRubricProps) {
     });
   };
 
-  const levels: { key: RubricLevel; title: string; color: string; desc: string }[] = [
+  const levels: { key: RubricTier; title: string; color: string; desc: string }[] = [
     { 
       key: 'Emerging', 
       title: 'Emerging', 
@@ -55,10 +55,10 @@ export function SkillRubric({ rubric }: SkillRubricProps) {
     },
   ];
 
-  const handleLevelSelect = (criterionId: string, level: RubricLevel) => {
+  const handleLevelSelect = (criterionId: string, level: RubricTier) => {
     setSelectedLevels(prev => ({
       ...prev,
-      [criterionId]: prev[criterionId] === level ? (undefined as unknown as RubricLevel) : level
+      [criterionId]: prev[criterionId] === level ? (undefined as unknown as RubricTier) : level
     }));
   };
 

@@ -44,6 +44,10 @@ export type GradeProfile = {
   recommendedPedagogy?: string[];
   flagshipProject?: { title: string; description: string };
   isFlagship?: boolean;
+  // v0.4 extensions
+  sampleUnits?: string[];
+  sampleProjects?: string[];
+  crossSubjectConnections?: string[];
 };
 
 export type SubjectSkillMap = {
@@ -138,7 +142,7 @@ export type Activity = {
   };
 };
 
-export type RubricLevel = "Emerging" | "Developing" | "Proficient" | "Transfer";
+export type RubricTier = "Emerging" | "Developing" | "Proficient" | "Transfer";
 
 export type RubricCriterion = {
   id: string;
@@ -195,4 +199,105 @@ export type Resource = {
   IndianClassroomNotes: string;
   sourceStatus: string;
 };
+
+// ============================================================================
+// v0.4 Extension Models: Units, Lessons, Assessments, Rubrics & Feedback
+// ============================================================================
+
+/**
+ * Lesson structure within a curricular unit (v0.4.1)
+ */
+export interface Lesson {
+  id: string;
+  unitId: string;
+  title: string;
+  sequenceIndex: number;
+  activities: string[]; // brief descriptions or references
+  resources: string[]; // links or references
+  assessmentHints?: string[]; // optional formative evaluation hints
+}
+
+/**
+ * Unit planning model for CBSE competency-based curriculum (v0.4.1)
+ */
+export interface Unit {
+  id: string;
+  gradeId: string;
+  title: string;
+  durationWeeks: number;
+  description: string;
+  targetSkillIds: string[]; // references to skills
+  learningAreas: string[];
+  status: "draft" | "published" | "archived";
+  sampleProjects?: string[];
+  lessons?: Lesson[];
+}
+
+/**
+ * Assessment task types supporting formative & summative skill evaluation (v0.4.2)
+ */
+export type AssessmentTaskType = 
+  | "performance task" 
+  | "project" 
+  | "question set" 
+  | "oral presentation" 
+  | "peer review"
+  | "investigation"
+  | string;
+
+/**
+ * Assessment task linked to skill & grade level (v0.4.2)
+ */
+export interface AssessmentTask {
+  id: string;
+  gradeId: string;
+  skillId: string;
+  title: string;
+  type: AssessmentTaskType;
+  description: string;
+  subjectArea: string;
+  timeRequired: string;
+  rubricRefId?: string;
+  evidenceProduced?: string[];
+}
+
+/**
+ * Graduated rubric level containing criteria statements (v0.4.2)
+ */
+export interface RubricLevel {
+  level: RubricTier | string;
+  criteria: string[];
+}
+
+/**
+ * Skill-to-grade rubric matrix mapping graduated competency levels (v0.4.2)
+ */
+export interface SkillRubric {
+  skillId: string;
+  gradeId: string;
+  levels: RubricLevel[];
+}
+
+/**
+ * Lightweight page feedback tracking for continuous framework improvement (v0.4.4)
+ */
+export interface PageFeedback {
+  id: string;
+  path: string;
+  rating: number | "helpful" | "not-helpful";
+  comment?: string;
+  timestamp: string;
+  userRole?: string;
+}
+
+/**
+ * Lightweight client usage event for telemetry and navigation analytics (v0.4.4)
+ */
+export interface UsageEvent {
+  id: string;
+  path: string;
+  timestamp: string;
+  eventType: "page_view" | "bookmark" | "filter_change" | "search" | "download" | string;
+  metadata?: Record<string, string | number | boolean>;
+}
 

@@ -20,6 +20,7 @@ import { About } from './pages/About';
 import { Roadmap } from './pages/Roadmap';
 import { AuditReport } from './pages/AuditReport';
 import { AuditReportV0_3 } from './pages/AuditReportV0_3';
+import { AuditStatusV0_3 } from './pages/AuditStatusV0_3';
 import { AdminDashboard } from './pages/AdminDashboard';
 import { AreaCoverage } from './pages/AreaCoverage';
 import { SchoolPlanner } from './pages/SchoolPlanner';
@@ -30,6 +31,7 @@ import { ActivitiesPage } from './pages/ActivitiesPage';
 import { AssessmentHub } from './pages/AssessmentHub';
 import { NotFound } from './pages/NotFound';
 import { Health } from './pages/Health';
+import { PlannerRoute, AssessmentMapperRoute, SkillPathwaysRoute } from './features/planning/routes';
 import { useAnalytics } from './hooks/useAnalytics';
 
 function AppContent() {
@@ -52,9 +54,16 @@ function AppContent() {
         <Route path="roadmap" element={<Roadmap />} />
         <Route path="audit" element={<AuditReport />} />
         <Route path="audit-v0-3" element={<AuditReportV0_3 />} />
+        <Route path="audit-status" element={<AuditStatusV0_3 />} />
+        <Route path="v0-3-audit" element={<AuditStatusV0_3 />} />
         <Route path="admin" element={<AdminDashboard />} />
         <Route path="coverage" element={<AreaCoverage />} />
-        <Route path="planner" element={<SchoolPlanner />} />
+        {/* v0.4 Planning Module Routes */}
+        <Route path="planner" element={<PlannerRoute />} />
+        <Route path="school-planner" element={<SchoolPlanner />} />
+        <Route path="assess" element={<AssessmentMapperRoute />} />
+        <Route path="assessment-mapper" element={<AssessmentMapperRoute />} />
+        <Route path="pathways" element={<SkillPathwaysRoute />} />
         <Route path="changelog" element={<Changelog />} />
         <Route path="about-framework" element={<AboutFramework />} />
         <Route path="health" element={<Health />} />

@@ -52,9 +52,10 @@ export function Layout() {
     },
   ];
 
-  const gradesLinks = [
-    { name: 'View All Grades (Dashboard)', fullName: 'View All 15 Grades (Pre-K to 12)', path: '/grades', badge: 'Overview' },
-    ...gradesData.map(grade => ({
+  const anchorGrades = gradesData.filter(g => ['grade-3', 'grade-6', 'grade-9', 'grade-11'].includes(g.id));
+  const gradesDropdownLinks = [
+    { name: 'Explore All Grades', fullName: 'View Dashboard', path: '/grades', badge: 'Overview' },
+    ...anchorGrades.map(grade => ({
       name: grade.name,
       fullName: `${grade.name} (${grade.ageRange})`,
       path: `/grade/${grade.id}`,
@@ -62,20 +63,30 @@ export function Layout() {
     }))
   ];
 
-  const toolsLinks = [
-    { name: 'Teacher Resource Hub', path: '/resources' },
+  const teachAndPlanLinks = [
+    { name: 'Classroom Activities', path: '/activities' },
+    { name: 'Unit & Lesson Planner (v0.4)', path: '/planner' },
+    { name: 'Assessment Mapper (v0.4)', path: '/assessment-mapper' },
+    { name: 'Skill Pathways (v0.4)', path: '/pathways' },
+  ];
+
+  const assessLinks = [
+    { name: 'Assessment Hub', path: '/assessment' },
+    { name: 'Skills Progression', path: '/skill-progression' },
+  ];
+
+  const resourcesLinks = [
+    { name: 'Teacher Resources', path: '/resources' },
     { name: 'Teacher Toolkit', path: '/toolkit' },
-    { name: 'School Planner', path: '/planner' },
-    { name: 'v0.3 Audit Report', path: '/audit-v0-3' },
-    { name: 'Baseline Audit Report (v0.2)', path: '/audit' },
+    { name: 'School Implementation Planner', path: '/school-planner' },
   ];
 
   const aboutLinks = [
-    { name: 'About Subjects2Skills', path: '/about' },
-    { name: 'v0.3 Content Roadmap', path: '/roadmap' },
-    { name: 'v0.3 Self-Audit Report', path: '/audit-v0-3' },
+    { name: 'About & Principles', path: '/about' },
     { name: 'Pedagogical Framework', path: '/about-framework' },
     { name: 'Changelog', path: '/changelog' },
+    { name: 'v0.3 Audit & Status', path: '/audit-status' },
+    { name: 'Baseline Audit Report', path: '/audit' },
   ];
 
   if (profile?.role === 'admin') {
@@ -87,6 +98,13 @@ export function Layout() {
       isActive
         ? 'bg-slate-100 text-indigo-700 dark:bg-slate-800 dark:text-indigo-300 font-semibold'
         : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800/50 dark:hover:text-slate-50'
+    }`;
+
+  const mobileNavLinkClass = ({ isActive }: { isActive: boolean }) =>
+    `flex items-center px-3 py-2 rounded-xl text-xs sm:text-sm font-medium transition-colors min-h-[44px] ${
+      isActive
+        ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-950/60 dark:text-indigo-300 font-semibold'
+        : 'text-slate-700 hover:bg-slate-50 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800/50 dark:hover:text-slate-50'
     }`;
 
   return (
@@ -142,32 +160,26 @@ export function Layout() {
             {/* Main Navigation (Preserved and complete) */}
             <nav className="hidden xl:flex items-center gap-1">
               <NavLink to="/" className={navLinkClass}>Home</NavLink>
-              <NavDropdown label="Explore by Stage" to="/stage/foundational" items={stagesLinks} />
-              <NavDropdown label="Explore by Grade" to="/grades" items={gradesLinks} />
-              <NavLink to="/skill-progression" className={navLinkClass}>Skills</NavLink>
-              <NavLink to="/activities" className={navLinkClass}>Activities</NavLink>
-              <NavLink to="/assessment" className={navLinkClass}>Assessment</NavLink>
-              <NavLink to="/resources" className={navLinkClass}>Teacher Resource Hub</NavLink>
-              <NavLink to="/toolkit" className={navLinkClass}>Teacher Toolkit</NavLink>
-              <NavLink to="/roadmap" className={navLinkClass}>Content Roadmap</NavLink>
-              <button onClick={() => window.dispatchEvent(new Event("open-feedback"))} className={`px-2.5 py-1.5 rounded-lg text-xs lg:text-sm font-medium transition-colors whitespace-nowrap text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800/50 dark:hover:text-slate-50`}>Feedback</button>
-              <NavLink to="/about" className={navLinkClass}>About</NavLink>
+              <NavDropdown label="Grades" to="/grades" items={gradesDropdownLinks} />
+              <NavDropdown label="Stages" to="/stage/foundational" items={stagesLinks} />
+              <NavDropdown label="Teach & Plan" items={teachAndPlanLinks} />
+              <NavDropdown label="Assess" items={assessLinks} />
+              <NavDropdown label="Resources" items={resourcesLinks} />
+              <NavLink to="/roadmap" className={navLinkClass}>Roadmap</NavLink>
+              <NavDropdown label="About" items={aboutLinks} />
             </nav>
 
             {/* Compact Nav for Mid-Sized Screens */}
             <nav className="hidden md:flex xl:hidden items-center gap-1">
               <NavLink to="/" className={navLinkClass}>Home</NavLink>
+              <NavDropdown label="Grades" to="/grades" items={gradesDropdownLinks} />
               <NavDropdown label="Stages" to="/stage/foundational" items={stagesLinks} />
-              <NavDropdown label="Explore by Grade" to="/grades" items={gradesLinks} />
-              <NavLink to="/activities" className={navLinkClass}>Activities</NavLink>
-              <NavLink to="/assessment" className={navLinkClass}>Assessment</NavLink>
+              <NavDropdown label="Teach & Plan" items={teachAndPlanLinks} />
+              <NavDropdown label="Assess" items={assessLinks} />
               <NavDropdown label="More" items={[
-                { name: 'Skill Progression', path: '/skill-progression' },
-                { name: 'Teacher Resource Hub', path: '/resources' },
-                { name: 'Teacher Toolkit', path: '/toolkit' },
+                ...resourcesLinks,
                 { name: 'v0.3 Content Roadmap', path: '/roadmap' },
-                { name: 'v0.3 Audit Report', path: '/audit-v0-3' },
-                { name: 'About Subjects2Skills', path: '/about' },
+                ...aboutLinks,
               ]} />
             </nav>
 
@@ -237,10 +249,10 @@ export function Layout() {
         {isMobileMenuOpen && (
           <div className="md:hidden border-t border-slate-200 dark:border-slate-800 max-h-[80vh] overflow-y-auto bg-white dark:bg-slate-900">
             <div className="space-y-1 px-4 pb-4 pt-2">
-              <NavLink to="/" className={navLinkClass}>Home</NavLink>
+              <NavLink to="/" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Home</NavLink>
               <button
                 onClick={() => { setIsBookmarksOpen(true); setIsMobileMenuOpen(false); }}
-                className="w-full flex items-center justify-between px-2.5 py-2 text-xs font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
+                className="w-full flex items-center justify-between px-3 py-2 text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-colors min-h-[44px]"
               >
                 <span className="flex items-center gap-2">
                   <Bookmark className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
@@ -252,28 +264,39 @@ export function Layout() {
                   </span>
                 )}
               </button>
-              <NavLink to="/grades" className={navLinkClass}>Explore by Grade</NavLink>
-              <NavLink to="/skill-progression" className={navLinkClass}>Skills Progression</NavLink>
-              <NavLink to="/activities" className={navLinkClass}>Classroom Activities</NavLink>
-              <NavLink to="/assessment" className={navLinkClass}>Evidence & Assessment Hub</NavLink>
-              <NavLink to="/resources" className={navLinkClass}>Teacher Resource Hub</NavLink>
-              <NavLink to="/toolkit" className={navLinkClass}>Teacher Toolkit</NavLink>
-              <NavLink to="/roadmap" className={navLinkClass}>v0.3 Content Roadmap</NavLink>
-              <NavLink to="/audit-v0-3" className={navLinkClass}>v0.3 Technical Audit Report</NavLink>
-              <button onClick={() => window.dispatchEvent(new Event("open-feedback"))} className={`w-full text-left px-2.5 py-1.5 rounded-lg text-xs lg:text-sm font-medium transition-colors whitespace-nowrap text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800/50 dark:hover:text-slate-50`}>Feedback</button>
-              <NavLink to="/about" className={navLinkClass}>About & Governance</NavLink>
+              <NavLink to="/grades" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Explore by Grade</NavLink>
+              <NavLink to="/activities" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Classroom Activities</NavLink>
+              <NavLink to="/planner" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Unit & Lesson Planner (v0.4)</NavLink>
+              <NavLink to="/assessment" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Assessment Hub</NavLink>
 
-              <div className="py-2 border-t border-slate-100 dark:border-slate-800">
-                <p className="px-2 text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Stages</p>
+              <div className="py-2 border-t border-slate-100 dark:border-slate-800 space-y-1">
+                <p className="px-3 text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Stages</p>
                 {stagesLinks.map((link) => (
                   <NavLink
                     key={link.path}
                     to={link.path}
-                    className="block px-2 py-1.5 text-xs text-slate-700 dark:text-slate-300 hover:text-indigo-600"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex items-center px-3 py-2 rounded-xl text-xs sm:text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-indigo-600 transition-colors min-h-[44px]"
                   >
                     {link.fullName || link.name}
                   </NavLink>
                 ))}
+              </div>
+
+              <div className="py-2 border-t border-slate-100 dark:border-slate-800 space-y-1">
+                <p className="px-3 text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">More</p>
+                <NavLink to="/assessment-mapper" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Assessment Mapper (v0.4)</NavLink>
+                <NavLink to="/pathways" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Skill Pathways (v0.4)</NavLink>
+                <NavLink to="/skill-progression" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Skills Progression</NavLink>
+                <NavLink to="/resources" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Teacher Resources</NavLink>
+                <NavLink to="/toolkit" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Teacher Toolkit</NavLink>
+                <NavLink to="/school-planner" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>School Implementation Planner</NavLink>
+                <NavLink to="/roadmap" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Content Roadmap</NavLink>
+                <NavLink to="/about" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>About & Principles</NavLink>
+                <NavLink to="/about-framework" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Pedagogical Framework</NavLink>
+                <NavLink to="/changelog" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Changelog</NavLink>
+                <NavLink to="/audit-status" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Audit & Status</NavLink>
+                <NavLink to="/audit" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Baseline Audit</NavLink>
               </div>
 
               {!loading && (
@@ -335,11 +358,14 @@ export function Layout() {
             <div className="space-y-2">
               <h4 className="font-bold text-slate-900 dark:text-white uppercase tracking-wider text-[11px]">Teaching & Assessment</h4>
               <ul className="space-y-1.5 text-slate-600 dark:text-slate-400">
+                <li><Link to="/planner" className="hover:underline text-indigo-600 dark:text-indigo-400 font-semibold">Unit & Lesson Planner (v0.4)</Link></li>
+                <li><Link to="/assessment-mapper" className="hover:underline">Skill–Assessment Mapper (v0.4)</Link></li>
+                <li><Link to="/pathways" className="hover:underline">Skill Pathways (v0.4)</Link></li>
                 <li><Link to="/activities" className="hover:underline">Classroom Activities Bank</Link></li>
                 <li><Link to="/assessment" className="hover:underline">Evidence & Rubrics Hub</Link></li>
                 <li><Link to="/resources" className="hover:underline">Teacher Resource Hub</Link></li>
                 <li><Link to="/toolkit" className="hover:underline">Teacher Toolkit</Link></li>
-                <li><Link to="/planner" className="hover:underline">School Planner</Link></li>
+                <li><Link to="/school-planner" className="hover:underline">School Implementation Planner</Link></li>
               </ul>
             </div>
 
@@ -348,7 +374,8 @@ export function Layout() {
               <ul className="space-y-1.5 text-slate-600 dark:text-slate-400">
                 <li><Link to="/about" className="hover:underline">About & Core Principles</Link></li>
                 <li><Link to="/roadmap" className="hover:underline">v0.3 Content Roadmap</Link></li>
-                <li><Link to="/audit-v0-3" className="hover:underline text-indigo-600 dark:text-indigo-400 font-semibold">v0.3 Technical Audit Report</Link></li>
+                <li><Link to="/audit-status" className="hover:underline text-indigo-600 dark:text-indigo-400 font-semibold">v0.3 Audit & Status</Link></li>
+                <li><Link to="/audit-v0-3" className="hover:underline">v0.3 Technical Audit Report</Link></li>
                 <li><Link to="/audit" className="hover:underline">v0.2 Baseline Audit Report</Link></li>
                 <li><Link to="/about#feedback" className="hover:underline">Submit Educator Feedback</Link></li>
               </ul>

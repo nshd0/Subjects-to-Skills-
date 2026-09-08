@@ -20,6 +20,7 @@ RUN npm run build
 FROM nginx:alpine
 
 # Copy custom Nginx configuration with SPA routing fallback
+COPY nginx.conf /etc/nginx/templates/default.conf.template
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copy compiled static assets from builder stage
@@ -29,5 +30,5 @@ COPY --from=builder /app/dist /usr/share/nginx/html
 ENV PORT=8080
 EXPOSE 8080
 
-# Substitute PORT if needed and start Nginx in foreground
-CMD ["nginx", "-g", "daemon off;"]
+# Dynamically substitute PORT if Cloud Run injects a custom port and start Nginx in foreground
+CMD ["/bin/sh", "-c", "sed -i \"s/8080/${PORT:-8080}/g\" /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"]
