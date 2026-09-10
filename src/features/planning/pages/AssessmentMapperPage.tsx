@@ -3,7 +3,9 @@ import { gradesData } from '@/data/grades';
 import { AssessmentTaskCard } from '@/components/AssessmentTaskCard';
 import { RubricTable } from '@/components/RubricTable';
 import { useAllSkillsForGrade, useAssessmentsForSkill } from '../useAssessments';
-import { Target, AlertCircle } from 'lucide-react';
+import { Target, AlertCircle, Wand2 } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { FEATURES } from '@/config/features';
 
 export function AssessmentMapperPage() {
   const [selectedGradeId, setSelectedGradeId] = useState<string | null>(null);
@@ -40,6 +42,15 @@ export function AssessmentMapperPage() {
               Map grade-specific competencies to standardized rubrics and actionable assessment tasks. Select a grade and a target skill to view associated assessments.
             </p>
           </div>
+          {FEATURES.ENABLE_ASSESSMENT_WIZARD && (
+            <Link
+              to="/assess/new"
+              className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold flex items-center justify-center gap-2 transition-colors min-h-[44px] shadow-sm whitespace-nowrap"
+            >
+              <Wand2 className="w-4 h-4" />
+              <span>Create an assessment</span>
+            </Link>
+          )}
         </div>
 
         {/* Selectors */}

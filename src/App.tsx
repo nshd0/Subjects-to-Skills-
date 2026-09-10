@@ -34,6 +34,10 @@ import { NotFound } from './pages/NotFound';
 import { Health } from './pages/Health';
 import { PlannerRoute, AssessmentMapperRoute, SkillPathwaysRoute } from './features/planning/routes';
 import { useAnalytics } from './hooks/useAnalytics';
+import { CreateLessonPlanWizard } from './features/planning/components/CreateLessonPlanWizard';
+import { CreateAssessmentWizard } from './features/planning/components/CreateAssessmentWizard';
+import { HowItWorksPage } from './pages/HowItWorksPage';
+import { FEATURES } from './config/features';
 
 function AppContent() {
   useAnalytics();
@@ -61,14 +65,17 @@ function AppContent() {
         <Route path="coverage" element={<AreaCoverage />} />
         {/* v0.4 Planning Module Routes */}
         <Route path="planner" element={<PlannerRoute />} />
+        {FEATURES.ENABLE_LESSON_PLAN_WIZARD && <Route path="plan/lesson/new" element={<CreateLessonPlanWizard />} />}
         <Route path="school-planner" element={<SchoolPlanner />} />
         <Route path="assess" element={<AssessmentMapperRoute />} />
+        {FEATURES.ENABLE_ASSESSMENT_WIZARD && <Route path="assess/new" element={<CreateAssessmentWizard />} />}
         <Route path="assessment-mapper" element={<AssessmentMapperRoute />} />
         <Route path="pathways" element={<SkillPathwaysRoute />} />
         <Route path="changelog" element={<Changelog />} />
         <Route path="about-framework" element={<AboutFramework />} />
         <Route path="about-content" element={<AboutContent />} />
         <Route path="health" element={<Health />} />
+        {FEATURES.ENABLE_HOW_IT_WORKS && <Route path="how-it-works" element={<HowItWorksPage />} />}
         {/* SPA 404 Catch-All Route */}
         <Route path="*" element={<NotFound />} />
       </Route>

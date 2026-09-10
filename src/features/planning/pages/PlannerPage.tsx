@@ -5,7 +5,9 @@ import { useUnitsForGrade, useCreateUnit } from '../useUnits';
 import { useLessonsForUnit } from '../useLessons';
 import { UnitDetailPanel } from '../components/UnitDetailPanel';
 import { CreateUnitForm } from '../components/CreateUnitForm';
-import { PlusCircle, Target, Clock, ArrowRight } from 'lucide-react';
+import { PlusCircle, Target, Clock, ArrowRight, Wand2 } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { FEATURES } from '@/config/features';
 
 const UnitCard: React.FC<{ unit: Unit, onClick: () => void }> = ({ unit, onClick }) => {
   return (
@@ -108,13 +110,24 @@ export function PlannerPage() {
               </div>
 
               {selectedGradeId && (
+                <div className="flex flex-col sm:flex-row gap-3">
                 <button
                   onClick={() => setShowCreateForm(true)}
-                  className="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold flex items-center justify-center gap-2 transition-colors min-h-[44px]"
+                  className="px-5 py-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-semibold flex items-center justify-center gap-2 transition-colors min-h-[44px] shadow-sm"
                 >
                   <PlusCircle className="w-4 h-4" />
                   <span>Create New Unit</span>
                 </button>
+                {FEATURES.ENABLE_LESSON_PLAN_WIZARD && (
+                  <Link
+                    to="/plan/lesson/new"
+                    className="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold flex items-center justify-center gap-2 transition-colors min-h-[44px] shadow-sm"
+                  >
+                    <Wand2 className="w-4 h-4" />
+                    <span>Plan a lesson / unit</span>
+                  </Link>
+                )}
+                </div>
               )}
             </div>
 

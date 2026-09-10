@@ -1,19 +1,14 @@
 const fs = require('fs');
+let app = fs.readFileSync('src/App.tsx', 'utf-8');
 
-let path = 'src/App.tsx';
-let content = fs.readFileSync(path, 'utf8');
-
-// Import
-content = content.replace(
-  "import { Layout } from './components/Layout';",
-  "import { Layout } from './components/Layout';\nimport { TeacherResourceHub } from './pages/TeacherResourceHub';"
+app = app.replace(
+  "import { useAnalytics } from './hooks/useAnalytics';",
+  "import { useAnalytics } from './hooks/useAnalytics';\nimport { HowItWorksPage } from './pages/HowItWorksPage';\nimport { FEATURES } from './config/features';"
 );
 
-// Route
-content = content.replace(
-  '<Route path="toolkit" element={<TeacherToolkit />} />',
-  '<Route path="toolkit" element={<TeacherToolkit />} />\n                <Route path="resources" element={<TeacherResourceHub />} />'
+app = app.replace(
+  "<Route path=\"health\" element={<Health />} />",
+  "<Route path=\"health\" element={<Health />} />\n        {FEATURES.ENABLE_HOW_IT_WORKS && <Route path=\"how-it-works\" element={<HowItWorksPage />} />}"
 );
 
-fs.writeFileSync(path, content);
-console.log('App.tsx updated');
+fs.writeFileSync('src/App.tsx', app);

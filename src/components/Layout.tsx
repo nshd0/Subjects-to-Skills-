@@ -10,6 +10,9 @@ import { GlobalSearch } from './GlobalSearch';
 
 import { NavDropdown } from './NavDropdown';
 import { BookmarksDrawer } from './BookmarksDrawer';
+import { OnboardingPrompt } from './OnboardingPrompt';
+import { OnboardingTour } from './OnboardingTour';
+import { FEATURES } from '@/config/features';
 import { gradesData } from '@/data/grades';
 
 export function Layout() {
@@ -18,6 +21,7 @@ export function Layout() {
   const { bookmarks } = useProgress();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [isBookmarksOpen, setIsBookmarksOpen] = React.useState(false);
+  const [isTourOpen, setIsTourOpen] = React.useState(false);
   const location = useLocation();
 
   React.useEffect(() => {
@@ -160,11 +164,11 @@ export function Layout() {
             {/* Main Navigation (Preserved and complete) */}
             <nav className="hidden xl:flex items-center gap-1">
               <NavLink to="/" className={navLinkClass}>Home</NavLink>
-              <NavDropdown label="Grades" to="/grades" items={gradesDropdownLinks} />
+              <div id="tour-step-map"><NavDropdown label="Grades" to="/grades" items={gradesDropdownLinks} /></div>
               <NavDropdown label="Stages" to="/stage/foundational" items={stagesLinks} />
-              <NavDropdown label="Teach & Plan" items={teachAndPlanLinks} />
-              <NavDropdown label="Assess" items={assessLinks} />
-              <NavDropdown label="Resources" items={resourcesLinks} />
+              <div id="tour-step-planner"><NavDropdown label="Teach & Plan" items={teachAndPlanLinks} /></div>
+              <div id="tour-step-assess"><NavDropdown label="Assess" items={assessLinks} /></div>
+              <div id="tour-step-resources"><NavDropdown label="Resources" items={resourcesLinks} /></div>
               <NavLink to="/roadmap" className={navLinkClass}>Roadmap</NavLink>
               <NavDropdown label="About" items={aboutLinks} />
             </nav>
@@ -172,10 +176,10 @@ export function Layout() {
             {/* Compact Nav for Mid-Sized Screens */}
             <nav className="hidden md:flex xl:hidden items-center gap-1">
               <NavLink to="/" className={navLinkClass}>Home</NavLink>
-              <NavDropdown label="Grades" to="/grades" items={gradesDropdownLinks} />
+              <div id="tour-step-map"><NavDropdown label="Grades" to="/grades" items={gradesDropdownLinks} /></div>
               <NavDropdown label="Stages" to="/stage/foundational" items={stagesLinks} />
-              <NavDropdown label="Teach & Plan" items={teachAndPlanLinks} />
-              <NavDropdown label="Assess" items={assessLinks} />
+              <div id="tour-step-planner"><NavDropdown label="Teach & Plan" items={teachAndPlanLinks} /></div>
+              <div id="tour-step-assess"><NavDropdown label="Assess" items={assessLinks} /></div>
               <NavDropdown label="More" items={[
                 ...resourcesLinks,
                 { name: 'v0.3 Content Roadmap', path: '/roadmap' },
@@ -372,6 +376,7 @@ export function Layout() {
             <div className="space-y-2">
               <h4 className="font-bold text-slate-900 dark:text-white uppercase tracking-wider text-[11px]">Transparency & Quality</h4>
               <ul className="space-y-1.5 text-slate-600 dark:text-slate-400">
+                <li><Link to="/how-it-works" className="hover:underline text-indigo-600 dark:text-indigo-400 font-semibold">How It Works</Link></li>
                 <li><Link to="/about" className="hover:underline">About & Core Principles</Link></li>
                 <li><Link to="/roadmap" className="hover:underline">v0.3 Content Roadmap</Link></li>
                 <li><Link to="/audit-status" className="hover:underline text-indigo-600 dark:text-indigo-400 font-semibold">v0.3 Audit & Status</Link></li>
@@ -398,6 +403,9 @@ export function Layout() {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-between gap-2 pt-2 text-slate-400">
+              <button onClick={() => setIsTourOpen(true)} className="text-indigo-600 dark:text-indigo-400 hover:underline font-semibold">
+                Replay onboarding tour
+              </button>
               <span>© 2026 Subjects2Skills Framework. Built for Indian K–12 education.</span>
               <span>Subjects organise knowledge · Skills organise capability</span>
             </div>
@@ -409,6 +417,12 @@ export function Layout() {
       <FeedbackWidget />
       
       <BookmarksDrawer isOpen={isBookmarksOpen} onClose={() => setIsBookmarksOpen(false)} />
+      {FEATURES.ENABLE_ONBOARDING_TOUR && (
+        <>
+          <OnboardingPrompt onStartTour={() => setIsTourOpen(true)} />
+          <OnboardingTour isOpen={isTourOpen} onClose={() => setIsTourOpen(false)} />
+        </>
+      )}
     </div>
   );
 }
