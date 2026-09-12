@@ -72,6 +72,9 @@ export function CreateAssessmentWizard() {
                 <option value="">Select Subject</option>
                 <option value="math">Mathematics</option>
                 <option value="science">Science</option>
+                <option value="english">English</option>
+                <option value="social-science">Social Science</option>
+                <option value="second-language">Second Language</option>
               </select>
               <div className="pt-2">
                 <span className="text-sm font-semibold text-slate-700 dark:text-slate-300 block mb-2">Focus Skills</span>

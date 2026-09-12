@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { BookOpen, Search, Filter, ExternalLink, ShieldCheck, CheckCircle2 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { openResources } from '@/data/resources';
+import { PageHeaderVisual } from '@/components/PageHeaderVisual';
 import { Resource } from '@/types';
 
 export function TeacherResourceHub() {
@@ -39,9 +40,10 @@ export function TeacherResourceHub() {
         <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900 dark:text-white mb-4">
           Curated Free & Open Resources
         </h1>
-        <p className="text-lg text-slate-600 dark:text-slate-300">
+        <p className="text-lg text-slate-600 dark:text-slate-300 mb-6">
           A carefully vetted collection of free, open-source, and official tools directly aligned with the CBSE syllabus and NCF 2023.
         </p>
+        <div className="flex justify-center"><PageHeaderVisual type="resources" /></div>
       </motion.div>
 
       {/* Filters and Search */}

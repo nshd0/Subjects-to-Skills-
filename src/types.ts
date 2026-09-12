@@ -87,6 +87,7 @@ export type SubjectSkillMap = {
   howLearningBecomesVisible?: string;
   howProgressIsAssessed?: string;
   supportAndExtension?: string;
+  progression?: { priorGrade?: string; nextGrade?: string; notes?: string };
 };
 
 export type ActivityType = 

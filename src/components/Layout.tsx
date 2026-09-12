@@ -164,11 +164,11 @@ export function Layout() {
             {/* Main Navigation (Preserved and complete) */}
             <nav className="hidden xl:flex items-center gap-1">
               <NavLink to="/" className={navLinkClass}>Home</NavLink>
-              <div id="tour-step-map"><NavDropdown label="Grades" to="/grades" items={gradesDropdownLinks} /></div>
+              <div id="tour-step-map-desktop"><NavDropdown label="Grades" to="/grades" items={gradesDropdownLinks} /></div>
               <NavDropdown label="Stages" to="/stage/foundational" items={stagesLinks} />
-              <div id="tour-step-planner"><NavDropdown label="Teach & Plan" items={teachAndPlanLinks} /></div>
-              <div id="tour-step-assess"><NavDropdown label="Assess" items={assessLinks} /></div>
-              <div id="tour-step-resources"><NavDropdown label="Resources" items={resourcesLinks} /></div>
+              <div id="tour-step-planner-desktop"><NavDropdown label="Teach & Plan" items={teachAndPlanLinks} /></div>
+              <div id="tour-step-assess-desktop"><NavDropdown label="Assess" items={assessLinks} /></div>
+              <div id="tour-step-resources-desktop"><NavDropdown label="Resources" items={resourcesLinks} /></div>
               <NavLink to="/roadmap" className={navLinkClass}>Roadmap</NavLink>
               <NavDropdown label="About" items={aboutLinks} />
             </nav>
@@ -176,15 +176,15 @@ export function Layout() {
             {/* Compact Nav for Mid-Sized Screens */}
             <nav className="hidden md:flex xl:hidden items-center gap-1">
               <NavLink to="/" className={navLinkClass}>Home</NavLink>
-              <div id="tour-step-map"><NavDropdown label="Grades" to="/grades" items={gradesDropdownLinks} /></div>
+              <div id="tour-step-map-compact"><NavDropdown label="Grades" to="/grades" items={gradesDropdownLinks} /></div>
               <NavDropdown label="Stages" to="/stage/foundational" items={stagesLinks} />
-              <div id="tour-step-planner"><NavDropdown label="Teach & Plan" items={teachAndPlanLinks} /></div>
-              <div id="tour-step-assess"><NavDropdown label="Assess" items={assessLinks} /></div>
-              <NavDropdown label="More" items={[
+              <div id="tour-step-planner-compact"><NavDropdown label="Teach & Plan" items={teachAndPlanLinks} /></div>
+              <div id="tour-step-assess-compact"><NavDropdown label="Assess" items={assessLinks} /></div>
+              <div id="tour-step-resources-compact"><NavDropdown label="More" items={[
                 ...resourcesLinks,
                 { name: 'v0.3 Content Roadmap', path: '/roadmap' },
                 ...aboutLinks,
-              ]} />
+              ]} /></div>
             </nav>
 
             {/* Utilities & Search */}
@@ -268,10 +268,10 @@ export function Layout() {
                   </span>
                 )}
               </button>
-              <NavLink to="/grades" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Explore by Grade</NavLink>
+              <NavLink id="tour-step-map-mobile" to="/grades" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Explore by Grade</NavLink>
               <NavLink to="/activities" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Classroom Activities</NavLink>
-              <NavLink to="/planner" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Unit & Lesson Planner (v0.4)</NavLink>
-              <NavLink to="/assessment" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Assessment Hub</NavLink>
+              <NavLink id="tour-step-planner-mobile" to="/planner" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Unit & Lesson Planner (v0.4)</NavLink>
+              <NavLink id="tour-step-assess-mobile" to="/assessment" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Assessment Hub</NavLink>
 
               <div className="py-2 border-t border-slate-100 dark:border-slate-800 space-y-1">
                 <p className="px-3 text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Stages</p>
@@ -292,7 +292,7 @@ export function Layout() {
                 <NavLink to="/assessment-mapper" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Assessment Mapper (v0.4)</NavLink>
                 <NavLink to="/pathways" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Skill Pathways (v0.4)</NavLink>
                 <NavLink to="/skill-progression" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Skills Progression</NavLink>
-                <NavLink to="/resources" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Teacher Resources</NavLink>
+                <NavLink id="tour-step-resources-mobile" to="/resources" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Teacher Resources</NavLink>
                 <NavLink to="/toolkit" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Teacher Toolkit</NavLink>
                 <NavLink to="/school-planner" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>School Implementation Planner</NavLink>
                 <NavLink to="/roadmap" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Content Roadmap</NavLink>
@@ -376,7 +376,7 @@ export function Layout() {
             <div className="space-y-2">
               <h4 className="font-bold text-slate-900 dark:text-white uppercase tracking-wider text-[11px]">Transparency & Quality</h4>
               <ul className="space-y-1.5 text-slate-600 dark:text-slate-400">
-                <li><Link to="/how-it-works" className="hover:underline text-indigo-600 dark:text-indigo-400 font-semibold">How It Works</Link></li>
+                {FEATURES.ENABLE_HOW_IT_WORKS && (<li><Link to="/how-it-works" className="hover:underline text-indigo-600 dark:text-indigo-400 font-semibold">How It Works</Link></li>)}
                 <li><Link to="/about" className="hover:underline">About & Core Principles</Link></li>
                 <li><Link to="/roadmap" className="hover:underline">v0.3 Content Roadmap</Link></li>
                 <li><Link to="/audit-status" className="hover:underline text-indigo-600 dark:text-indigo-400 font-semibold">v0.3 Audit & Status</Link></li>
@@ -403,9 +403,11 @@ export function Layout() {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-between gap-2 pt-2 text-slate-400">
-              <button onClick={() => setIsTourOpen(true)} className="text-indigo-600 dark:text-indigo-400 hover:underline font-semibold">
-                Replay onboarding tour
-              </button>
+              {FEATURES.ENABLE_ONBOARDING_TOUR && (
+                <button onClick={() => { setIsTourOpen(true); if (window.innerWidth < 768) setIsMobileMenuOpen(true); }} className="text-indigo-600 dark:text-indigo-400 hover:underline font-semibold">
+                  Replay onboarding tour
+                </button>
+              )}
               <span>© 2026 Subjects2Skills Framework. Built for Indian K–12 education.</span>
               <span>Subjects organise knowledge · Skills organise capability</span>
             </div>
@@ -419,7 +421,7 @@ export function Layout() {
       <BookmarksDrawer isOpen={isBookmarksOpen} onClose={() => setIsBookmarksOpen(false)} />
       {FEATURES.ENABLE_ONBOARDING_TOUR && (
         <>
-          <OnboardingPrompt onStartTour={() => setIsTourOpen(true)} />
+          <OnboardingPrompt onStartTour={() => { setIsTourOpen(true); if (window.innerWidth < 768) setIsMobileMenuOpen(true); }} />
           <OnboardingTour isOpen={isTourOpen} onClose={() => setIsTourOpen(false)} />
         </>
       )}

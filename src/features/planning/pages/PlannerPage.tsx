@@ -8,6 +8,7 @@ import { CreateUnitForm } from '../components/CreateUnitForm';
 import { PlusCircle, Target, Clock, ArrowRight, Wand2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { FEATURES } from '@/config/features';
+import { PageHeaderVisual } from '@/components/PageHeaderVisual';
 
 const UnitCard: React.FC<{ unit: Unit, onClick: () => void }> = ({ unit, onClick }) => {
   return (
@@ -75,6 +76,8 @@ export function PlannerPage() {
             Build and map competency-based curricular units directly to skills.
           </p>
         </header>
+
+        <PageHeaderVisual type="planner" />
 
         {showCreateForm ? (
           <CreateUnitForm 

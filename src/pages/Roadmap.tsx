@@ -5,7 +5,7 @@ import {
   AlertCircle, Layers, Sparkles, Check, Milestone, 
   Calendar, Flag, Filter, ArrowUpRight
 } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { gradesData } from '@/data/grades';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 
@@ -89,6 +89,9 @@ const PHASES: RoadmapPhase[] = [
 
 export function Roadmap() {
   const [filter, setFilter] = useState<'all' | 'in-development' | 'planned'>('all');
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const subjectParam = searchParams.get('subject');
 
   const getStatusBadge = (status: string) => {
     switch (status) {
@@ -524,6 +527,17 @@ export function Roadmap() {
           </div>
         </div>
 
+        
+        {/* Fallback for unmapped subject/unit from Grade8Hub */}
+        {subjectParam && (
+          <div className="bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/60 rounded-2xl p-4 mb-6 flex items-center gap-3">
+            <AlertCircle className="w-5 h-5 text-amber-600 dark:text-amber-500 shrink-0" />
+            <p className="text-sm font-medium text-amber-800 dark:text-amber-300">
+              Skill mapping for this unit is in progress &mdash; you can still create a plan manually.
+            </p>
+          </div>
+        )}
+        
         {/* Informational Callout */}
         <div className="p-6 rounded-2xl bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-900/60 text-indigo-950 dark:text-indigo-200 space-y-2">
           <h3 className="text-sm font-bold flex items-center gap-2">

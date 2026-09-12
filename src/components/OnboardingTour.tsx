@@ -2,36 +2,37 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, ChevronRight, ChevronLeft, CheckCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { FEATURES } from '@/config/features';
 
 interface TourStep {
-  targetId: string | null;
+  targetIds: string[] | null;
   title: string;
   content: string;
 }
 
 const steps: TourStep[] = [
   {
-    targetId: 'tour-step-map',
+    targetIds: ['tour-step-map-desktop', 'tour-step-map-compact', 'tour-step-map-mobile'],
     title: 'The Skill Map',
     content: 'See how skills grow across grades, so you know what to build on and where you’re heading.',
   },
   {
-    targetId: 'tour-step-planner',
+    targetIds: ['tour-step-planner-desktop', 'tour-step-planner-compact', 'tour-step-planner-mobile'],
     title: 'Plan with Purpose',
     content: 'Plan units directly from skills, aligned to your curriculum — no more starting from scratch.',
   },
   {
-    targetId: 'tour-step-assess',
+    targetIds: ['tour-step-assess-desktop', 'tour-step-assess-compact', 'tour-step-assess-mobile'],
     title: 'Assess Meaningfully',
     content: 'Design tasks and rubrics that match each skill, so assessment feels connected to what you teach.',
   },
   {
-    targetId: 'tour-step-resources',
+    targetIds: ['tour-step-resources-desktop', 'tour-step-resources-compact', 'tour-step-resources-mobile'],
     title: 'Ready-to-Use Resources',
     content: 'Find open, verified resources linked to each skill — ready to use with your class.',
   },
   {
-    targetId: null,
+    targetIds: null,
     title: 'You’re all set!',
     content: 'Start planning, exploring, or assessing whenever you’re ready.',
   }
@@ -50,16 +51,26 @@ export function OnboardingTour({ isOpen, onClose }: { isOpen: boolean, onClose: 
     }
 
     const updateRect = () => {
-      const targetId = steps[currentStep].targetId;
-      if (!targetId) {
+      const targetIds = steps[currentStep].targetIds;
+      if (!targetIds) {
         setTargetRect(null);
         return;
       }
       
-      const el = document.getElementById(targetId);
-      if (el) {
-        setTargetRect(el.getBoundingClientRect());
-      } else {
+      let foundEl = null;
+      for (const id of targetIds) {
+        const el = document.getElementById(id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.width > 0 && rect.height > 0) {
+            foundEl = el;
+            setTargetRect(rect);
+            break;
+          }
+        }
+      }
+      
+      if (!foundEl) {
         setTargetRect(null);
       }
     };
@@ -153,15 +164,24 @@ export function OnboardingTour({ isOpen, onClose }: { isOpen: boolean, onClose: 
           <div className="flex items-center justify-between">
             {isLast ? (
                <div className="flex flex-col w-full gap-2">
-                 <button onClick={() => { onClose(); navigate('/grades'); }} className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-3 rounded-lg text-sm transition-colors min-h-[44px]">
-                    Start with the Skill Map
-                 </button>
+                 {FEATURES.ENABLE_SKILL_VISUALS && (
+                   <button onClick={() => { onClose(); navigate('/skill-map'); }} className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-3 rounded-lg text-sm transition-colors min-h-[44px]">
+                      Start with the Skill Map
+                   </button>
+                 )}
                  <button onClick={() => { onClose(); navigate('/planner'); }} className="w-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-semibold py-2 px-3 rounded-lg text-sm transition-colors min-h-[44px]">
                     Open the Planner
                  </button>
-                 <button onClick={() => { onClose(); navigate('/how-it-works'); }} className="w-full text-indigo-600 dark:text-indigo-400 font-semibold py-2 px-3 rounded-lg text-sm transition-colors min-h-[44px]">
-                    Learn how it works
-                 </button>
+                 {FEATURES.ENABLE_HOW_IT_WORKS && (
+                   <button onClick={() => { onClose(); navigate('/how-it-works'); }} className="w-full text-indigo-600 dark:text-indigo-400 font-semibold py-2 px-3 rounded-lg text-sm transition-colors min-h-[44px]">
+                      Learn how it works
+                   </button>
+                 )}
+                 {!FEATURES.ENABLE_SKILL_VISUALS && !FEATURES.ENABLE_HOW_IT_WORKS && (
+                   <button onClick={() => { onClose(); navigate('/grades'); }} className="w-full text-indigo-600 dark:text-indigo-400 font-semibold py-2 px-3 rounded-lg text-sm transition-colors min-h-[44px]">
+                      Explore Grades
+                   </button>
+                 )}
                </div>
             ) : (
               <>

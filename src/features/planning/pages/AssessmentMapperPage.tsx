@@ -6,6 +6,7 @@ import { useAllSkillsForGrade, useAssessmentsForSkill } from '../useAssessments'
 import { Target, AlertCircle, Wand2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { FEATURES } from '@/config/features';
+import { PageHeaderVisual } from '@/components/PageHeaderVisual';
 
 export function AssessmentMapperPage() {
   const [selectedGradeId, setSelectedGradeId] = useState<string | null>(null);
@@ -38,9 +39,10 @@ export function AssessmentMapperPage() {
               <Target className="w-8 h-8 text-indigo-500" />
               Skill–Assessment Mapper
             </h1>
-            <p className="mt-2 text-sm text-slate-500 dark:text-slate-400 max-w-2xl">
+            <p className="mt-2 text-sm text-slate-500 dark:text-slate-400 max-w-2xl mb-4">
               Map grade-specific competencies to standardized rubrics and actionable assessment tasks. Select a grade and a target skill to view associated assessments.
             </p>
+            <PageHeaderVisual type="assessment" />
           </div>
           {FEATURES.ENABLE_ASSESSMENT_WIZARD && (
             <Link

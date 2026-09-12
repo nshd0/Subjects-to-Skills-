@@ -36,7 +36,11 @@ import { PlannerRoute, AssessmentMapperRoute, SkillPathwaysRoute } from './featu
 import { useAnalytics } from './hooks/useAnalytics';
 import { CreateLessonPlanWizard } from './features/planning/components/CreateLessonPlanWizard';
 import { CreateAssessmentWizard } from './features/planning/components/CreateAssessmentWizard';
+import { Grade8Collaborate } from './features/planning/pages/Grade8Collaborate';
+import { CreateIntegratedUnitWizard } from './features/planning/components/CreateIntegratedUnitWizard';
+import { IntegratedUnitDetail } from './features/planning/pages/IntegratedUnitDetail';
 import { HowItWorksPage } from './pages/HowItWorksPage';
+import { SkillMapPage } from './pages/SkillMapPage';
 import { FEATURES } from './config/features';
 
 function AppContent() {
@@ -66,6 +70,9 @@ function AppContent() {
         {/* v0.4 Planning Module Routes */}
         <Route path="planner" element={<PlannerRoute />} />
         {FEATURES.ENABLE_LESSON_PLAN_WIZARD && <Route path="plan/lesson/new" element={<CreateLessonPlanWizard />} />}
+        {FEATURES.ENABLE_CROSS_SUBJECT_COLLAB && <Route path="grade/8/collaborate" element={<Grade8Collaborate />} />}
+        {FEATURES.ENABLE_CROSS_SUBJECT_COLLAB && <Route path="plan/integrated/new" element={<CreateIntegratedUnitWizard />} />}
+        {FEATURES.ENABLE_CROSS_SUBJECT_COLLAB && <Route path="plan/integrated/:id" element={<IntegratedUnitDetail />} />}
         <Route path="school-planner" element={<SchoolPlanner />} />
         <Route path="assess" element={<AssessmentMapperRoute />} />
         {FEATURES.ENABLE_ASSESSMENT_WIZARD && <Route path="assess/new" element={<CreateAssessmentWizard />} />}
@@ -76,6 +83,7 @@ function AppContent() {
         <Route path="about-content" element={<AboutContent />} />
         <Route path="health" element={<Health />} />
         {FEATURES.ENABLE_HOW_IT_WORKS && <Route path="how-it-works" element={<HowItWorksPage />} />}
+        {FEATURES.ENABLE_SKILL_VISUALS && <Route path="skill-map" element={<SkillMapPage />} />}
         {/* SPA 404 Catch-All Route */}
         <Route path="*" element={<NotFound />} />
       </Route>

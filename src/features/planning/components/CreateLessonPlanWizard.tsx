@@ -88,6 +88,8 @@ export function CreateLessonPlanWizard() {
                   <option value="math">Mathematics</option>
                   <option value="science">Science</option>
                   <option value="english">English</option>
+                  <option value="social-science">Social Science</option>
+                  <option value="second-language">Second Language</option>
                 </select>
               </div>
               <div>

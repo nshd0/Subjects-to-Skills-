@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { BookOpen, Map, Target, Layers, FileText, FileCheck, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { FEATURES } from '@/config/features';
+import { subjectMaps } from '@/data/subjectMaps';
 
 export function HowItWorksPage() {
   const [activeStep, setActiveStep] = useState<number>(0);
+  const [exampleData] = useState(() => subjectMaps[Math.floor(Math.random() * subjectMaps.length)]);
 
   const steps = [
     {
@@ -15,12 +18,12 @@ export function HowItWorksPage() {
       detail: (
         <div className="bg-slate-50 dark:bg-slate-900 rounded-xl p-4 sm:p-6 border border-slate-200 dark:border-slate-800 text-sm">
           <p className="mb-4 text-slate-600 dark:text-slate-400">
-            Instead of just covering a textbook chapter, you see exactly what skills students are building. For example, "Fractions" becomes the skill of "Proportional Reasoning".
+            Instead of just covering a textbook chapter, you see exactly what skills students are building. For example, a unit in {exampleData.subject} maps directly to real competencies.
           </p>
-          <div className="flex items-center gap-4 text-slate-700 dark:text-slate-300 font-medium bg-white dark:bg-slate-950 p-3 rounded-lg border border-slate-100 dark:border-slate-800">
-            <span className="bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-400 px-3 py-1 rounded-full text-xs">Math Chapter 4</span>
-            <ArrowRight className="w-4 h-4 text-slate-400" />
-            <span className="bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-400 px-3 py-1 rounded-full text-xs">Skill: Proportional Reasoning</span>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4 text-slate-700 dark:text-slate-300 font-medium bg-white dark:bg-slate-950 p-3 rounded-lg border border-slate-100 dark:border-slate-800">
+            <span className="bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-400 px-3 py-1 rounded-full text-xs text-center">{exampleData.learningArea}</span>
+            <ArrowRight className="hidden sm:block w-4 h-4 text-slate-400 shrink-0" />
+            <span className="bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-400 px-3 py-1 rounded-full text-xs text-center line-clamp-2" title={exampleData.primarySkill || exampleData.competency}>Skill: {exampleData.primarySkill || exampleData.competency}</span>
           </div>
         </div>
       )
@@ -36,10 +39,10 @@ export function HowItWorksPage() {
             Our planner helps you design activities that explicitly target the skills. Then, the Assessment Mapper gives you 4-tier rubrics (from Emerging to Transfer) so you can accurately measure student growth.
           </p>
           <div className="flex items-start gap-3 bg-white dark:bg-slate-950 p-3 rounded-lg border border-slate-100 dark:border-slate-800">
-            <FileCheck className="w-5 h-5 text-indigo-500 mt-0.5" />
+            <FileCheck className="w-5 h-5 text-indigo-500 mt-0.5 shrink-0" />
             <div>
-              <p className="font-semibold text-slate-800 dark:text-slate-200">Sample Task: Fraction Scavenger Hunt</p>
-              <p className="text-xs text-slate-500 mt-1">Measures: Problem Solving • 45 minutes</p>
+              <p className="font-semibold text-slate-800 dark:text-slate-200 line-clamp-1">Sample Task: {exampleData.studentOutput}</p>
+              <p className="text-xs text-slate-500 mt-1">Measures: {exampleData.keyConcepts?.[0] || 'Core Skill'} • Via {exampleData.pedagogy?.[0] || 'Activity'}</p>
             </div>
           </div>
         </div>
@@ -113,9 +116,11 @@ export function HowItWorksPage() {
         </div>
 
         <div className="flex flex-col sm:flex-row justify-center gap-4">
-          <Link to="/grades" className="px-6 py-3 rounded-xl font-semibold bg-indigo-600 hover:bg-indigo-700 text-white transition-colors text-center shadow-sm min-h-[44px]">
+          {FEATURES.ENABLE_SKILL_VISUALS && (
+          <Link to="/skill-map" className="px-6 py-3 rounded-xl font-semibold bg-indigo-600 hover:bg-indigo-700 text-white transition-colors text-center shadow-sm min-h-[44px]">
             Explore the Skill Map
           </Link>
+          )}
           <Link to="/planner" className="px-6 py-3 rounded-xl font-semibold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors text-center shadow-sm min-h-[44px]">
             Try the Planner
           </Link>

@@ -15,9 +15,15 @@ import { ActivityCard } from '@/components/ActivityCard';
 import { SubjectSkillMapCard } from '@/components/SubjectSkillMapCard';
 import { SkillRubric } from '@/components/SkillRubric';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
+import { FEATURES } from '@/config/features';
+import { Grade8Hub } from '@/features/planning/pages/Grade8Hub';
 
 export function GradePage() {
   const { gradeId } = useParams<{ gradeId: string }>();
+
+  if (FEATURES.ENABLE_GRADE8_FULL && (gradeId === '8' || gradeId === 'grade-8')) {
+    return <Grade8Hub />;
+  }
   const location = useLocation();
 
   // Safely find grade by id or slug alias

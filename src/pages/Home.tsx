@@ -8,6 +8,7 @@ import { motion } from 'motion/react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
+import { FEATURES } from '@/config/features';
 import { stages, secondaryStage, homeHeroImage } from '@/data/curriculum';
 
 const containerVariants = {
@@ -85,25 +86,13 @@ export function Home() {
               </h1>
 
               <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl">
-                Grade-wise learning pathways for Indian school classrooms. Connect disciplinary subject curricula with 21st-century competencies, hands-on activities, and authentic assessment evidence.
+                A skill-centred view of school curriculum for teachers — with planning, assessment, and open resources.
               </p>
 
               {/* Status Notice Banner */}
-              <div className="bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/80 p-4 rounded-xl text-xs text-slate-700 dark:text-slate-300 leading-relaxed max-w-2xl space-y-3">
-                <div>
-                  <span className="font-bold text-slate-900 dark:text-white flex items-center gap-1.5 mb-1">
-                    <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-                    v0.4.3 Content Upgrade Live
-                  </span>
-                  <p>
-                    All 13 grade profiles (Pre-school → Grade 12) are now explicitly aligned with CBSE (2025–26) subjects, NCERT textbooks, and NCF 2023 competencies. 
-                  </p>
-                </div>
-                <div className="pt-2 border-t border-slate-200 dark:border-slate-700">
-                  <Link to="/about-content" className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline flex items-center gap-1">
-                    Read our alignment methodology <ArrowRight className="w-3 h-3" />
-                  </Link>
-                </div>
+              <div className="bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/80 p-4 rounded-xl text-xs text-slate-700 dark:text-slate-300 leading-relaxed max-w-2xl flex items-center gap-3">
+                 <ShieldCheck className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                 <p className="font-medium">Currently aligned to CBSE/NCERT/NCF 2023, designed to work with any standard curriculum.</p>
               </div>
 
               {/* Primary CTA Buttons */}
