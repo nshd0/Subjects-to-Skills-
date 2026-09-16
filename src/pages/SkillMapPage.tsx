@@ -2,6 +2,8 @@ import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { BookOpen, Map, Target, Layers, ArrowRight, Activity, Filter, FileText } from 'lucide-react';
 import { subjectMaps } from '@/data/subjectMaps';
+import { SceneCanvas } from '@/components/3d/SceneCanvas';
+import { SkillMap3D } from '@/components/3d/SkillMap3D';
 import { SubjectSkillMap } from '@/types';
 import { FEATURES } from '@/config/features';
 
@@ -10,6 +12,7 @@ const STAGES = ['Foundational', 'Preparatory', 'Middle', 'Secondary'];
 export function SkillMapPage() {
   const [selectedSubject, setSelectedSubject] = useState<string>('Mathematics');
   const [selectedNode, setSelectedNode] = useState<SubjectSkillMap | null>(null);
+  const [viewMode, setViewMode] = useState<'2d' | '3d'>('2d');
 
   const subjects = useMemo(() => Array.from(new Set(subjectMaps.map(s => s.subject))).sort(), []);
 
@@ -39,22 +42,40 @@ export function SkillMapPage() {
             </p>
           </div>
           
-          <div className="w-full md:w-auto">
-            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
-              Filter by Subject
-            </label>
-            <select
-              value={selectedSubject}
-              onChange={(e) => {
-                setSelectedSubject(e.target.value);
-                setSelectedNode(null);
-              }}
-              className="w-full md:w-64 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white rounded-xl px-4 py-2.5 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors appearance-none"
-            >
-              {subjects.map(sub => (
-                <option key={sub} value={sub}>{sub}</option>
-              ))}
-            </select>
+          <div className="w-full md:w-auto flex flex-col sm:flex-row items-start sm:items-end gap-4">
+            <div>
+              <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
+                Filter by Subject
+              </label>
+              <select
+                value={selectedSubject}
+                onChange={(e) => {
+                  setSelectedSubject(e.target.value);
+                  setSelectedNode(null);
+                }}
+                className="w-full md:w-64 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white rounded-xl px-4 py-2.5 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors appearance-none"
+              >
+                {subjects.map(sub => (
+                  <option key={sub} value={sub}>{sub}</option>
+                ))}
+              </select>
+            </div>
+            <div>
+               <div className="flex bg-slate-100 dark:bg-slate-950 rounded-xl p-1 border border-slate-200 dark:border-slate-800">
+                 <button 
+                   onClick={() => setViewMode('2d')} 
+                   className={`px-4 py-1.5 rounded-lg text-sm font-semibold transition-colors ${viewMode === '2d' ? 'bg-white dark:bg-slate-800 text-indigo-600 shadow-sm' : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}
+                 >
+                   2D Map
+                 </button>
+                 <button 
+                   onClick={() => setViewMode('3d')} 
+                   className={`px-4 py-1.5 rounded-lg text-sm font-semibold transition-colors ${viewMode === '3d' ? 'bg-white dark:bg-slate-800 text-indigo-600 shadow-sm' : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}
+                 >
+                   3D Terrain
+                 </button>
+               </div>
+            </div>
           </div>
         </div>
 
@@ -63,7 +84,20 @@ export function SkillMapPage() {
           
           {/* Progression Nodes */}
           <div className="lg:col-span-2 space-y-6">
-            {mapData.every(stage => stage.items.length === 0) ? (
+            {viewMode === '3d' && (
+              <div className="w-full h-[500px]">
+                <SceneCanvas>
+                  <SkillMap3D 
+                    skills={mapData.flatMap(stage => stage.items)} 
+                    onNodeClick={(skill) => setSelectedNode(skill)} 
+                  />
+                </SceneCanvas>
+              </div>
+            )}
+            
+            {viewMode === '2d' && (
+              <>
+                {mapData.every(stage => stage.items.length === 0) ? (
               <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-12 text-center">
                  <Filter className="w-12 h-12 text-slate-300 dark:text-slate-700 mx-auto mb-4" />
                  <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">No mappings found</h3>
@@ -112,6 +146,8 @@ export function SkillMapPage() {
                   ))}
                 </div>
               </div>
+                )}
+              </>
             )}
           </div>
           

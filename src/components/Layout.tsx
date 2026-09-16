@@ -89,7 +89,7 @@ export function Layout() {
     { name: 'About & Principles', path: '/about' },
     { name: 'Pedagogical Framework', path: '/about-framework' },
     { name: 'Changelog', path: '/changelog' },
-    { name: 'v0.3 Audit & Status', path: '/audit-status' },
+    { name: 'v0.4 Audit & Status', path: '/audit-status' },
     { name: 'Baseline Audit Report', path: '/audit' },
   ];
 
@@ -114,13 +114,13 @@ export function Layout() {
   return (
     <div className="min-h-screen overflow-x-hidden bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50 flex flex-col font-sans transition-colors duration-200">
       
-      {/* Target Version Banner: v0.3 — Milestone 1 Live */}
+      {/* Target Version Banner: v0.4 — Milestone 1 Live */}
       <div className="bg-indigo-900 text-white px-4 py-2.5 text-xs font-medium border-b border-indigo-800 print:hidden relative">
         <div className="container mx-auto flex flex-col md:flex-row items-center justify-between gap-2 text-center md:text-left">
           <div className="flex flex-wrap items-center justify-center md:justify-start gap-2">
             <span className="font-bold border border-indigo-400/50 px-2 py-0.5 rounded text-[11px] bg-indigo-800/80 tracking-wider flex items-center gap-1 text-indigo-200">
               <Sparkles className="w-3 h-3 text-amber-300" />
-              v0.3 · Milestone 1 Live
+              v0.4 · Milestone 1 Live
             </span>
             <span className="text-slate-200 font-medium hidden sm:inline">
               Subjects organise knowledge. Skills organise capability.
@@ -182,7 +182,7 @@ export function Layout() {
               <div id="tour-step-assess-compact"><NavDropdown label="Assess" items={assessLinks} /></div>
               <div id="tour-step-resources-compact"><NavDropdown label="More" items={[
                 ...resourcesLinks,
-                { name: 'v0.3 Content Roadmap', path: '/roadmap' },
+                { name: 'v0.4 Content Roadmap', path: '/roadmap' },
                 ...aboutLinks,
               ]} /></div>
             </nav>
@@ -343,7 +343,7 @@ export function Layout() {
                 A public educational framework demonstrating how existing CBSE subjects can be connected to skills, pedagogy stages, classroom activities, assessment evidence, and free open resources.
               </p>
               <div className="inline-block px-2 py-1 rounded bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 font-bold text-[10px]">
-                v0.3 · Milestone 1 Live
+                v0.4 · Milestone 1 Live
               </div>
             </div>
 
@@ -378,9 +378,9 @@ export function Layout() {
               <ul className="space-y-1.5 text-slate-600 dark:text-slate-400">
                 {FEATURES.ENABLE_HOW_IT_WORKS && (<li><Link to="/how-it-works" className="hover:underline text-indigo-600 dark:text-indigo-400 font-semibold">How It Works</Link></li>)}
                 <li><Link to="/about" className="hover:underline">About & Core Principles</Link></li>
-                <li><Link to="/roadmap" className="hover:underline">v0.3 Content Roadmap</Link></li>
-                <li><Link to="/audit-status" className="hover:underline text-indigo-600 dark:text-indigo-400 font-semibold">v0.3 Audit & Status</Link></li>
-                <li><Link to="/audit-v0-3" className="hover:underline">v0.3 Technical Audit Report</Link></li>
+                <li><Link to="/roadmap" className="hover:underline">v0.4 Content Roadmap</Link></li>
+                <li><Link to="/audit-status" className="hover:underline text-indigo-600 dark:text-indigo-400 font-semibold">v0.4 Audit & Status</Link></li>
+                <li><Link to="/audit-v0-3" className="hover:underline">v0.4 Technical Audit Report</Link></li>
                 <li><Link to="/audit" className="hover:underline">v0.2 Baseline Audit Report</Link></li>
                 <li><Link to="/about#feedback" className="hover:underline">Submit Educator Feedback</Link></li>
               </ul>
