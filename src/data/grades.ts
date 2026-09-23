@@ -234,7 +234,13 @@ export const gradesData: (GradeProfile & {
       "Physical Education & Yoga"
     ],
     status: "in-development",
-    cbseSubjects: ["Mathematics", "Science", "Social Science", "English", "Hindi"],
+    curriculumFramework: "NCF-SE-2023",
+    textbookStatus: "new-ncert-published",
+    academicSession: "2026-27",
+    lastVerifiedDate: "2026-09-18",
+    
+  
+    cbseSubjects: ["Mathematics", "EVS", "English", "Hindi"],
     ncrtBooks: [
       { subject: "Mathematics", title: "NCERT Mathematics", url: "https://ncert.nic.in/textbook.php" },
       { subject: "Science", title: "NCERT Science", url: "https://ncert.nic.in/textbook.php" },
@@ -302,7 +308,13 @@ export const gradesData: (GradeProfile & {
       "Physical Education & Team Sports"
     ],
     status: "planned",
-    cbseSubjects: ["Mathematics", "Science", "Social Science", "English", "Hindi"],
+    curriculumFramework: "NCF-SE-2023",
+    textbookStatus: "new-ncert-published",
+    academicSession: "2026-27",
+    lastVerifiedDate: "2026-09-18",
+    
+  
+    cbseSubjects: ["Mathematics", "EVS", "English", "Hindi"],
     ncrtBooks: [
       { subject: "Mathematics", title: "NCERT Mathematics", url: "https://ncert.nic.in/textbook.php" },
       { subject: "Science", title: "NCERT Science", url: "https://ncert.nic.in/textbook.php" },
@@ -365,7 +377,13 @@ export const gradesData: (GradeProfile & {
       "Physical Education & Health Habits"
     ],
     status: "planned",
-    cbseSubjects: ["Mathematics", "Science", "Social Science", "English", "Hindi"],
+    curriculumFramework: "NCF-SE-2023",
+    textbookStatus: "new-ncert-published",
+    academicSession: "2026-27",
+    lastVerifiedDate: "2026-09-18",
+    
+  
+    cbseSubjects: ["Mathematics", "EVS", "English", "Hindi"],
     ncrtBooks: [
       { subject: "Mathematics", title: "NCERT Mathematics", url: "https://ncert.nic.in/textbook.php" },
       { subject: "Science", title: "NCERT Science", url: "https://ncert.nic.in/textbook.php" },
@@ -432,7 +450,13 @@ export const gradesData: (GradeProfile & {
       "Art & Physical Education"
     ],
     status: "in-development",
-    cbseSubjects: ["Mathematics", "Science", "Social Science", "English", "Hindi"],
+    curriculumFramework: "NCF-SE-2023",
+    textbookStatus: "new-ncert-published",
+    academicSession: "2026-27",
+    lastVerifiedDate: "2026-09-18",
+    thirdLanguageRequired: true,
+  
+    cbseSubjects: ["Mathematics", "Science", "Social Science", "English", "Second Language", "Third Language"],
     ncrtBooks: [
       { subject: "Mathematics", title: "NCERT Mathematics", url: "https://ncert.nic.in/textbook.php" },
       { subject: "Science", title: "NCERT Science", url: "https://ncert.nic.in/textbook.php" },
@@ -502,7 +526,13 @@ export const gradesData: (GradeProfile & {
       "Art & Physical Education"
     ],
     status: "in-development",
-    cbseSubjects: ["Mathematics", "Science", "Social Science", "English", "Hindi"],
+    curriculumFramework: "NCF-SE-2023",
+    textbookStatus: "new-ncert-published",
+    academicSession: "2026-27",
+    lastVerifiedDate: "2026-09-18",
+    thirdLanguageRequired: true,
+  
+    cbseSubjects: ["Mathematics", "Science", "Social Science", "English", "Second Language", "Third Language"],
     ncrtBooks: [
       { subject: "Mathematics", title: "NCERT Mathematics", url: "https://ncert.nic.in/textbook.php" },
       { subject: "Science", title: "NCERT Science", url: "https://ncert.nic.in/textbook.php" },
@@ -572,7 +602,13 @@ export const gradesData: (GradeProfile & {
       "Vocational Arts & Technology"
     ],
     status: "in-development",
-    cbseSubjects: ["Mathematics", "Science", "Social Science", "English", "Hindi"],
+    curriculumFramework: "NCF-SE-2023",
+    textbookStatus: "new-ncert-published",
+    academicSession: "2026-27",
+    lastVerifiedDate: "2026-09-18",
+    thirdLanguageRequired: true,
+  
+    cbseSubjects: ["Mathematics", "Science", "Social Science", "English", "Second Language", "Third Language"],
     ncrtBooks: [
       { subject: "Mathematics", title: "NCERT Mathematics", url: "https://ncert.nic.in/textbook.php" },
       { subject: "Science", title: "NCERT Science", url: "https://ncert.nic.in/textbook.php" },
@@ -643,7 +679,14 @@ export const gradesData: (GradeProfile & {
       "Art & Physical Education"
     ],
     status: "in-development",
-    cbseSubjects: ["Mathematics", "Science", "Social Science", "English", "Hindi"],
+    curriculumFramework: "NCF-SE-2023",
+    textbookStatus: "new-ncert-rolling-out",
+    academicSession: "2026-27",
+    lastVerifiedDate: "2026-09-18",
+    advancedTrackAvailable: true,
+    thirdLanguageRequired: true,
+  
+    cbseSubjects: ["Mathematics", "Science", "Social Science", "English", "Second Language", "Third Language"],
     ncrtBooks: [
       { subject: "Mathematics", title: "NCERT Mathematics", url: "https://ncert.nic.in/textbook.php" },
       { subject: "Science", title: "NCERT Science", url: "https://ncert.nic.in/textbook.php" },
@@ -712,7 +755,13 @@ export const gradesData: (GradeProfile & {
       "Health & Physical Well-being"
     ],
     status: "planned",
-    cbseSubjects: ["Mathematics", "Science", "Social Science", "English", "Hindi"],
+    curriculumFramework: "pre-NCF-2023",
+    textbookStatus: "existing-textbooks-continuing",
+    academicSession: "2026-27",
+    lastVerifiedDate: "2026-09-18",
+    thirdLanguageRequired: true,
+  
+    cbseSubjects: ["Mathematics", "Science", "Social Science", "English", "Second Language", "Third Language"],
     ncrtBooks: [
       { subject: "Mathematics", title: "NCERT Mathematics", url: "https://ncert.nic.in/textbook.php" },
       { subject: "Science", title: "NCERT Science", url: "https://ncert.nic.in/textbook.php" },

@@ -56,7 +56,14 @@ export function Layout() {
     },
   ];
 
-  const anchorGrades = gradesData.filter(g => ['grade-3', 'grade-6', 'grade-9', 'grade-11'].includes(g.id));
+  let anchorGradesIds = ['grade-3', 'grade-6', 'grade-9', 'grade-11'];
+  if (!FEATURES.ENABLE_GRADE_RANGE_3_10) {
+    anchorGradesIds = ['grade-11'];
+    if (FEATURES.ENABLE_GRADE8_FULL) anchorGradesIds.unshift('grade-8');
+  } else {
+    if (FEATURES.ENABLE_GRADE8_FULL) anchorGradesIds.splice(2, 0, 'grade-8');
+  }
+  const anchorGrades = gradesData.filter(g => anchorGradesIds.includes(g.id));
   const gradesDropdownLinks = [
     { name: 'Explore All Grades', fullName: 'View Dashboard', path: '/grades', badge: 'Overview' },
     ...anchorGrades.map(grade => ({
@@ -69,9 +76,9 @@ export function Layout() {
 
   const teachAndPlanLinks = [
     { name: 'Classroom Activities', path: '/activities' },
-    { name: 'Unit & Lesson Planner (v0.4)', path: '/planner' },
-    { name: 'Assessment Mapper (v0.4)', path: '/assessment-mapper' },
-    { name: 'Skill Pathways (v0.4)', path: '/pathways' },
+    { name: 'Unit & Lesson Planner (v0.5)', path: '/planner' },
+    { name: 'Assessment Mapper (v0.5)', path: '/assessment-mapper' },
+    { name: 'Skill Pathways (v0.5)', path: '/pathways' },
   ];
 
   const assessLinks = [
@@ -114,13 +121,13 @@ export function Layout() {
   return (
     <div className="min-h-screen overflow-x-hidden bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50 flex flex-col font-sans transition-colors duration-200">
       
-      {/* Target Version Banner: v0.4 — Milestone 1 Live */}
+      {/* Target Version Banner: v0.5 — Full CBSE AI Tracks Live */}
       <div className="bg-indigo-900 text-white px-4 py-2.5 text-xs font-medium border-b border-indigo-800 print:hidden relative">
         <div className="container mx-auto flex flex-col md:flex-row items-center justify-between gap-2 text-center md:text-left">
           <div className="flex flex-wrap items-center justify-center md:justify-start gap-2">
             <span className="font-bold border border-indigo-400/50 px-2 py-0.5 rounded text-[11px] bg-indigo-800/80 tracking-wider flex items-center gap-1 text-indigo-200">
               <Sparkles className="w-3 h-3 text-amber-300" />
-              v0.4 · Milestone 1 Live
+              v0.5 · CBSE AI Tracks Live
             </span>
             <span className="text-slate-200 font-medium hidden sm:inline">
               Subjects organise knowledge. Skills organise capability.
@@ -270,7 +277,7 @@ export function Layout() {
               </button>
               <NavLink id="tour-step-map-mobile" to="/grades" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Explore by Grade</NavLink>
               <NavLink to="/activities" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Classroom Activities</NavLink>
-              <NavLink id="tour-step-planner-mobile" to="/planner" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Unit & Lesson Planner (v0.4)</NavLink>
+              <NavLink id="tour-step-planner-mobile" to="/planner" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Unit & Lesson Planner (v0.5)</NavLink>
               <NavLink id="tour-step-assess-mobile" to="/assessment" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Assessment Hub</NavLink>
 
               <div className="py-2 border-t border-slate-100 dark:border-slate-800 space-y-1">
@@ -289,8 +296,8 @@ export function Layout() {
 
               <div className="py-2 border-t border-slate-100 dark:border-slate-800 space-y-1">
                 <p className="px-3 text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">More</p>
-                <NavLink to="/assessment-mapper" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Assessment Mapper (v0.4)</NavLink>
-                <NavLink to="/pathways" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Skill Pathways (v0.4)</NavLink>
+                <NavLink to="/assessment-mapper" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Assessment Mapper (v0.5)</NavLink>
+                <NavLink to="/pathways" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Skill Pathways (v0.5)</NavLink>
                 <NavLink to="/skill-progression" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Skills Progression</NavLink>
                 <NavLink id="tour-step-resources-mobile" to="/resources" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Teacher Resources</NavLink>
                 <NavLink to="/toolkit" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Teacher Toolkit</NavLink>
@@ -343,7 +350,7 @@ export function Layout() {
                 A public educational framework demonstrating how existing CBSE subjects can be connected to skills, pedagogy stages, classroom activities, assessment evidence, and free open resources.
               </p>
               <div className="inline-block px-2 py-1 rounded bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 font-bold text-[10px]">
-                v0.4 · Milestone 1 Live
+                v0.5 · CBSE AI Tracks Live
               </div>
             </div>
 
@@ -362,9 +369,9 @@ export function Layout() {
             <div className="space-y-2">
               <h4 className="font-bold text-slate-900 dark:text-white uppercase tracking-wider text-[11px]">Teaching & Assessment</h4>
               <ul className="space-y-1.5 text-slate-600 dark:text-slate-400">
-                <li><Link to="/planner" className="hover:underline text-indigo-600 dark:text-indigo-400 font-semibold">Unit & Lesson Planner (v0.4)</Link></li>
-                <li><Link to="/assessment-mapper" className="hover:underline">Skill–Assessment Mapper (v0.4)</Link></li>
-                <li><Link to="/pathways" className="hover:underline">Skill Pathways (v0.4)</Link></li>
+                <li><Link to="/planner" className="hover:underline text-indigo-600 dark:text-indigo-400 font-semibold">Unit & Lesson Planner (v0.5)</Link></li>
+                <li><Link to="/assessment-mapper" className="hover:underline">Skill–Assessment Mapper (v0.5)</Link></li>
+                <li><Link to="/pathways" className="hover:underline">Skill Pathways (v0.5)</Link></li>
                 <li><Link to="/activities" className="hover:underline">Classroom Activities Bank</Link></li>
                 <li><Link to="/assessment" className="hover:underline">Evidence & Rubrics Hub</Link></li>
                 <li><Link to="/resources" className="hover:underline">Teacher Resource Hub</Link></li>

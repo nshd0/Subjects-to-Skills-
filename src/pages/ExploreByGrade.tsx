@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { gradesData } from '@/data/grades';
+import { FEATURES } from '@/config/features';
 import { GradeCard } from '@/components/GradeCard';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { ArrowRight, Layers, Clock, AlertCircle } from 'lucide-react';
@@ -136,7 +137,17 @@ export function ExploreByGrade() {
 
           {/* Stages and Grade Cards */}
           {filteredStages.map(stage => {
-            const stageGrades = gradesData.filter(g => g.stageId === stage.id);
+            const processedGrades = gradesData.map(g => {
+              if (g.id === 'grade-8' && FEATURES.ENABLE_GRADE8_FULL) {
+                return { ...g, status: 'published' };
+              }
+              const validGrades = ['grade-3', 'grade-4', 'grade-5', 'grade-6', 'grade-7', 'grade-9', 'grade-10'];
+              if (validGrades.includes(g.id) && FEATURES.ENABLE_GRADE_RANGE_3_10) {
+                return { ...g, status: 'published' };
+              }
+              return g;
+            });
+            const stageGrades = processedGrades.filter(g => g.stageId === stage.id);
             if (stageGrades.length === 0) return null;
 
             return (

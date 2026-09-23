@@ -1,7 +1,7 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 
-export function Badge({ className, variant = 'default', ...props }: React.HTMLAttributes<HTMLDivElement> & { variant?: 'default' | 'secondary' | 'outline' }) {
+export function Badge({ className, variant = 'default', ...props }: React.HTMLAttributes<HTMLDivElement> & { variant?: 'default' | 'secondary' | 'outline' | 'destructive' }) {
   return (
     <div
       className={cn(
@@ -9,6 +9,7 @@ export function Badge({ className, variant = 'default', ...props }: React.HTMLAt
         {
           'border-transparent bg-indigo-100 text-indigo-900 hover:bg-indigo-200 dark:bg-indigo-900/30 dark:text-indigo-300': variant === 'default',
           'border-transparent bg-slate-100 text-slate-900 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-50': variant === 'secondary',
+          'border-transparent bg-rose-100 text-rose-800 dark:bg-rose-900/30 dark:text-rose-300': variant === 'destructive',
           'text-foreground': variant === 'outline',
         },
         className

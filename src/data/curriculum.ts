@@ -88,6 +88,7 @@ export interface SecondaryPathway {
 export interface StageData {
   id: string;
   title: string;
+  name?: string;
   subtitle: string;
   ageGroup: string;
   gradeBand: string;

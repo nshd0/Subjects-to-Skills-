@@ -25,7 +25,7 @@ const containerVariants = {
 
 const itemVariants = {
   hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 24 } }
+  show: { opacity: 1, y: 0, transition: { type: 'spring' as const, stiffness: 300, damping: 24 } }
 };
 
 function InclusivePathIcon({ icon }: { icon: string }) {
@@ -387,7 +387,7 @@ export function StagePage() {
             {loadingDb ? (
               <div className="py-12 flex justify-center"><Loader2 className="w-8 h-8 animate-spin text-indigo-500" /></div>
             ) : subjectsToRender.filter(s => activeGrade === "All" || (s.applicableGrades && s.applicableGrades.includes(activeGrade))).map((subject, index) => (
-              <SubjectMappingCard key={`${subject.id || subject.name}-${index}`} subject={subject} index={index} />
+              <SubjectMappingCard key={`${(subject as any).id || subject.name}-${index}`} subject={subject} index={index} />
             ))}
           </Accordion>
         </section>

@@ -1,6 +1,11 @@
 import { SubjectSkillMap } from '@/types';
+import { FEATURES } from '@/config/features';
+import { preparatorySubjectMaps } from './curriculumDataPreparatory';
+import { middleSecondarySubjectMaps } from './curriculumDataMiddleSecondary';
+import { secondarySupplementarySubjectMaps } from './curriculumDataSecondary_v05';
+import { aiSubjectMaps } from './curriculumDataAI';
 
-export const subjectMaps: SubjectSkillMap[] = [
+const baseSubjectMaps: SubjectSkillMap[] = [
   // ================= GRADE 3 =================
   {
     id: "g3-evs-1",
@@ -59,7 +64,7 @@ export const subjectMaps: SubjectSkillMap[] = [
     howLearningBecomesVisible: "Students point out specific leaf veins, bark textures, and animal behaviours during outdoor discussions and correctly sequence tally bars.",
     howProgressIsAssessed: "Teacher observation checklists during the walk, verification of tally accuracy against a partner's count, and an oral presentation of one organism's needs.",
     supportAndExtension: "Scaffold: Pre-printed photo cards of target local trees (Neem, Peepal, Banyan) to match against real leaves. Extension: Hypothesize why certain birds only visit specific trees."
-  },,
+  },
   {
     id: "g3-math-1",
     stage: "Preparatory",
@@ -114,7 +119,7 @@ export const subjectMaps: SubjectSkillMap[] = [
     howLearningBecomesVisible: "Students answer 'How many more?' by counting the exposed icons on the longer column rather than recalculating from memory.",
     howProgressIsAssessed: "Rubric evaluation of tally bundling, icon spacing uniformity, and oral response to comparative questions.",
     supportAndExtension: "Scaffold: Use dot stickers to ensure identical icon size. Extension: Introduce a scale where 1 smiley face represents 2 students."
-  },,
+  },
 
   // ================= GRADE 6 =================
   {
@@ -173,7 +178,7 @@ export const subjectMaps: SubjectSkillMap[] = [
     howLearningBecomesVisible: "Students justify their inclusion of specific pulses, green leafy vegetables, or millets by naming the exact nutrient and its physiological function.",
     howProgressIsAssessed: "Laboratory accuracy assessment, meal plan rubric evaluating nutritional completeness and realistic budget estimation.",
     supportAndExtension: "Scaffold: Provide a template thali divided into 4 quadrants with pre-labeled food groups. Extension: Calculate the daily cost per student of a school Mid-Day Meal and propose one nutrient enhancement."
-  },,
+  },
   {
     id: "g6-soc-1",
     stage: "Middle",
@@ -228,7 +233,7 @@ export const subjectMaps: SubjectSkillMap[] = [
     howLearningBecomesVisible: "Students articulate the perspective of people doing manual community labour and point to specific organizational factors during poster presentations.",
     howProgressIsAssessed: "Rubric assessing interview ethics, symptom vs. cause distinction, and collaborative team contribution.",
     supportAndExtension: "Scaffold: Sentence starter interview prompts. Extension: Write a formal 1-page letter to the School Management Committee (SMC) summarizing findings."
-  },,
+  },
 
   // ================= GRADE 7 =================
   {
@@ -285,7 +290,7 @@ export const subjectMaps: SubjectSkillMap[] = [
     howLearningBecomesVisible: "Students demonstrate clear water outflow from brown mud-water inflow and explain the mechanical function of every single granular layer.",
     howProgressIsAssessed: "Evaluation of calculation accuracy, engineering prototype stability, and understanding of potable vs. filtered water safety.",
     supportAndExtension: "Scaffold: Pre-formatted arithmetic multiplication table for monthly drip rates. Extension: Compare filter flow rate using coarse sand vs. fine sand and graph the trade-off between speed and clarity."
-  },,
+  },
 
   // ================= GRADE 8 =================
   {
@@ -343,7 +348,7 @@ export const subjectMaps: SubjectSkillMap[] = [
     howLearningBecomesVisible: "Students avoid anthropomorphic language (like 'the AI thinks') and instead explain mathematical correlation, training limits, and exact human override points.",
     howProgressIsAssessed: "Rubric evaluation of model understanding, depth of bias identification, feasibility of human safeguards, and clarity of technical communication.",
     supportAndExtension: "Scaffold: Provide a structured AI Canvas template with prompting questions in each box. Extension: Write pseudo-code for a confidence-score threshold with automated human escalation triggers."
-  },,
+  },
 
   // ================= GRADE 9 =================
   {
@@ -570,4 +575,99 @@ export const subjectMaps: SubjectSkillMap[] = [
       notes: "Bridges basic grammar with practical, real-world conversational skills."
     }
   }
+];
+
+// ============================================================================
+// v0.5 Extended Content (Grades 3-10)
+// ============================================================================
+export const extendedSubjectMaps: SubjectSkillMap[] = [
+  {
+    id: "g3-evs-verified-1",
+    stage: "Preparatory",
+    grade: "Grade 3",
+    learningArea: "Environmental Studies",
+    subject: "EVS",
+    primarySkill: "Skill mapping pending verification",
+    competency: "Observe and identify immediate surroundings",
+    learningOutcome: "Students will explore their local environment.",
+    essentialKnowledge: ["Local flora and fauna"],
+    keyConcepts: ["Observation"],
+    vocabulary: ["Environment", "Local"],
+    subjectPractices: ["Observation"],
+    curricularGoal: "Develop environmental awareness",
+    supportingSkills: [],
+    pedagogy: ["Field trip"],
+    activityIds: [],
+    evidence: ["Observation notes"],
+    assessmentIds: [],
+    inclusion: [],
+    resourceIds: [],
+    sourceType: "official-reference",
+    status: "in-development",
+    sourceReference: "NCERT Grade 3 EVS, NCF-SE 2023 edition (Pending Validation)",
+    progression: { nextGrade: "Grade 4: Broader ecosystems" }
+  },
+  {
+    id: "g9-math-1",
+    stage: "Secondary",
+    grade: "Grade 9",
+    learningArea: "Mathematics",
+    subject: "Mathematics",
+    primarySkill: "Skill mapping pending verification",
+    competency: "Number systems (Advanced track available)",
+    learningOutcome: "Students will understand irrational numbers.",
+    essentialKnowledge: ["Irrational numbers", "Real numbers"],
+    keyConcepts: ["Number lines"],
+    vocabulary: ["Irrational"],
+    subjectPractices: ["Mathematical proof"],
+    curricularGoal: "Build abstract mathematical reasoning",
+    supportingSkills: [],
+    pedagogy: ["Direct instruction"],
+    activityIds: [],
+    evidence: ["Problem sets"],
+    assessmentIds: [],
+    inclusion: [],
+    resourceIds: [],
+    sourceType: "official-reference",
+    status: "in-development",
+    sourceReference: "CBSE Class 9 Curriculum 2026-27 (Pending Validation)",
+    progression: { nextGrade: "Grade 10: Real Numbers", notes: "Note: Transitioning to pre-NCF 2023 curriculum in Grade 10." }
+  },
+  {
+    id: "g10-sci-1",
+    stage: "Secondary",
+    grade: "Grade 10",
+    learningArea: "Science",
+    subject: "Science",
+    primarySkill: "Chemical Reactions and Equations",
+    competency: "Write and balance chemical equations",
+    learningOutcome: "Students balance chemical equations following the law of conservation of mass.",
+    essentialKnowledge: ["Reactants", "Products", "Conservation of mass"],
+    keyConcepts: ["Chemical equations"],
+    vocabulary: ["Balance", "Coefficient"],
+    subjectPractices: ["Scientific notation"],
+    curricularGoal: "Understand chemical processes",
+    supportingSkills: ["Algebraic balancing"],
+    pedagogy: ["Lab demonstration"],
+    activityIds: [],
+    evidence: ["Balanced equations worksheet"],
+    assessmentIds: [],
+    inclusion: [],
+    resourceIds: [],
+    sourceType: "official-reference",
+    status: "published",
+    sourceReference: "NCERT Class 10 Science (Pre-NCF 2023 syllabus)",
+    progression: { priorGrade: "Grade 9: Atoms and Molecules (NCF-2023 transition boundary)" }
+  }
+];
+
+// Append to export if not already there
+
+export const subjectMaps: SubjectSkillMap[] = [
+  ...baseSubjectMaps,
+  ...extendedSubjectMaps,
+  ...preparatorySubjectMaps,
+  ...middleSecondarySubjectMaps,
+  ...secondarySupplementarySubjectMaps,
+  ...(FEATURES.ENABLE_AI_SUBJECT ? aiSubjectMaps : [])
 ];

@@ -17,12 +17,21 @@ import { SkillRubric } from '@/components/SkillRubric';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { FEATURES } from '@/config/features';
 import { Grade8Hub } from '@/features/planning/pages/Grade8Hub';
+import { GenericGradeHub } from '@/features/planning/pages/GenericGradeHub';
 
 export function GradePage() {
   const { gradeId } = useParams<{ gradeId: string }>();
 
   if (FEATURES.ENABLE_GRADE8_FULL && (gradeId === '8' || gradeId === 'grade-8')) {
     return <Grade8Hub />;
+  }
+
+  if (FEATURES.ENABLE_GRADE_RANGE_3_10 && gradeId) {
+    const numericGrade = gradeId.replace('grade-', '');
+    const validGrades = ['3','4','5','6','7','8','9','10'];
+    if (validGrades.includes(numericGrade)) {
+      return <GenericGradeHub gradeId={numericGrade} />;
+    }
   }
   const location = useLocation();
 

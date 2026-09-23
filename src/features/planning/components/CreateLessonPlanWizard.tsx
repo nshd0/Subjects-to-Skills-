@@ -6,14 +6,10 @@ import { useWizardLessonPlans } from '../useWizardStorage';
 import { LessonPlan } from '../wizardTypes';
 import { gradesData } from '@/data/grades';
 import { units } from '@/data/units';
+import { subjectMaps } from '@/data/subjectMaps';
+import { FEATURES } from '@/config/features';
 
 const BLOOMS_LEVELS = ['Remember', 'Understand', 'Apply', 'Analyse', 'Evaluate', 'Create'];
-const SKILLS_MOCK = [
-  { id: 's1', label: 'Proportional Reasoning', desc: 'Solve real-world problems involving ratios' },
-  { id: 's2', label: 'Critical Analysis', desc: 'Evaluate arguments based on evidence' },
-  { id: 's3', label: 'Data Interpretation', desc: 'Extract meaning from charts and graphs' },
-  { id: 's4', label: 'Creative Expression', desc: 'Communicate ideas through various mediums' }
-];
 
 export function CreateLessonPlanWizard() {
   const navigate = useNavigate();
@@ -27,6 +23,86 @@ export function CreateLessonPlanWizard() {
     timeline: [],
     resourceIds: []
   });
+
+  // Dynamic subjects based on selected grade and AI tracks
+  const selectedGradeProfile = gradesData.find(g => g.id === plan.gradeId);
+  const availableSubjects = React.useMemo(() => {
+    const base = selectedGradeProfile ? [...selectedGradeProfile.cbseSubjects] : [];
+    if (FEATURES.ENABLE_AI_SUBJECT && plan.gradeId) {
+      const gNum = plan.gradeId.replace('grade-', '');
+      if (['3', '4', '5'].includes(gNum)) {
+        if (!base.includes('Computational Thinking')) base.push('Computational Thinking');
+      } else if (['6', '7', '8'].includes(gNum)) {
+        if (!base.includes('Computational Thinking & AI')) base.push('Computational Thinking & AI');
+        if (!base.includes('AI Skill Module (901)')) base.push('AI Skill Module (901)');
+      } else if (['9', '10', '11', '12'].includes(gNum)) {
+        if (!base.includes('Artificial Intelligence (Code 417)')) base.push('Artificial Intelligence (Code 417)');
+      }
+    }
+    return base;
+  }, [selectedGradeProfile, plan.gradeId]);
+
+  // Filtered units based on selected grade and subject
+  const availableUnits = units.filter(u => {
+    if (plan.gradeId && u.gradeId !== plan.gradeId) return false;
+    if (plan.subjectId) {
+      const sLow = plan.subjectId.toLowerCase();
+      return u.learningAreas.some(la => {
+        const laLow = la.toLowerCase();
+        return laLow.includes(sLow) || sLow.includes(laLow) || (sLow === 'evs' && laLow.includes('environmental'));
+      });
+    }
+    return true;
+  });
+
+  // Dynamically derived skills from subjectMaps based on grade, subject, unit
+  const availableSkills = React.useMemo(() => {
+    if (!plan.gradeId) return [];
+    const gradeNum = plan.gradeId.replace('grade-', '');
+    const gradeStr = `Grade ${gradeNum}`;
+
+    let matchedMaps = subjectMaps.filter(m => m.grade === gradeStr || m.grade === gradeNum);
+    if (plan.subjectId) {
+      const sLow = plan.subjectId.toLowerCase();
+      matchedMaps = matchedMaps.filter(m => {
+        const mLow = m.subject.toLowerCase();
+        return mLow.includes(sLow) || sLow.includes(mLow) || (sLow === 'evs' && mLow.includes('evs'));
+      });
+    }
+
+    if (plan.unitId) {
+      const directMap = matchedMaps.find(m => `unit-${m.id}` === plan.unitId || m.id === plan.unitId.replace('unit-', ''));
+      if (directMap) {
+        matchedMaps = [directMap, ...matchedMaps.filter(m => m.id !== directMap.id)];
+      }
+    }
+
+    const skillsList: { id: string; label: string; desc: string }[] = [];
+    const seenLabels = new Set<string>();
+
+    matchedMaps.forEach(m => {
+      if (m.primarySkill && !seenLabels.has(m.primarySkill)) {
+        seenLabels.add(m.primarySkill);
+        skillsList.push({
+          id: `skill-${m.id}`,
+          label: m.primarySkill,
+          desc: m.competency || m.learningOutcome
+        });
+      }
+      m.supportingSkills?.forEach((sup, idx) => {
+        if (sup && !seenLabels.has(sup)) {
+          seenLabels.add(sup);
+          skillsList.push({
+            id: `skill-${m.id}-sup-${idx}`,
+            label: sup,
+            desc: `Supporting skill for ${m.subject} (${m.grade})`
+          });
+        }
+      });
+    });
+
+    return skillsList;
+  }, [plan.gradeId, plan.subjectId, plan.unitId]);
 
   const nextStep = () => setStep(s => Math.min(8, s + 1));
   const prevStep = () => setStep(s => Math.max(1, s - 1));
@@ -82,14 +158,21 @@ export function CreateLessonPlanWizard() {
                 <select 
                   className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white"
                   value={plan.subjectId || ''}
-                  onChange={e => setPlan({...plan, subjectId: e.target.value})}
+                  onChange={e => setPlan({...plan, subjectId: e.target.value, unitId: '', skillIds: []})}
                 >
                   <option value="">Select Subject</option>
-                  <option value="math">Mathematics</option>
-                  <option value="science">Science</option>
-                  <option value="english">English</option>
-                  <option value="social-science">Social Science</option>
-                  <option value="second-language">Second Language</option>
+                  {availableSubjects.map(subj => {
+                    let badge = '';
+                    if (subj === 'Computational Thinking') badge = ' (Track A • Compulsory Embedded)';
+                    else if (subj === 'Computational Thinking & AI') badge = ' (Track A • Compulsory Embedded)';
+                    else if (subj === 'AI Skill Module (901)') badge = ' (Track B • Optional Skill Module)';
+                    else if (subj === 'Artificial Intelligence (Code 417)') badge = ' (Track C • CBSE Elective 417)';
+                    return (
+                      <option key={subj} value={subj}>
+                        {subj}{badge}
+                      </option>
+                    );
+                  })}
                 </select>
               </div>
               <div>
@@ -97,10 +180,10 @@ export function CreateLessonPlanWizard() {
                 <select 
                   className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white"
                   value={plan.unitId || ''}
-                  onChange={e => setPlan({...plan, unitId: e.target.value})}
+                  onChange={e => setPlan({...plan, unitId: e.target.value, skillIds: []})}
                 >
-                  <option value="">Select Unit</option>
-                  {units.map(u => <option key={u.id} value={u.id}>{u.title}</option>)}
+                  <option value="">{availableUnits.length ? "Select Unit" : "No matching units found (Select Subject)"}</option>
+                  {availableUnits.map(u => <option key={u.id} value={u.id}>{u.title}</option>)}
                 </select>
               </div>
             </div>
@@ -111,28 +194,36 @@ export function CreateLessonPlanWizard() {
           <div className="space-y-6">
             <div>
               <h3 className="text-xl font-bold text-slate-900 dark:text-white">Select Focus Skills</h3>
-              <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">Choose 2–4 skills you want this lesson to focus on. You can always add more later.</p>
+              <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
+                Choose 2–4 verified skills mapped to this curriculum unit. {plan.skillIds?.length ? `(${plan.skillIds.length} selected)` : ''}
+              </p>
             </div>
-            <div className="space-y-3">
-              {SKILLS_MOCK.map(skill => (
-                <label key={skill.id} className={`flex items-start gap-3 p-4 rounded-xl border cursor-pointer transition-colors ${plan.skillIds?.includes(skill.id) ? 'bg-indigo-50 dark:bg-indigo-900/20 border-indigo-200 dark:border-indigo-800' : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:border-indigo-200 dark:hover:border-indigo-800'}`}>
-                  <input 
-                    type="checkbox" 
-                    className="mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-600"
-                    checked={plan.skillIds?.includes(skill.id)}
-                    onChange={(e) => {
-                      const newIds = e.target.checked 
-                        ? [...(plan.skillIds || []), skill.id]
-                        : (plan.skillIds || []).filter(id => id !== skill.id);
-                      setPlan({...plan, skillIds: newIds});
-                    }}
-                  />
-                  <div>
-                    <div className="font-semibold text-slate-900 dark:text-white">{skill.label}</div>
-                    <div className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">{skill.desc}</div>
-                  </div>
-                </label>
-              ))}
+            <div className="space-y-3 max-h-[420px] overflow-y-auto pr-1">
+              {availableSkills.length === 0 ? (
+                <div className="p-6 text-center text-slate-500 dark:text-slate-400 border border-dashed rounded-xl">
+                  Please select a Grade and Subject in Step 2 to view curriculum-aligned skills.
+                </div>
+              ) : (
+                availableSkills.map(skill => (
+                  <label key={skill.id} className={`flex items-start gap-3 p-4 rounded-xl border cursor-pointer transition-colors ${plan.skillIds?.includes(skill.id) ? 'bg-indigo-50 dark:bg-indigo-900/20 border-indigo-200 dark:border-indigo-800' : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:border-indigo-200 dark:hover:border-indigo-800'}`}>
+                    <input 
+                      type="checkbox" 
+                      className="mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-600"
+                      checked={plan.skillIds?.includes(skill.id)}
+                      onChange={(e) => {
+                        const newIds = e.target.checked 
+                          ? [...(plan.skillIds || []), skill.id]
+                          : (plan.skillIds || []).filter(id => id !== skill.id);
+                        setPlan({...plan, skillIds: newIds});
+                      }}
+                    />
+                    <div>
+                      <div className="font-semibold text-slate-900 dark:text-white">{skill.label}</div>
+                      <div className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">{skill.desc}</div>
+                    </div>
+                  </label>
+                ))
+              )}
             </div>
           </div>
         );

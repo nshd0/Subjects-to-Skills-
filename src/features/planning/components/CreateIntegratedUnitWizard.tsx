@@ -266,7 +266,7 @@ export function CreateIntegratedUnitWizard() {
             </div>
             <div className="grid gap-4">
                <button onClick={() => {
-                 saveUnit({ ...unit, status: 'draft', id: Math.random().toString(36).substring(7) });
+                 saveUnit({ ...unit, gradeId: unit.gradeId || 'grade-8', status: 'draft', id: Math.random().toString(36).substring(7), createdAt: Date.now(), updatedAt: Date.now() } as IntegratedUnit);
                  navigate('/assess/new');
                }} className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-left hover:border-indigo-400 transition-colors group">
                   <div className="font-bold text-slate-900 dark:text-white flex items-center gap-2 group-hover:text-indigo-600"><Target className="w-4 h-4" /> Save Draft & Create New Assessment</div>

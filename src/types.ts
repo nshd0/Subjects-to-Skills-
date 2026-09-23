@@ -4,7 +4,8 @@ export type GradeStatus =
   | "teacher-pilot" 
   | "reviewed" 
   | "published" 
-  | "needs-update";
+  | "needs-update"
+  | (string & {});
 
 export type ContentStatus = GradeStatus;
 
@@ -51,9 +52,23 @@ export type GradeProfile = {
   
   // CBSE/NCERT/NCF Extensions
   cbseSubjects?: string[];
+  
+  // Curriculum Vintage Metadata
+  curriculumFramework?: "NCF-SE-2023" | "pre-NCF-2023";
+  textbookStatus?: "new-ncert-published" | "new-ncert-rolling-out" | "existing-textbooks-continuing";
+  academicSession?: string;
+  lastVerifiedDate?: string;
+  advancedTrackAvailable?: boolean;
+  thirdLanguageRequired?: boolean;
   ncrtBooks?: { subject: string; title: string; url: string }[];
   sources?: string[];
 };
+
+export type TrackType = 
+  | "compulsory-embedded"    // Track A: CT&AI (Grades 3-8, compulsory, embedded)
+  | "optional-skill-module"   // Track B: AI Skill Module 901 (901A/B/C, Grades 6-8, optional elective)
+  | "elective-skill-subject"  // Track C: AI Skill Subject 417 (Grades 9-12, established board elective)
+  | "core-discipline";        // Standard subject
 
 export type SubjectSkillMap = {
   id: string;
@@ -61,6 +76,9 @@ export type SubjectSkillMap = {
   grade: string;
   learningArea: string;
   subject: string;
+  trackType?: TrackType;
+  trackBadge?: string;
+  hoursPerYear?: number;
   essentialKnowledge: string[];
   keyConcepts: string[];
   vocabulary: string[];
@@ -77,6 +95,7 @@ export type SubjectSkillMap = {
   inclusion: string[];
   resourceIds: string[];
   sourceType: "official-reference" | "subjects2skills-interpretation" | "suggested-activity";
+  sourceReference?: string;
   status: string;
   // Extended fields for rich display
   whatStudentsLearn?: string;

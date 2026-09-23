@@ -1,10 +1,11 @@
 import { Unit } from '@/types';
+import { subjectMaps } from './subjectMaps';
 
 /**
- * Curricular Units Scaffold for v0.4.1 (Unit & Lesson Planner)
- * Realistic CBSE-aligned competency units for Middle Stage anchor grades (Grade 6 & Grade 7)
+ * Curricular Units Scaffold for v0.4.1 & v0.5
+ * Realistic CBSE-aligned competency units derived from verified subject maps and anchor units
  */
-export const units: Unit[] = [
+const baseUnits: Unit[] = [
   {
     id: "unit-g6-water-systems",
     gradeId: "grade-6",
@@ -195,3 +196,26 @@ export const units: Unit[] = [
     ]
   }
 ];
+
+const mappedUnits: Unit[] = subjectMaps.map(m => {
+  const gradeNum = m.grade.replace('Grade ', '').trim();
+  const titleDisplay = m.sourceReference && m.sourceReference.includes(':')
+    ? `${m.sourceReference.split(':')[1]?.trim()}`
+    : m.keyConcepts?.[0] || m.primarySkill;
+
+  return {
+    id: `unit-${m.id}`,
+    gradeId: `grade-${gradeNum}`,
+    title: `${m.subject}: ${titleDisplay}`,
+    durationWeeks: 3,
+    description: m.learningOutcome || m.competency,
+    targetSkillIds: [m.primarySkill, ...(m.supportingSkills || [])],
+    learningAreas: [m.subject, m.learningArea].filter(Boolean),
+    status: "published" as const,
+    cbseCompetencies: [m.competency],
+    ncrtReferences: m.sourceReference ? [{ chapter: m.sourceReference, title: m.competency }] : undefined
+  };
+});
+
+export const units: Unit[] = [...baseUnits, ...mappedUnits];
+
