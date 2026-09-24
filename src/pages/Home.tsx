@@ -12,16 +12,16 @@ import { FEATURES } from '@/config/features';
 import { stages, secondaryStage, homeHeroImage } from '@/data/curriculum';
 
 const containerVariants = {
-  hidden: { opacity: 0 },
+  hidden: { opacity: 1 },
   show: {
     opacity: 1,
-    transition: { staggerChildren: 0.08 }
+    transition: { staggerChildren: 0.05 }
   }
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 16 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.35, ease: 'easeOut' as const } }
+  hidden: { opacity: 1, y: 0 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.25, ease: 'easeOut' as const } }
 };
 
 export function Home() {
@@ -72,13 +72,13 @@ export function Home() {
             {/* Left Content Column */}
             <motion.div 
               className="lg:col-span-7 text-left space-y-6"
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 1, y: 0 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: 'easeOut' }}
+              transition={{ duration: 0.3, ease: 'easeOut' }}
             >
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/70 border border-indigo-100 dark:border-indigo-900/50 text-xs font-bold text-indigo-700 dark:text-indigo-300">
                 <Sparkles className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
-                <span>NCF 5+3+3+4 Pedagogical Framework · v0.4 Live</span>
+                <span>NCF 5+3+3+4 Pedagogical Framework · v0.6 Live</span>
               </div>
 
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.12]">
@@ -115,9 +115,9 @@ export function Home() {
             {/* Right Visual Column */}
             <motion.div 
               className="lg:col-span-5 relative"
-              initial={{ opacity: 0, scale: 0.96 }}
+              initial={{ opacity: 1, scale: 1 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.15, ease: 'easeOut' }}
+              transition={{ duration: 0.4, ease: 'easeOut' }}
             >
               <div className="relative rounded-2xl overflow-hidden shadow-xl border border-slate-200 dark:border-slate-800 group bg-slate-100 dark:bg-slate-950">
                 <img 
@@ -147,10 +147,9 @@ export function Home() {
         <div className="grid lg:grid-cols-12 gap-10 items-center">
           <motion.div
             className="lg:col-span-5 space-y-4"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4 }}
+            initial={{ opacity: 1, y: 0 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
           >
             <span className="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/60 px-3 py-1 rounded-full border border-indigo-100 dark:border-indigo-900/40 inline-flex items-center gap-1.5">
               <Compass className="w-3.5 h-3.5" />
@@ -231,9 +230,9 @@ export function Home() {
       <section id="stages" className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl pt-4">
         <motion.div 
           className="text-center mb-10 space-y-3"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          initial={{ opacity: 1, y: 0 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
         >
           <span className="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/60 px-3 py-1 rounded-full border border-indigo-100 dark:border-indigo-900/40 inline-flex items-center gap-1.5">
             <Layers className="w-3.5 h-3.5" />
@@ -338,9 +337,9 @@ export function Home() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl space-y-10">
           <motion.div 
             className="text-center space-y-3"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
+            initial={{ opacity: 1 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
           >
             <span className="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/60 px-3 py-1 rounded-full border border-indigo-100 dark:border-indigo-900/40 inline-flex items-center gap-1.5">
               <Compass className="w-3.5 h-3.5" />
@@ -367,7 +366,7 @@ export function Home() {
               { num: '03', title: 'See Subject Mapping', desc: 'Uncover how CBSE subjects like Mathematics, Science, and Social Science activate specific competencies.', icon: BookOpen },
               { num: '04', title: 'Run Classroom Activities', desc: 'Browse lesson-ready activities with age-appropriate inquiry questions, materials, and teacher instructions.', icon: Activity },
               { num: '05', title: 'Review Rubric Evidence', desc: 'Measure student growth with transparent 4-tier rubrics (Emerging → Developing → Proficient → Transfer).', icon: Award },
-              { num: '06', title: 'Plan Integrated Units', desc: 'Synthesize multi-week units using modern lesson planning and assessment mapping tools (v0.4 prep).', icon: Calendar },
+              { num: '06', title: 'Plan Integrated Units', desc: 'Synthesize multi-week units using modern lesson planning, assessment mapping, and vertical pathway tools (v0.6).', icon: Calendar },
             ].map((step, i) => {
               const StepIcon = step.icon;
               return (
@@ -401,10 +400,9 @@ export function Home() {
       <section className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
         <motion.div 
           className="bg-indigo-600 dark:bg-indigo-900 rounded-2xl p-8 sm:p-12 text-center text-white shadow-xl relative overflow-hidden"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-40px" }}
-          transition={{ duration: 0.4 }}
+          initial={{ opacity: 1, y: 0 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
         >
           <div className="absolute top-0 right-0 -mt-16 -mr-16 w-64 h-64 bg-indigo-500 dark:bg-indigo-800 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
           <div className="relative z-10 space-y-4 max-w-2xl mx-auto">

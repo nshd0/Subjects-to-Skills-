@@ -13,6 +13,7 @@ export interface LessonBlock {
 
 export interface LessonPlan {
   id: string;
+  title?: string;
   gradeId: string;
   subjectId: string;
   unitId?: string;
@@ -29,6 +30,8 @@ export interface LessonPlan {
   createdAt: number;
   updatedAt: number;
 }
+
+export type WizardLessonPlan = LessonPlan;
 
 export interface WizardAssessmentTask {
   id: string;

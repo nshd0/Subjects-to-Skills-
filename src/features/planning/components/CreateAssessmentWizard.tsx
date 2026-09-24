@@ -8,6 +8,7 @@ import { gradesData } from '@/data/grades';
 import { units } from '@/data/units';
 import { subjectMaps } from '@/data/subjectMaps';
 import { FEATURES } from '@/config/features';
+import { TeacherTipsPopover } from './TeacherTipsPopover';
 
 const BLOOMS_LEVELS = ['Remember', 'Understand', 'Apply', 'Analyse', 'Evaluate', 'Create'];
 
@@ -352,15 +353,22 @@ export function CreateAssessmentWizard() {
         <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col min-h-[600px]">
           
           {step > 1 && (
-            <div className="bg-slate-50 dark:bg-slate-800/50 px-6 py-4 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center">
-              <div className="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-                Step {step - 1} of 7
+            <div className="bg-slate-50 dark:bg-slate-800/50 px-6 py-3.5 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center gap-3">
+              <div className="flex items-center gap-3">
+                <div className="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                  Step {step - 1} of 7
+                </div>
+                <div className="flex gap-1">
+                  {[1, 2, 3, 4, 5, 6, 7].map(s => (
+                    <div key={s} className={`h-1.5 w-6 rounded-full ${s <= step - 1 ? 'bg-emerald-500' : 'bg-slate-200 dark:bg-slate-700'}`} />
+                  ))}
+                </div>
               </div>
-              <div className="flex gap-1">
-                {[1, 2, 3, 4, 5, 6, 7].map(s => (
-                  <div key={s} className={`h-1.5 w-6 rounded-full ${s <= step - 1 ? 'bg-emerald-500' : 'bg-slate-200 dark:bg-slate-700'}`} />
-                ))}
-              </div>
+              <TeacherTipsPopover 
+                gradeId={assessment.gradeId} 
+                subjectId={assessment.subjectId} 
+                align="right" 
+              />
             </div>
           )}
 

@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import { safeStorage } from '@/lib/safeStorage';
 
 type Theme = 'light' | 'dark';
 
@@ -27,19 +28,23 @@ export function ThemeProvider({
   ...props
 }: ThemeProviderProps) {
   const [theme, setTheme] = useState<Theme>(
-    () => (localStorage.getItem(storageKey) as Theme) || defaultTheme
+    () => (safeStorage.getItem(storageKey) as Theme) || defaultTheme
   );
 
   useEffect(() => {
-    const root = window.document.documentElement;
-    root.classList.remove('light', 'dark');
-    root.classList.add(theme);
+    try {
+      const root = window.document.documentElement;
+      root.classList.remove('light', 'dark');
+      root.classList.add(theme);
+    } catch (e) {
+      console.warn('Could not apply theme to documentElement', e);
+    }
   }, [theme]);
 
   const value = {
     theme,
     setTheme: (theme: Theme) => {
-      localStorage.setItem(storageKey, theme);
+      safeStorage.setItem(storageKey, theme);
       setTheme(theme);
     },
   };

@@ -11,7 +11,7 @@ export function About() {
         <div className="text-center space-y-4 max-w-2xl mx-auto">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-800 dark:bg-indigo-950/60 dark:text-indigo-300">
             <Sparkles className="w-3.5 h-3.5" />
-            Subjects2Skills v0.3
+            Subjects2Skills v0.6
           </div>
           <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">
             About Subjects2Skills
@@ -67,7 +67,7 @@ export function About() {
               The Purpose of this Upgrade
             </h2>
             <p>
-              This release represents <strong>v0.3</strong>, a scalable grade-wise curriculum implementation covering Pre-school to Grade 12. We provide transparent starter structures and full flagship activities for priority anchor grades (Grades 3, 6, 7, 8, and 9) while inviting educators across India to review, test, and contribute feedback.
+              This release represents <strong>v0.6</strong>, introducing longitudinal vertical skill pathways, a 4-level custom rubric builder, print-ready monochrome lesson plan exports, and interdisciplinary theme bundles, alongside universal curriculum mapping across Pre-school to Grade 12. We provide transparent, observable competencies and full flagship activities for priority anchor grades while inviting educators across India to review, test, and contribute feedback.
             </p>
           </section>
 

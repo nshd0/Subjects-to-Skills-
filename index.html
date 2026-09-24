@@ -26,9 +26,109 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/favicon.svg" />
     <link rel="canonical" href="https://subjects2skills.ai.studio/" />
+
+    <!-- Defensive Polyfills for Sandboxed Iframe Preview Environments -->
+    <script>
+      (function() {
+        if (typeof window === 'undefined') return;
+
+        // Polyfill IntersectionObserver if missing or throwing in sandbox
+        if (!window.IntersectionObserver) {
+          window.IntersectionObserver = function(callback) {
+            this.observe = function(target) {
+              setTimeout(function() {
+                try {
+                  var rect = target && target.getBoundingClientRect ? target.getBoundingClientRect() : { top: 0, bottom: 100, left: 0, right: 100, width: 100, height: 100 };
+                  callback([{
+                    isIntersecting: true,
+                    intersectionRatio: 1,
+                    target: target,
+                    boundingClientRect: rect,
+                    intersectionRect: rect,
+                    rootBounds: null,
+                    time: Date.now()
+                  }], this);
+                } catch (e) {}
+              }, 16);
+            };
+            this.unobserve = function() {};
+            this.disconnect = function() {};
+            this.takeRecords = function() { return []; };
+          };
+        }
+
+        // Polyfill ResizeObserver if missing
+        if (!window.ResizeObserver) {
+          window.ResizeObserver = function(callback) {
+            this.observe = function(target) {
+              setTimeout(function() {
+                try {
+                  var rect = target && target.getBoundingClientRect ? target.getBoundingClientRect() : { width: 100, height: 100 };
+                  callback([{ target: target, contentRect: rect }], this);
+                } catch (e) {}
+              }, 16);
+            };
+            this.unobserve = function() {};
+            this.disconnect = function() {};
+          };
+        }
+
+        // Safe matchMedia stub
+        if (!window.matchMedia) {
+          window.matchMedia = function() {
+            return {
+              matches: false,
+              addListener: function() {},
+              removeListener: function() {},
+              addEventListener: function() {},
+              removeEventListener: function() {}
+            };
+          };
+        }
+
+        // Safe scrollTo
+        if (!window.scrollTo) {
+          window.scrollTo = function() {};
+        }
+
+        // Global uncaught error listener to prevent silent blank screen
+        window.addEventListener('error', function(event) {
+          console.error('[Subjects2Skills Uncaught Error]', event.message, event.error);
+          var rootEl = document.getElementById('root');
+          if (rootEl && (!rootEl.firstElementChild || rootEl.firstElementChild.id === 's2s-preloader')) {
+            var errBox = document.getElementById('s2s-error-fallback');
+            if (!errBox) {
+              rootEl.innerHTML = '<div id="s2s-error-fallback" style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;font-family:system-ui,-apple-system,sans-serif;background:#0f172a;color:#f8fafc;text-align:center;">' +
+                '<div style="max-width:440px;padding:32px;background:#1e293b;border-radius:16px;border:1px solid #334155;box-shadow:0 10px 25px rgba(0,0,0,0.5);">' +
+                '<div style="width:48px;height:48px;border-radius:12px;background:#4f46e5;color:white;display:inline-flex;align-items:center;justify-content:center;font-weight:bold;font-size:24px;margin-bottom:16px;">S</div>' +
+                '<h2 style="margin:0 0 8px 0;font-size:18px;font-weight:700;">Subjects2Skills</h2>' +
+                '<p style="margin:0 0 16px 0;font-size:13px;color:#94a3b8;line-height:1.5;">An unexpected initialization error occurred. Please click below to reload the app.</p>' +
+                '<button onclick="window.location.reload()" style="background:#4f46e5;color:white;border:none;padding:10px 20px;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer;">Reload Framework</button>' +
+                '</div></div>';
+            }
+          }
+        });
+      })();
+    </script>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Branded instantaneous preloader so user never experiences an empty white screen -->
+      <div id="s2s-preloader" style="min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f8fafc; color: #0f172a; padding: 20px;">
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+          <div style="width: 44px; height: 44px; border-radius: 12px; background: #4f46e5; display: flex; align-items: center; justify-content: center; color: #ffffff; font-weight: 800; font-size: 22px; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);">S</div>
+          <div style="text-align: left;">
+            <div style="font-weight: 800; font-size: 19px; letter-spacing: -0.02em; color: #0f172a;">Subjects2Skills</div>
+            <div style="font-size: 10.5px; color: #4f46e5; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">CBSE Skill-Centred Framework</div>
+          </div>
+        </div>
+        <div style="display: inline-flex; align-items: center; gap: 10px; background: #ffffff; padding: 8px 18px; border-radius: 9999px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.05); color: #64748b; font-size: 13px; font-weight: 500;">
+          <div style="width: 14px; height: 14px; border: 2px solid #e2e8f0; border-top-color: #4f46e5; border-radius: 50%; animation: s2s-spin 0.8s linear infinite;"></div>
+          <span>Loading framework...</span>
+        </div>
+        <style>@keyframes s2s-spin { to { transform: rotate(360deg); } }</style>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

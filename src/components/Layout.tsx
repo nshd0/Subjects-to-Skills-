@@ -76,19 +76,24 @@ export function Layout() {
 
   const teachAndPlanLinks = [
     { name: 'Classroom Activities', path: '/activities' },
-    { name: 'Unit & Lesson Planner (v0.5)', path: '/planner' },
-    { name: 'Assessment Mapper (v0.5)', path: '/assessment-mapper' },
-    { name: 'Skill Pathways (v0.5)', path: '/pathways' },
+    { name: 'Unit & Lesson Planner', path: '/planner' },
+    { name: 'Assessment Mapper', path: '/assessment-mapper' },
+    { name: 'Custom Rubric Builder (v0.6)', path: '/rubric/new' },
+    { name: 'Vertical Skill Pathways (v0.6)', path: '/pathways' },
+    { name: 'Interdisciplinary Theme Bundles (v0.6)', path: '/theme-bundles' },
   ];
 
   const assessLinks = [
     { name: 'Assessment Hub', path: '/assessment' },
     { name: 'Skills Progression', path: '/skill-progression' },
+    { name: 'Custom Rubric Builder (v0.6)', path: '/rubric/new' },
+    { name: 'Vertical Pathways (v0.6)', path: '/pathways' },
   ];
 
   const resourcesLinks = [
     { name: 'Teacher Resources', path: '/resources' },
     { name: 'Teacher Toolkit', path: '/toolkit' },
+    { name: 'Theme Bundles (v0.6)', path: '/theme-bundles' },
     { name: 'School Implementation Planner', path: '/school-planner' },
   ];
 
@@ -96,7 +101,8 @@ export function Layout() {
     { name: 'About & Principles', path: '/about' },
     { name: 'Pedagogical Framework', path: '/about-framework' },
     { name: 'Changelog', path: '/changelog' },
-    { name: 'v0.4 Audit & Status', path: '/audit-status' },
+    { name: 'v0.6 Technical Audit', path: '/audit-v0-6' },
+    { name: 'v0.4 Implementation Status', path: '/audit-status' },
     { name: 'Baseline Audit Report', path: '/audit' },
   ];
 
@@ -121,13 +127,13 @@ export function Layout() {
   return (
     <div className="min-h-screen overflow-x-hidden bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50 flex flex-col font-sans transition-colors duration-200">
       
-      {/* Target Version Banner: v0.5 — Full CBSE AI Tracks Live */}
+      {/* Target Version Banner: v0.6 — Vertical Pathways, Custom Rubrics & Theme Bundles Live */}
       <div className="bg-indigo-900 text-white px-4 py-2.5 text-xs font-medium border-b border-indigo-800 print:hidden relative">
         <div className="container mx-auto flex flex-col md:flex-row items-center justify-between gap-2 text-center md:text-left">
           <div className="flex flex-wrap items-center justify-center md:justify-start gap-2">
             <span className="font-bold border border-indigo-400/50 px-2 py-0.5 rounded text-[11px] bg-indigo-800/80 tracking-wider flex items-center gap-1 text-indigo-200">
               <Sparkles className="w-3 h-3 text-amber-300" />
-              v0.5 · CBSE AI Tracks Live
+              v0.6 · Vertical Pathways, Custom Rubrics, Print Exports & Theme Bundles Live
             </span>
             <span className="text-slate-200 font-medium hidden sm:inline">
               Subjects organise knowledge. Skills organise capability.
@@ -139,7 +145,7 @@ export function Layout() {
 
           <div className="flex items-center gap-3 text-[11px] text-indigo-200 shrink-0">
             <Link to="/roadmap" className="hover:text-white underline underline-offset-2">
-              Content Roadmap
+              Content Roadmap (v0.6)
             </Link>
             <span>·</span>
             <Link to="/about" className="hover:text-white underline underline-offset-2">
@@ -189,7 +195,7 @@ export function Layout() {
               <div id="tour-step-assess-compact"><NavDropdown label="Assess" items={assessLinks} /></div>
               <div id="tour-step-resources-compact"><NavDropdown label="More" items={[
                 ...resourcesLinks,
-                { name: 'v0.4 Content Roadmap', path: '/roadmap' },
+                { name: 'v0.6 Content Roadmap', path: '/roadmap' },
                 ...aboutLinks,
               ]} /></div>
             </nav>
@@ -277,7 +283,7 @@ export function Layout() {
               </button>
               <NavLink id="tour-step-map-mobile" to="/grades" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Explore by Grade</NavLink>
               <NavLink to="/activities" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Classroom Activities</NavLink>
-              <NavLink id="tour-step-planner-mobile" to="/planner" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Unit & Lesson Planner (v0.5)</NavLink>
+              <NavLink id="tour-step-planner-mobile" to="/planner" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Unit & Lesson Planner (v0.6)</NavLink>
               <NavLink id="tour-step-assess-mobile" to="/assessment" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Assessment Hub</NavLink>
 
               <div className="py-2 border-t border-slate-100 dark:border-slate-800 space-y-1">
@@ -296,17 +302,20 @@ export function Layout() {
 
               <div className="py-2 border-t border-slate-100 dark:border-slate-800 space-y-1">
                 <p className="px-3 text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">More</p>
-                <NavLink to="/assessment-mapper" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Assessment Mapper (v0.5)</NavLink>
-                <NavLink to="/pathways" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Skill Pathways (v0.5)</NavLink>
+                <NavLink to="/assessment-mapper" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Assessment Mapper (v0.6)</NavLink>
+                <NavLink to="/rubric/new" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Custom Rubric Builder (v0.6)</NavLink>
+                <NavLink to="/pathways" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Skill Pathways (v0.6)</NavLink>
+                <NavLink to="/theme-bundles" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Theme Bundles (v0.6)</NavLink>
                 <NavLink to="/skill-progression" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Skills Progression</NavLink>
                 <NavLink id="tour-step-resources-mobile" to="/resources" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Teacher Resources</NavLink>
                 <NavLink to="/toolkit" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Teacher Toolkit</NavLink>
                 <NavLink to="/school-planner" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>School Implementation Planner</NavLink>
-                <NavLink to="/roadmap" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Content Roadmap</NavLink>
+                <NavLink to="/roadmap" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Content Roadmap (v0.6)</NavLink>
                 <NavLink to="/about" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>About & Principles</NavLink>
                 <NavLink to="/about-framework" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Pedagogical Framework</NavLink>
                 <NavLink to="/changelog" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Changelog</NavLink>
-                <NavLink to="/audit-status" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Audit & Status</NavLink>
+                <NavLink to="/audit-v0-6" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>v0.6 Technical Audit</NavLink>
+                <NavLink to="/audit-status" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>v0.4 Implementation Status</NavLink>
                 <NavLink to="/audit" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Baseline Audit</NavLink>
               </div>
 
@@ -350,7 +359,7 @@ export function Layout() {
                 A public educational framework demonstrating how existing CBSE subjects can be connected to skills, pedagogy stages, classroom activities, assessment evidence, and free open resources.
               </p>
               <div className="inline-block px-2 py-1 rounded bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 font-bold text-[10px]">
-                v0.5 · CBSE AI Tracks Live
+                v0.6 · Pathways, Rubrics & Theme Bundles Live
               </div>
             </div>
 
@@ -369,9 +378,11 @@ export function Layout() {
             <div className="space-y-2">
               <h4 className="font-bold text-slate-900 dark:text-white uppercase tracking-wider text-[11px]">Teaching & Assessment</h4>
               <ul className="space-y-1.5 text-slate-600 dark:text-slate-400">
-                <li><Link to="/planner" className="hover:underline text-indigo-600 dark:text-indigo-400 font-semibold">Unit & Lesson Planner (v0.5)</Link></li>
-                <li><Link to="/assessment-mapper" className="hover:underline">Skill–Assessment Mapper (v0.5)</Link></li>
-                <li><Link to="/pathways" className="hover:underline">Skill Pathways (v0.5)</Link></li>
+                <li><Link to="/planner" className="hover:underline text-indigo-600 dark:text-indigo-400 font-semibold">Unit & Lesson Planner (v0.6)</Link></li>
+                <li><Link to="/assessment-mapper" className="hover:underline">Skill–Assessment Mapper (v0.6)</Link></li>
+                <li><Link to="/rubric/new" className="hover:underline">Custom Rubric Builder (v0.6)</Link></li>
+                <li><Link to="/pathways" className="hover:underline">Skill Pathways (v0.6)</Link></li>
+                <li><Link to="/theme-bundles" className="hover:underline">Theme Bundles (v0.6)</Link></li>
                 <li><Link to="/activities" className="hover:underline">Classroom Activities Bank</Link></li>
                 <li><Link to="/assessment" className="hover:underline">Evidence & Rubrics Hub</Link></li>
                 <li><Link to="/resources" className="hover:underline">Teacher Resource Hub</Link></li>
@@ -385,9 +396,10 @@ export function Layout() {
               <ul className="space-y-1.5 text-slate-600 dark:text-slate-400">
                 {FEATURES.ENABLE_HOW_IT_WORKS && (<li><Link to="/how-it-works" className="hover:underline text-indigo-600 dark:text-indigo-400 font-semibold">How It Works</Link></li>)}
                 <li><Link to="/about" className="hover:underline">About & Core Principles</Link></li>
-                <li><Link to="/roadmap" className="hover:underline">v0.4 Content Roadmap</Link></li>
-                <li><Link to="/audit-status" className="hover:underline text-indigo-600 dark:text-indigo-400 font-semibold">v0.4 Audit & Status</Link></li>
-                <li><Link to="/audit-v0-3" className="hover:underline">v0.4 Technical Audit Report</Link></li>
+                <li><Link to="/roadmap" className="hover:underline">v0.6 Content Roadmap</Link></li>
+                <li><Link to="/audit-v0-6" className="hover:underline text-indigo-600 dark:text-indigo-400 font-semibold">v0.6 Technical Audit Report</Link></li>
+                <li><Link to="/audit-status" className="hover:underline">v0.4 Implementation Status</Link></li>
+                <li><Link to="/audit-v0-3" className="hover:underline">v0.3 Technical Audit Report</Link></li>
                 <li><Link to="/audit" className="hover:underline">v0.2 Baseline Audit Report</Link></li>
                 <li><Link to="/about#feedback" className="hover:underline">Submit Educator Feedback</Link></li>
               </ul>

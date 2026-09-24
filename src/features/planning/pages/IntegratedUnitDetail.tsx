@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, MessageSquare, Trash2, Edit } from 'lucide-react';
 import { useWizardIntegratedUnits } from '../useWizardStorage';
 import { Comment } from '../wizardTypes';
+import { PrintReadyPlanExport } from '@/components/PrintReadyPlanExport';
 
 export function IntegratedUnitDetail() {
   const { id } = useParams();
@@ -64,13 +65,26 @@ export function IntegratedUnitDetail() {
         
         <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 border border-slate-200 dark:border-slate-800 shadow-sm relative">
           
-          {canEdit && (
-            <div className="absolute top-8 right-8 flex gap-2">
+          <div className="absolute top-8 right-8 flex items-center gap-2">
+            <PrintReadyPlanExport 
+              unit={{
+                id: unit.id,
+                title: unit.title || 'Integrated Cross-Curricular Unit',
+                gradeId: unit.gradeId || 'grade-8',
+                durationWeeks: 3,
+                learningAreas: unit.subjectIds || ['Interdisciplinary'],
+                description: unit.description || '',
+                targetSkillIds: unit.skillIds || [],
+                status: unit.status as any || 'draft'
+              }}
+              triggerLabel="Print Unit"
+            />
+            {canEdit && (
               <button onClick={handleDelete} className="p-2 text-rose-500 hover:bg-rose-50 rounded-lg transition-colors" title="Delete Unit">
                 <Trash2 className="w-5 h-5" />
               </button>
-            </div>
-          )}
+            )}
+          </div>
 
           <div className="flex gap-2 mb-4">
              {unit.subjectIds?.map(sub => (

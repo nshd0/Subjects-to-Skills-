@@ -49,8 +49,8 @@ export function StatusBadge({
       case 'planned':
       default:
         return {
-          label: 'Planned for v0.3',
-          subtext: 'Scheduled for starter drafting in v0.3 release cycle',
+          label: 'Planned for v0.7',
+          subtext: 'Scheduled for starter drafting in upcoming release cycle',
           styles: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 border-slate-300 dark:border-slate-700'
         };
     }

@@ -2,16 +2,21 @@
 
 A modern educational web application bridging traditional subjects with 21st-century skills, designed in strict alignment with **NCF 2023** and **CBSE 2025–26** curriculum guidelines.
 
-This platform (v0.4.3) is a verified curriculum-translation framework connecting CBSE/NCERT-aligned subject learning, skills, pedagogy, assessment, and classroom practice.
+This platform (v0.6.0) is a verified curriculum-translation framework connecting CBSE/NCERT-aligned subject learning, skills, pedagogy, assessment, and classroom practice.
 
 ## ✨ Key Features
 
-### 🌟 New in v0.4.x (Planning, Assessments, and Official Alignment)
-*   **v0.4.3 Professional Content Upgrade:** Comprehensive mapping of all 13 grade profiles to the latest CBSE syllabus (2025-26) and NCERT textbooks. Includes a verified Open Resource Hub featuring DIKSHA, Khan Academy, and PhET.
-*   **v0.4.2 Assessment Mapper:** Dynamically generates summative and formative assessment tasks explicitly linked to competency skills. Features 4-tier graduated rubrics (Emerging → Transfer) for evaluating student evidence.
-*   **v0.4.1 Unit & Lesson Planner:** A robust builder enabling teachers to construct actionable, classroom-ready units by referencing official skills and pedagogical guidelines. Features a print-ready export view.
+### 🌟 New in v0.6.0 (Vertical Pathways, Custom Rubrics, Print Exports & Theme Bundles)
+*   **Vertical Skill Pathways (`/pathways`):** Visualizes competency progression across Foundational, Preparatory, Middle, and Secondary stages with official NCF-FS, NCF-SE, and NCERT citations.
+*   **Custom Rubric Builder (`/rubric/new`):** Enables teachers to construct validated assessment rubrics using the 4-level maturity scale (Emerging → Developing → Proficient → Transfer) with anti-orphan validation.
+*   **Print-Ready Exports (`PrintReadyPlanExport`):** Clean, photocopy- and print-optimized export for lesson and unit plans, including track badges, time allocations, and rubric criteria.
+*   **Interdisciplinary Theme Bundles (`/theme-bundles`):** Three cross-subject inquiry bundles (Climate Resilience, Heritage & Craft Economies, Data/AI & Civic Ethics) with source citations, browse-only mode, and one-click clone to active plans.
+*   **Contextual Teacher Tips (`TeacherTipsPopover`):** Classroom strategies for 40+ student classrooms, Track A/B/C execution, and differentiated pedagogy.
 
-### 🌟 Core Framework (v0.3 & earlier)
+### 🌟 Previous Major Releases
+*   **v0.5.0 CBSE AI Tracks Integration:** Compulsory embedded CT (Track A), optional 15-hr skill modules (Track B), and elective subject 417 (Track C) across Grades 3–12.
+*   **v0.4.x Planning Engine:** Unit & Lesson Planner, Bloom's taxonomy mapping, and formative assessment mapper.
+*   **v0.3.0 Universal Grade Coverage:** Granular coverage across all 13 school grades (Pre-school to Grade 12).
 *   **13 Grade Profiles:** Granular profiles from Pre-school to Grade 12 covering learning areas, priority skills, and developmental pedagogy.
 *   **Standards Alignment Panel:** Explicit tracking of official curriculum references (NCF 2023, CBSE) vs Subjects2Skills interpretations.
 *   **Observable Competencies:** Core skills translated into observable, assessable performance statements grounded in subject contexts.

@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { ChevronRight, ChevronLeft, Save, FileText, CheckCircle } from 'lucide-react';
+import { ChevronRight, ChevronLeft, Save, FileText, CheckCircle, Lightbulb } from 'lucide-react';
 import { useWizardLessonPlans } from '../useWizardStorage';
 import { LessonPlan } from '../wizardTypes';
 import { gradesData } from '@/data/grades';
 import { units } from '@/data/units';
 import { subjectMaps } from '@/data/subjectMaps';
 import { FEATURES } from '@/config/features';
+import { TeacherTipsPopover } from './TeacherTipsPopover';
+import { PrintReadyPlanExport } from '@/components/PrintReadyPlanExport';
 
 const BLOOMS_LEVELS = ['Remember', 'Understand', 'Apply', 'Analyse', 'Evaluate', 'Create'];
 
@@ -137,10 +139,43 @@ export function CreateLessonPlanWizard() {
       case 2:
         return (
           <div className="space-y-6">
-            <div>
-              <h3 className="text-xl font-bold text-slate-900 dark:text-white">Grade, Subject, Unit</h3>
-              <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">Pick the unit you’re teaching next. We’ll map it to skills and suggest Bloom’s levels and activities.</p>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <div>
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white">Grade, Subject, Unit</h3>
+                <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">Pick the unit you’re teaching next. We’ll map it to skills and suggest Bloom’s levels and activities.</p>
+              </div>
+              <TeacherTipsPopover 
+                gradeId={plan.gradeId} 
+                subjectId={plan.subjectId} 
+                align="right" 
+              />
             </div>
+
+            {/* Context-aware Track Tip Banner */}
+            {plan.subjectId && (
+              <div className="p-3.5 rounded-2xl bg-amber-50/70 dark:bg-amber-950/20 border border-amber-200/80 dark:border-amber-900/40 flex items-center justify-between gap-3">
+                <div className="flex items-center gap-2.5">
+                  <span className="p-1.5 rounded-xl bg-amber-100 dark:bg-amber-900/60 text-amber-700 dark:text-amber-300 shrink-0">
+                    <Lightbulb className="w-4 h-4" />
+                  </span>
+                  <div>
+                    <span className="text-xs text-amber-950 dark:text-amber-200 font-semibold block">
+                      Targeted CBSE pedagogical advice is active for {plan.subjectId}
+                    </span>
+                    <span className="text-[11px] text-amber-800/80 dark:text-amber-400/80">
+                      Click Teacher Tips to review 5-min hooks, 40+ student management, and compliance notes.
+                    </span>
+                  </div>
+                </div>
+                <TeacherTipsPopover 
+                  gradeId={plan.gradeId} 
+                  subjectId={plan.subjectId} 
+                  buttonLabel="View Advice"
+                  align="right" 
+                />
+              </div>
+            )}
+
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Grade</label>
@@ -398,6 +433,14 @@ export function CreateLessonPlanWizard() {
                 </div>
               </div>
             </div>
+
+            <div className="pt-2 flex justify-center">
+              <PrintReadyPlanExport 
+                plan={plan}
+                triggerLabel="Preview & Print Lesson Plan (B&W Optimized)"
+                className="w-full justify-center py-2.5"
+              />
+            </div>
           </div>
         );
     }
@@ -409,15 +452,22 @@ export function CreateLessonPlanWizard() {
         <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col min-h-[600px]">
           
           {step > 1 && (
-            <div className="bg-slate-50 dark:bg-slate-800/50 px-6 py-4 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center">
-              <div className="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-                Step {step - 1} of 7
+            <div className="bg-slate-50 dark:bg-slate-800/50 px-6 py-3.5 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center gap-3">
+              <div className="flex items-center gap-3">
+                <div className="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                  Step {step - 1} of 7
+                </div>
+                <div className="flex gap-1">
+                  {[1, 2, 3, 4, 5, 6, 7].map(s => (
+                    <div key={s} className={`h-1.5 w-6 rounded-full ${s <= step - 1 ? 'bg-indigo-500' : 'bg-slate-200 dark:bg-slate-700'}`} />
+                  ))}
+                </div>
               </div>
-              <div className="flex gap-1">
-                {[1, 2, 3, 4, 5, 6, 7].map(s => (
-                  <div key={s} className={`h-1.5 w-6 rounded-full ${s <= step - 1 ? 'bg-indigo-500' : 'bg-slate-200 dark:bg-slate-700'}`} />
-                ))}
-              </div>
+              <TeacherTipsPopover 
+                gradeId={plan.gradeId} 
+                subjectId={plan.subjectId} 
+                align="right" 
+              />
             </div>
           )}
 

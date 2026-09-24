@@ -343,3 +343,84 @@ export interface UsageEvent {
   metadata?: Record<string, string | number | boolean>;
 }
 
+/**
+ * ============================================================================
+ * V0.6 Extensions: Vertical Skill Pathways, Custom Rubrics, and Theme Bundles
+ * ============================================================================
+ */
+
+export type NcfStageName = "Foundational" | "Preparatory" | "Middle" | "Secondary";
+
+export interface PathwayStageIndicator {
+  stage: NcfStageName;
+  ageRange: string;
+  grades: string;
+  ncfCompetencyCode: string;
+  sourceCitation: string;
+  whatStudentsLearn: string;
+  whatChanges: string; // The cognitive shift / pedagogical leap
+  observableArtifact: string;
+  sampleBenchmark: string;
+}
+
+export interface VerticalSkillPathway {
+  id: string;
+  name: string;
+  domain: string;
+  description: string;
+  progressionOverview: string;
+  stages: PathwayStageIndicator[];
+}
+
+export interface CustomRubricLevels {
+  emerging: { label: string; descriptor: string; points?: number };
+  developing: { label: string; descriptor: string; points?: number };
+  proficient: { label: string; descriptor: string; points?: number };
+  transfer: { label: string; descriptor: string; points?: number };
+}
+
+export interface CustomRubric {
+  id: string;
+  title: string;
+  skillId: string;
+  skillName: string;
+  gradeId: string;
+  subjectId: string;
+  unitTitle?: string;
+  levels: CustomRubricLevels;
+  assessmentType: string;
+  sourceNote?: string;
+  createdAt: number;
+  updatedAt: number;
+}
+
+export interface ThemeCrossSubjectConnection {
+  subject: string;
+  coreConcepts: string[];
+  competencyMapped: string;
+  ncfCitation: string;
+  classroomActivity: string;
+}
+
+export interface ThemeBundle {
+  id: string;
+  slug: string;
+  title: string;
+  themeCategory: 'climate' | 'heritage' | 'data-ethics';
+  tagline: string;
+  description: string;
+  gradeBand: string;
+  recommendedHours: number;
+  disciplines: string[];
+  crossSubjectConnections: ThemeCrossSubjectConnection[];
+  flagshipChallenge: {
+    title: string;
+    drivingQuestion: string;
+    studentDeliverable: string;
+    communityEngagement: string;
+  };
+  unifyingSkills: string[];
+  sources: string[];
+}
+
+

@@ -115,14 +115,14 @@ export function AdminDashboard() {
             <Shield className="w-8 h-8 text-indigo-600" />
             Curriculum Admin Portal
           </h1>
-          <p className="text-slate-600 dark:text-slate-400 mt-2">Review educator feedback and manage SubjectMapping data (v0.2 Phase 4).</p>
+          <p className="text-slate-600 dark:text-slate-400 mt-2">Review educator feedback and manage SubjectMapping data (v0.6 Release).</p>
         </div>
         <Link
-          to="/audit-v0-3"
+          to="/audit-v0-6"
           className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-100 dark:hover:bg-indigo-900/50 text-xs font-semibold transition-colors"
         >
           <FileCheck className="w-4 h-4" />
-          <span>v0.3 Audit Report</span>
+          <span>v0.6 Audit Report</span>
         </Link>
       </div>
 

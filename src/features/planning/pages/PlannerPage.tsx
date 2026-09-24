@@ -70,7 +70,7 @@ export function PlannerPage() {
       <div className="container mx-auto px-4 max-w-6xl space-y-8">
         <header className="space-y-2">
           <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-            Unit & Lesson Planner (v0.4)
+            Unit & Lesson Planner (v0.6)
           </h1>
           <p className="text-sm text-slate-600 dark:text-slate-400">
             Build and map competency-based curricular units directly to skills.

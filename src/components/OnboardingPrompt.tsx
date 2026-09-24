@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Sparkles, Map, Target, Layers } from 'lucide-react';
 import { FEATURES } from '@/config/features';
+import { safeStorage } from '@/lib/safeStorage';
 
 interface OnboardingPromptProps {
   onStartTour: () => void;
@@ -15,7 +16,7 @@ export function OnboardingPrompt({ onStartTour }: OnboardingPromptProps) {
     
     // Slight delay to not overwhelm on load
     const timer = setTimeout(() => {
-      const hasSeen = localStorage.getItem('hasSeenOnboarding');
+      const hasSeen = safeStorage.getItem('hasSeenOnboarding');
       if (!hasSeen) {
         setIsVisible(true);
       }
@@ -26,13 +27,12 @@ export function OnboardingPrompt({ onStartTour }: OnboardingPromptProps) {
 
   const handleDismiss = () => {
     setIsVisible(false);
-    localStorage.setItem("hasSeenOnboarding", "true");
-    localStorage.setItem('hasSeenOnboarding', 'true');
+    safeStorage.setItem('hasSeenOnboarding', 'true');
   };
 
   const handleStart = () => {
     setIsVisible(false);
-    localStorage.setItem("hasSeenOnboarding", "true");
+    safeStorage.setItem('hasSeenOnboarding', 'true');
     onStartTour();
   };
 

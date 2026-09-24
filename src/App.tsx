@@ -21,6 +21,7 @@ import { Roadmap } from './pages/Roadmap';
 import { AuditReport } from './pages/AuditReport';
 import { AuditReportV0_3 } from './pages/AuditReportV0_3';
 import { AuditStatusV0_3 } from './pages/AuditStatusV0_3';
+import { AuditReportV0_6 } from './pages/AuditReportV0_6';
 import { AdminDashboard } from './pages/AdminDashboard';
 import { AreaCoverage } from './pages/AreaCoverage';
 import { SchoolPlanner } from './pages/SchoolPlanner';
@@ -32,7 +33,13 @@ import { ActivitiesPage } from './pages/ActivitiesPage';
 import { AssessmentHub } from './pages/AssessmentHub';
 import { NotFound } from './pages/NotFound';
 import { Health } from './pages/Health';
-import { PlannerRoute, AssessmentMapperRoute, SkillPathwaysRoute } from './features/planning/routes';
+import { 
+  PlannerRoute, 
+  AssessmentMapperRoute, 
+  SkillPathwaysRoute,
+  CustomRubricBuilderRoute,
+  ThemeBundlesRoute 
+} from './features/planning/routes';
 import { useAnalytics } from './hooks/useAnalytics';
 import { CreateLessonPlanWizard } from './features/planning/components/CreateLessonPlanWizard';
 import { CreateAssessmentWizard } from './features/planning/components/CreateAssessmentWizard';
@@ -65,6 +72,8 @@ function AppContent() {
         <Route path="audit-v0-3" element={<AuditReportV0_3 />} />
         <Route path="audit-status" element={<AuditStatusV0_3 />} />
         <Route path="v0-3-audit" element={<AuditStatusV0_3 />} />
+        <Route path="audit-v0-6" element={<AuditReportV0_6 />} />
+        <Route path="v0-6-audit" element={<AuditReportV0_6 />} />
         <Route path="admin" element={<AdminDashboard />} />
         <Route path="coverage" element={<AreaCoverage />} />
         {/* v0.4 Planning Module Routes */}
@@ -77,7 +86,11 @@ function AppContent() {
         <Route path="assess" element={<AssessmentMapperRoute />} />
         {FEATURES.ENABLE_ASSESSMENT_WIZARD && <Route path="assess/new" element={<CreateAssessmentWizard />} />}
         <Route path="assessment-mapper" element={<AssessmentMapperRoute />} />
+        <Route path="rubric/new" element={<CustomRubricBuilderRoute />} />
+        <Route path="assess/rubric-builder" element={<CustomRubricBuilderRoute />} />
         <Route path="pathways" element={<SkillPathwaysRoute />} />
+        <Route path="theme-bundles" element={<ThemeBundlesRoute />} />
+        <Route path="themes" element={<ThemeBundlesRoute />} />
         <Route path="changelog" element={<Changelog />} />
         <Route path="about-framework" element={<AboutFramework />} />
         <Route path="about-content" element={<AboutContent />} />

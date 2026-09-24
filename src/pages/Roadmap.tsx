@@ -48,7 +48,7 @@ const PHASES: RoadmapPhase[] = [
     version: 'v0.3',
     title: 'Full Grade-Wise Architecture',
     status: 'completed',
-    timeline: 'Q1 2025 · Live',
+    timeline: 'Q1 2025 · Complete',
     summary: 'Universal coverage across all 13 school grades (Pre-school → Grade 12) with transparent content maturity.',
     deliverables: [
       '13 comprehensive Grade Profiles with NCF developmental milestones',
@@ -57,32 +57,61 @@ const PHASES: RoadmapPhase[] = [
       'Teacher Toolkit with downloadable templates and facilitation guides',
       'Mobile-optimized responsive navigation and breadcrumbs'
     ],
-    isCurrent: true
+    isCurrent: false
   },
   {
     version: 'v0.4',
-    title: 'Planning Tools & Skill Pathways',
-    status: 'in-progress',
-    timeline: 'Q2 2025 · In Active Prep',
-    summary: 'Classroom lesson planners, skill-assessment matrix engines, and vertical learning pathways.',
+    title: 'Planning Tools & Skill–Assessment Matrices',
+    status: 'completed',
+    timeline: 'Q2 2025 · Complete',
+    summary: 'Interactive unit & lesson planning engine, Bloom\'s taxonomy alignment, and formative rubric matrices.',
     deliverables: [
       'Interactive Unit & Lesson Planner with time-block scaffolding',
       'Skill–Assessment Mapper with real-time competency alignment',
-      'Deep vertical skill pathways from Foundational to Senior Secondary',
-      'Custom rubric builder and classroom print-ready exports'
+      'Formative assessment tasks linked to observable evidence',
+      'Comprehensive Grade 8 curriculum hub pilot'
     ],
     isCurrent: false
   },
   {
     version: 'v0.5',
-    title: 'Interdisciplinary Studios & Co-Planning',
-    status: 'planned',
-    timeline: 'Q3–Q4 2025 · Envisioned',
-    summary: 'Collaborative curriculum co-design, community review workflows, and regional language adaptation.',
+    title: 'CBSE AI Tracks Integration',
+    status: 'completed',
+    timeline: 'Q3 2026 · Complete',
+    summary: 'Full integration of Track A (compulsory embedded CT), Track B (optional 15-hr skill module 901), and Track C (elective board subject 417).',
     deliverables: [
-      'Interdisciplinary theme bundles (Climate, Heritage, Data & Ethics)',
-      'Peer educator review and feedback validation workflows',
-      'NCERT / State SCERT localized textbook alignment modules'
+      'Track A, B, and C indicators across Grades 3–12 skill maps',
+      'Track Profile detail panel with verified CBSE citations and time allocations',
+      'Grade- and track-aware filtering across Lesson Plan and Assessment wizards',
+      'Curriculum-aligned rubrics with CBSE assessment outcomes'
+    ],
+    isCurrent: false
+  },
+  {
+    version: 'v0.6',
+    title: 'Vertical Pathways + Custom Rubrics + Print Exports + Theme Bundles (Phase 1)',
+    status: 'completed',
+    timeline: 'Q3 2026 · Current Release',
+    summary: 'Longitudinal progression across all 4 NCF stages, custom rubric construction engine, print-ready monochrome exports, and interdisciplinary theme bundles.',
+    deliverables: [
+      'Vertical Skill Pathways with NCF-FS / NCF-SE / NCERT competency citations',
+      'Custom Rubric Builder with 4-level maturity scale (Emerging → Transfer) and anti-orphan validation',
+      'Print-Ready PDF export for lesson and unit plans with track badges and signoffs',
+      'Interdisciplinary Theme Bundles (Climate, Heritage, Data & Ethics) with read-only browse and cloning',
+      'Context-aware pedagogical teacher tips for multi-track execution and large classrooms'
+    ],
+    isCurrent: true
+  },
+  {
+    version: 'v0.7',
+    title: 'Interdisciplinary Co-Planning + Peer Review + Localized Alignment',
+    status: 'planned',
+    timeline: 'Q4 2026 · Planned',
+    summary: 'Collaborative curriculum co-design, community peer review workflows, and regional SCERT textbook localization.',
+    deliverables: [
+      'Collaborative multi-teacher interdisciplinary co-planning workspace',
+      'Community peer review, moderation, and feedback validation workflows',
+      'State SCERT and multilingual localized curriculum alignment modules'
     ]
   }
 ];
@@ -190,7 +219,7 @@ export function Roadmap() {
               </p>
             </div>
             <div className="text-xs font-bold text-slate-500">
-              Current Release: <span className="text-indigo-600 dark:text-indigo-400">v0.3 Live (v0.4 Scaffolding)</span>
+              Current Release: <span className="text-indigo-600 dark:text-indigo-400">v0.6 Live (Vertical Pathways & Custom Rubrics)</span>
             </div>
           </div>
 
@@ -217,7 +246,12 @@ export function Roadmap() {
                       <span className="font-mono text-xs font-extrabold px-2.5 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200">
                         {phase.version}
                       </span>
-                      {isCompleted ? (
+                      {phase.isCurrent ? (
+                        <span className="inline-flex items-center gap-1 text-[11px] font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/60 px-2 py-0.5 rounded-full border border-indigo-200 dark:border-indigo-800">
+                          <Sparkles className="w-3 h-3 text-indigo-600 dark:text-indigo-400" />
+                          Current Release
+                        </span>
+                      ) : isCompleted ? (
                         <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-800">
                           <Check className="w-3 h-3" />
                           Completed

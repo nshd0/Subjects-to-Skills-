@@ -1,6 +1,7 @@
 import React from 'react';
 import { Unit, Lesson } from '@/types';
 import { Clock, Target, Printer, LayoutList } from 'lucide-react';
+import { PrintReadyPlanExport } from '@/components/PrintReadyPlanExport';
 // Minimal inline LessonRow for MVP
 // In the future this can be expanded or we can reuse a global component if it fits
 const LessonRow: React.FC<{ lesson: Lesson }> = ({ lesson }) => {
@@ -57,12 +58,13 @@ export function UnitDetailPanel({ unit, lessons, onPrint, onBack }: UnitDetailPa
           &larr; Back to Units
         </button>
         <div className="flex-1"></div>
+        <PrintReadyPlanExport unit={unit} triggerLabel="Print Unit (B&W Optimized)" />
         <button 
           onClick={onPrint}
           className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold flex items-center gap-2 transition-colors min-h-[44px] focus:ring-2 focus:ring-indigo-500 focus:outline-hidden focus:ring-offset-2 dark:focus:ring-offset-slate-900"
         >
           <Printer className="w-4 h-4" />
-          <span>Print Unit Plan</span>
+          <span>Quick Print</span>
         </button>
       </div>
 

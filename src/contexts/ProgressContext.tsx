@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import { safeStorage } from '@/lib/safeStorage';
 
 export interface BookmarkItem {
   id: string;
@@ -30,7 +31,7 @@ const MODULES_STORAGE_KEY = 'curriculum-progress';
 export function ProgressProvider({ children }: { children: React.ReactNode }) {
   const [savedModules, setSavedModules] = useState<string[]>(() => {
     try {
-      const saved = localStorage.getItem(MODULES_STORAGE_KEY);
+      const saved = safeStorage.getItem(MODULES_STORAGE_KEY);
       return saved ? JSON.parse(saved) : [];
     } catch {
       return [];
@@ -39,7 +40,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
 
   const [bookmarks, setBookmarks] = useState<BookmarkItem[]>(() => {
     try {
-      const saved = localStorage.getItem(BOOKMARKS_STORAGE_KEY);
+      const saved = safeStorage.getItem(BOOKMARKS_STORAGE_KEY);
       return saved ? JSON.parse(saved) : [];
     } catch {
       return [];
@@ -48,7 +49,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     try {
-      localStorage.setItem(MODULES_STORAGE_KEY, JSON.stringify(savedModules));
+      safeStorage.setItem(MODULES_STORAGE_KEY, JSON.stringify(savedModules));
     } catch (e) {
       console.warn('Failed to persist curriculum progress', e);
     }
@@ -56,7 +57,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     try {
-      localStorage.setItem(BOOKMARKS_STORAGE_KEY, JSON.stringify(bookmarks));
+      safeStorage.setItem(BOOKMARKS_STORAGE_KEY, JSON.stringify(bookmarks));
     } catch (e) {
       console.warn('Failed to persist bookmarks', e);
     }

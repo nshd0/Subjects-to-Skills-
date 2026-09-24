@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { LessonPlan, WizardAssessment, IntegratedUnit } from './wizardTypes';
+import { safeStorage } from '@/lib/safeStorage';
 
 export function useWizardLessonPlans() {
   const defaultPlans: LessonPlan[] = [
@@ -232,19 +233,23 @@ export function useWizardLessonPlans() {
   const [plans, setPlans] = useState<LessonPlan[]>(defaultPlans);
 
   useEffect(() => {
-    const stored = localStorage.getItem('wizard_lesson_plans');
-    if (stored) {
-      const parsed = JSON.parse(stored);
-      if (parsed.length > 0) {
-        setPlans(parsed);
+    try {
+      const stored = safeStorage.getItem('wizard_lesson_plans');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setPlans(parsed);
+        }
       }
+    } catch (e) {
+      console.warn('Failed to parse wizard_lesson_plans from storage', e);
     }
   }, []);
 
   const savePlan = (plan: LessonPlan) => {
     const newPlans = [...plans.filter(p => p.id !== plan.id), plan];
     setPlans(newPlans);
-    localStorage.setItem('wizard_lesson_plans', JSON.stringify(newPlans));
+    safeStorage.setItem('wizard_lesson_plans', JSON.stringify(newPlans));
   };
 
   return { plans, savePlan };
@@ -471,19 +476,23 @@ export function useWizardAssessments() {
   const [assessments, setAssessments] = useState<WizardAssessment[]>(defaultAssessments);
 
   useEffect(() => {
-    const stored = localStorage.getItem('wizard_assessments');
-    if (stored) {
-      const parsed = JSON.parse(stored);
-      if (parsed.length > 0) {
-        setAssessments(parsed);
+    try {
+      const stored = safeStorage.getItem('wizard_assessments');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setAssessments(parsed);
+        }
       }
+    } catch (e) {
+      console.warn('Failed to parse wizard_assessments from storage', e);
     }
   }, []);
 
   const saveAssessment = (assessment: WizardAssessment) => {
     const newAssessments = [...assessments.filter(a => a.id !== assessment.id), assessment];
     setAssessments(newAssessments);
-    localStorage.setItem('wizard_assessments', JSON.stringify(newAssessments));
+    safeStorage.setItem('wizard_assessments', JSON.stringify(newAssessments));
   };
 
   return { assessments, saveAssessment };
@@ -493,22 +502,29 @@ export function useWizardIntegratedUnits() {
   const [units, setUnits] = useState<IntegratedUnit[]>([]);
 
   useEffect(() => {
-    const stored = localStorage.getItem('wizard_integrated_units');
-    if (stored) {
-      setUnits(JSON.parse(stored));
+    try {
+      const stored = safeStorage.getItem('wizard_integrated_units');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed)) {
+          setUnits(parsed);
+        }
+      }
+    } catch (e) {
+      console.warn('Failed to parse wizard_integrated_units from storage', e);
     }
   }, []);
 
   const saveUnit = (unit: IntegratedUnit) => {
     const newUnits = [...units.filter(u => u.id !== unit.id), unit];
     setUnits(newUnits);
-    localStorage.setItem('wizard_integrated_units', JSON.stringify(newUnits));
+    safeStorage.setItem('wizard_integrated_units', JSON.stringify(newUnits));
   };
 
   const deleteUnit = (id: string) => {
     const newUnits = units.filter(u => u.id !== id);
     setUnits(newUnits);
-    localStorage.setItem('wizard_integrated_units', JSON.stringify(newUnits));
+    safeStorage.setItem('wizard_integrated_units', JSON.stringify(newUnits));
   };
 
   return { units, saveUnit, deleteUnit };

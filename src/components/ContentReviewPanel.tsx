@@ -4,6 +4,7 @@ import {
   CheckCircle2, AlertCircle, Clock, FileText, Send, 
   MessageSquare, UserCheck, ShieldAlert, Sparkles, ThumbsUp 
 } from 'lucide-react';
+import { safeStorage } from '@/lib/safeStorage';
 
 interface ContentReviewPanelProps {
   gradeId: string;
@@ -37,7 +38,7 @@ export function ContentReviewPanel({
   const [reviewerEmail, setReviewerEmail] = useState('');
   const [sessionContributions, setSessionContributions] = useState<number>(() => {
     try {
-      const stored = localStorage.getItem(`s2s_feedback_count_${gradeId}`);
+      const stored = safeStorage.getItem(`s2s_feedback_count_${gradeId}`);
       return stored ? parseInt(stored, 10) : 0;
     } catch {
       return 0;
@@ -61,7 +62,7 @@ export function ContentReviewPanel({
     const newCount = sessionContributions + 1;
     setSessionContributions(newCount);
     try {
-      localStorage.setItem(`s2s_feedback_count_${gradeId}`, newCount.toString());
+      safeStorage.setItem(`s2s_feedback_count_${gradeId}`, newCount.toString());
     } catch (err) {
       console.warn('Could not save feedback count', err);
     }
@@ -173,7 +174,7 @@ export function ContentReviewPanel({
                 Thank you for contributing to Subjects2Skills!
               </h4>
               <p className="text-xs text-emerald-800 dark:text-emerald-300 max-w-md mx-auto">
-                Your feedback directly informs our v0.3 grade-wise release iterations. Educator inputs are reviewed weekly.
+                Your feedback directly informs our v0.6 grade-wise release iterations. Educator inputs are reviewed weekly.
               </p>
               <button
                 onClick={() => setFeedbackSubmitted(false)}
@@ -331,7 +332,7 @@ export function ContentReviewPanel({
               {/* 8. Optional: Interested in reviewing future content? */}
               <div>
                 <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                  Interested in piloting or reviewing future v0.3 releases? (Optional email)
+                  Interested in piloting or reviewing future v0.7 releases? (Optional email)
                 </label>
                 <input
                   type="email"
