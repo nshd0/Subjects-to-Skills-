@@ -17,9 +17,9 @@ export function Health() {
     status: 'healthy',
     timestamp: new Date().toISOString(),
     service: 'Subjects2Skills SPA',
-    version: '0.6.0',
+    version: '0.8.0',
     environment: import.meta.env.MODE || 'production',
-    routesActive: 18,
+    routesActive: 30,
     gradesConfigured: gradesData.length,
     activitiesConfigured: activitiesData.length,
     uptimeSec: uptimeSeconds,
@@ -56,7 +56,7 @@ export function Health() {
           <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 space-y-1">
             <span className="text-slate-400 font-bold uppercase text-[10px] block">Version</span>
             <span className="font-bold text-slate-900 dark:text-white text-sm">
-              v0.6.0
+              v0.8.0
             </span>
           </div>
 

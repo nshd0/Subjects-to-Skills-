@@ -122,15 +122,15 @@ Student demonstrates deep understanding. Applies the skill creatively, explains 
                 Framework Integrity & Technical Audit
               </span>
               <span className="text-slate-600 dark:text-slate-400">
-                Review the newly verified v0.6 technical self-audit covering routing, grade completeness, and SPA fallback readiness.
+                Review the verified v0.8 technical self-audit covering 12-state SCERT alignments, CRDT co-planning, and offline PWA readiness.
               </span>
             </div>
           </div>
           <Link
-            to="/audit-v0-6"
+            to="/audit-v0-8"
             className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold shrink-0 transition-colors"
           >
-            <span>v0.6 Technical Audit</span>
+            <span>v0.8 Technical Audit</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </motion.div>

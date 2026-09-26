@@ -1,9 +1,27 @@
 import React from 'react';
 import { NavLink, Outlet, useLocation, Link } from 'react-router-dom';
-import { Moon, Sun, Menu, X, GraduationCap, LogIn, LogOut, User as UserIcon, ShieldAlert, Sparkles, Layers, Bookmark } from 'lucide-react';
+import { 
+  Moon, 
+  Sun, 
+  Menu, 
+  X, 
+  GraduationCap, 
+  LogIn, 
+  LogOut, 
+  User as UserIcon, 
+  ShieldAlert, 
+  Sparkles, 
+  Layers, 
+  Bookmark, 
+  HardDrive, 
+  Languages, 
+  Wifi, 
+  WifiOff 
+} from 'lucide-react';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { useProgress } from '@/contexts/ProgressContext';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from './ui/Button';
 import { FeedbackWidget } from './FeedbackWidget';
 import { GlobalSearch } from './GlobalSearch';
@@ -12,6 +30,8 @@ import { NavDropdown } from './NavDropdown';
 import { BookmarksDrawer } from './BookmarksDrawer';
 import { OnboardingPrompt } from './OnboardingPrompt';
 import { OnboardingTour } from './OnboardingTour';
+import { PWAInstallButton } from './PWAInstallButton';
+import { OfflineVaultDrawer } from '@/features/offline/OfflineVaultDrawer';
 import { FEATURES } from '@/config/features';
 import { gradesData } from '@/data/grades';
 
@@ -19,13 +39,29 @@ export function Layout() {
   const { theme, setTheme } = useTheme();
   const { user, profile, login, logout, loading } = useAuth();
   const { bookmarks } = useProgress();
+  const { currentLanguage, setLanguage, languages, activeLanguageMeta } = useLanguage();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [isBookmarksOpen, setIsBookmarksOpen] = React.useState(false);
   const [isTourOpen, setIsTourOpen] = React.useState(false);
+  const [isOfflineVaultOpen, setIsOfflineVaultOpen] = React.useState(false);
+  const [isLanguageMenuOpen, setIsLanguageMenuOpen] = React.useState(false);
+  const [isOnline, setIsOnline] = React.useState(navigator.onLine);
   const location = useLocation();
 
   React.useEffect(() => {
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, []);
+
+  React.useEffect(() => {
     setIsMobileMenuOpen(false);
+    setIsLanguageMenuOpen(false);
     window.scrollTo(0, 0);
   }, [location.pathname]);
 
@@ -77,23 +113,30 @@ export function Layout() {
   const teachAndPlanLinks = [
     { name: 'Classroom Activities', path: '/activities' },
     { name: 'Unit & Lesson Planner', path: '/planner' },
+    { name: 'Real-Time Co-Planning (v0.8)', path: '/co-planning' },
     { name: 'Assessment Mapper', path: '/assessment-mapper' },
-    { name: 'Custom Rubric Builder (v0.6)', path: '/rubric/new' },
-    { name: 'Vertical Skill Pathways (v0.6)', path: '/pathways' },
-    { name: 'Interdisciplinary Theme Bundles (v0.6)', path: '/theme-bundles' },
+    { name: 'Custom Rubric Builder', path: '/rubric/new' },
+    { name: 'Vertical Skill Pathways', path: '/pathways' },
+    { name: 'Interdisciplinary Theme Bundles', path: '/theme-bundles' },
+    { name: '12-State SCERT Alignments (v0.8)', path: '/state-alignments' },
   ];
 
   const assessLinks = [
     { name: 'Assessment Hub', path: '/assessment' },
     { name: 'Skills Progression', path: '/skill-progression' },
-    { name: 'Custom Rubric Builder (v0.6)', path: '/rubric/new' },
-    { name: 'Vertical Pathways (v0.6)', path: '/pathways' },
+    { name: 'Custom Rubric Builder', path: '/rubric/new' },
+    { name: 'Vertical Pathways', path: '/pathways' },
   ];
 
   const resourcesLinks = [
-    { name: 'Teacher Resources', path: '/resources' },
+    { name: 'Ready-to-Use Classroom Resources (v0.8)', path: '/resources' },
+    { name: 'School & District Dashboards (v0.8)', path: '/school-dashboards' },
+    { name: 'DIKSHA & NISHTHA CPD Hub (v0.8)', path: '/professional-development' },
     { name: 'Teacher Toolkit', path: '/toolkit' },
-    { name: 'Theme Bundles (v0.6)', path: '/theme-bundles' },
+    { name: 'Theme Bundles', path: '/theme-bundles' },
+    { name: 'State SCERT Alignments (12 States)', path: '/state-alignments' },
+    { name: 'Peer Review Guidelines', path: '/peer-review-guidelines' },
+    { name: 'Resource Quality Guidelines (v0.8)', path: '/resource-guidelines' },
     { name: 'School Implementation Planner', path: '/school-planner' },
   ];
 
@@ -101,8 +144,12 @@ export function Layout() {
     { name: 'About & Principles', path: '/about' },
     { name: 'Pedagogical Framework', path: '/about-framework' },
     { name: 'Changelog', path: '/changelog' },
+    { name: 'v0.8 Technical Audit & Evidence', path: '/audit-v0-8' },
+    { name: 'Real-Time CRDT Architecture Docs', path: '/collab-docs' },
+    { name: 'Institutional Dashboards Docs', path: '/school-dashboard-docs' },
+    { name: 'State Board Framework Docs', path: '/state-docs' },
+    { name: 'v0.7 Technical Audit', path: '/audit-v0-7' },
     { name: 'v0.6 Technical Audit', path: '/audit-v0-6' },
-    { name: 'v0.4 Implementation Status', path: '/audit-status' },
     { name: 'Baseline Audit Report', path: '/audit' },
   ];
 
@@ -127,29 +174,33 @@ export function Layout() {
   return (
     <div className="min-h-screen overflow-x-hidden bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50 flex flex-col font-sans transition-colors duration-200">
       
-      {/* Target Version Banner: v0.6 — Vertical Pathways, Custom Rubrics & Theme Bundles Live */}
+      {/* Target Version Banner: v0.8 — Full 12-State Expansion, Real-Time CRDT Co-Planning, Classroom Resources & Offline PWA Live */}
       <div className="bg-indigo-900 text-white px-4 py-2.5 text-xs font-medium border-b border-indigo-800 print:hidden relative">
         <div className="container mx-auto flex flex-col md:flex-row items-center justify-between gap-2 text-center md:text-left">
           <div className="flex flex-wrap items-center justify-center md:justify-start gap-2">
             <span className="font-bold border border-indigo-400/50 px-2 py-0.5 rounded text-[11px] bg-indigo-800/80 tracking-wider flex items-center gap-1 text-indigo-200">
               <Sparkles className="w-3 h-3 text-amber-300" />
-              v0.6 · Vertical Pathways, Custom Rubrics, Print Exports & Theme Bundles Live
+              v0.8 · Full 12-State Expansion, Real-Time CRDT Co-Planning & PWA Live
             </span>
             <span className="text-slate-200 font-medium hidden sm:inline">
               Subjects organise knowledge. Skills organise capability.
             </span>
             <span className="text-indigo-300 text-[11px]">
-              (Explore by Grade: Pre-school to Grade 12 Active)
+              (12 State SCERTs + CBSE Baseline · Pre-school to Grade 12)
             </span>
           </div>
 
           <div className="flex items-center gap-3 text-[11px] text-indigo-200 shrink-0">
-            <Link to="/roadmap" className="hover:text-white underline underline-offset-2">
-              Content Roadmap (v0.6)
+            <Link to="/audit-v0-8" className="hover:text-white underline underline-offset-2 font-semibold text-amber-300">
+              v0.8 Audit Report
             </Link>
             <span>·</span>
-            <Link to="/about" className="hover:text-white underline underline-offset-2">
-              Trust & Transparency
+            <Link to="/co-planning" className="hover:text-white underline underline-offset-2">
+              Co-Planning Studio
+            </Link>
+            <span>·</span>
+            <Link to="/resources" className="hover:text-white underline underline-offset-2">
+              Classroom Resources
             </Link>
           </div>
         </div>
@@ -195,7 +246,7 @@ export function Layout() {
               <div id="tour-step-assess-compact"><NavDropdown label="Assess" items={assessLinks} /></div>
               <div id="tour-step-resources-compact"><NavDropdown label="More" items={[
                 ...resourcesLinks,
-                { name: 'v0.6 Content Roadmap', path: '/roadmap' },
+                { name: 'Content Roadmap (v0.8)', path: '/roadmap' },
                 ...aboutLinks,
               ]} /></div>
             </nav>
@@ -203,6 +254,66 @@ export function Layout() {
             {/* Utilities & Search */}
             <div className="flex items-center space-x-1 sm:space-x-2">
               <GlobalSearch />
+
+              {/* Ambient Connection & Low-Bandwidth Vault Indicator */}
+              <button
+                type="button"
+                onClick={() => setIsOfflineVaultOpen(true)}
+                className={`flex items-center gap-1.5 px-2 sm:px-2.5 py-1 rounded-full text-[11px] font-medium transition-all ${
+                  isOnline
+                    ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 hover:bg-emerald-100'
+                    : 'bg-amber-50 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300 border border-amber-300 dark:border-amber-700 animate-pulse'
+                }`}
+                title="Low-Bandwidth Offline Vault: Click to inspect cached curriculum units"
+                aria-label="Offline Resource Vault"
+              >
+                <span className={`w-2 h-2 rounded-full ${isOnline ? 'bg-emerald-500 animate-pulse' : 'bg-amber-500'}`} />
+                <span className="hidden sm:inline font-semibold">{isOnline ? 'Offline Ready' : 'Offline Mode'}</span>
+                <HardDrive className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
+              </button>
+
+              {/* Regional Language Switcher */}
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={() => setIsLanguageMenuOpen(!isLanguageMenuOpen)}
+                  className="p-1.5 sm:px-2 sm:py-1 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-1 text-xs font-medium"
+                  title="Change Regional Language"
+                  aria-label="Select Interface & Glossary Language"
+                >
+                  <Languages className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+                  <span className="hidden lg:inline text-[11px] font-semibold">{activeLanguageMeta?.nativeName || 'EN'}</span>
+                </button>
+
+                {isLanguageMenuOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800 py-1.5 z-50">
+                    <div className="px-3 py-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-100 dark:border-slate-800">
+                      Regional Language
+                    </div>
+                    <div className="max-h-60 overflow-y-auto">
+                      {languages.map((lang) => (
+                        <button
+                          key={lang.code}
+                          type="button"
+                          onClick={() => {
+                            setLanguage(lang.code);
+                            setIsLanguageMenuOpen(false);
+                          }}
+                          className={`w-full text-left px-3 py-1.5 text-xs flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800 ${
+                            currentLanguage === lang.code ? 'font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50/50 dark:bg-indigo-950/30' : 'text-slate-700 dark:text-slate-300'
+                          }`}
+                        >
+                          <span>{lang.name}</span>
+                          <span className="text-[11px] text-slate-400 font-normal">{lang.nativeName}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* PWA In-App Install Button */}
+              <PWAInstallButton className="hidden lg:inline-flex" />
 
               {/* Bookmarks Button */}
               <button
@@ -283,7 +394,8 @@ export function Layout() {
               </button>
               <NavLink id="tour-step-map-mobile" to="/grades" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Explore by Grade</NavLink>
               <NavLink to="/activities" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Classroom Activities</NavLink>
-              <NavLink id="tour-step-planner-mobile" to="/planner" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Unit & Lesson Planner (v0.6)</NavLink>
+              <NavLink id="tour-step-planner-mobile" to="/planner" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Unit &amp; Lesson Planner</NavLink>
+              <NavLink to="/co-planning" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Real-Time Co-Planning (v0.8)</NavLink>
               <NavLink id="tour-step-assess-mobile" to="/assessment" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Assessment Hub</NavLink>
 
               <div className="py-2 border-t border-slate-100 dark:border-slate-800 space-y-1">
@@ -302,20 +414,23 @@ export function Layout() {
 
               <div className="py-2 border-t border-slate-100 dark:border-slate-800 space-y-1">
                 <p className="px-3 text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">More</p>
-                <NavLink to="/assessment-mapper" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Assessment Mapper (v0.6)</NavLink>
-                <NavLink to="/rubric/new" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Custom Rubric Builder (v0.6)</NavLink>
-                <NavLink to="/pathways" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Skill Pathways (v0.6)</NavLink>
-                <NavLink to="/theme-bundles" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Theme Bundles (v0.6)</NavLink>
+                <NavLink to="/resource-bank" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Classroom Resource Bank</NavLink>
+                <NavLink to="/school-dashboards" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>School &amp; District Dashboards</NavLink>
+                <NavLink to="/assessment-mapper" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Assessment Mapper</NavLink>
+                <NavLink to="/rubric/new" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Custom Rubric Builder</NavLink>
+                <NavLink to="/pathways" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Skill Pathways</NavLink>
+                <NavLink to="/theme-bundles" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Theme Bundles</NavLink>
                 <NavLink to="/skill-progression" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Skills Progression</NavLink>
                 <NavLink id="tour-step-resources-mobile" to="/resources" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Teacher Resources</NavLink>
                 <NavLink to="/toolkit" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Teacher Toolkit</NavLink>
                 <NavLink to="/school-planner" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>School Implementation Planner</NavLink>
-                <NavLink to="/roadmap" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Content Roadmap (v0.6)</NavLink>
-                <NavLink to="/about" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>About & Principles</NavLink>
+                <NavLink to="/roadmap" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Content Roadmap (v0.8)</NavLink>
+                <NavLink to="/about" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>About &amp; Principles</NavLink>
                 <NavLink to="/about-framework" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Pedagogical Framework</NavLink>
                 <NavLink to="/changelog" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Changelog</NavLink>
+                <NavLink to="/audit-v0-8" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>v0.8 Technical Audit</NavLink>
+                <NavLink to="/audit-v0-7" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>v0.7 Technical Audit</NavLink>
                 <NavLink to="/audit-v0-6" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>v0.6 Technical Audit</NavLink>
-                <NavLink to="/audit-status" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>v0.4 Implementation Status</NavLink>
                 <NavLink to="/audit" className={mobileNavLinkClass} onClick={() => setIsMobileMenuOpen(false)}>Baseline Audit</NavLink>
               </div>
 
@@ -359,7 +474,7 @@ export function Layout() {
                 A public educational framework demonstrating how existing CBSE subjects can be connected to skills, pedagogy stages, classroom activities, assessment evidence, and free open resources.
               </p>
               <div className="inline-block px-2 py-1 rounded bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 font-bold text-[10px]">
-                v0.6 · Pathways, Rubrics & Theme Bundles Live
+                v0.7 · Co-Planning, Peer Review & State SCERT Live
               </div>
             </div>
 
@@ -372,22 +487,23 @@ export function Layout() {
                 <li><Link to="/stage/middle" className="hover:underline">Middle Stage</Link></li>
                 <li><Link to="/stage/secondary" className="hover:underline">Secondary Stage</Link></li>
                 <li><Link to="/skill-progression" className="hover:underline">Skill Progression</Link></li>
+                <li><Link to="/state-alignments" className="hover:underline text-indigo-600 dark:text-indigo-400 font-semibold">12-State SCERT Alignments (v0.8)</Link></li>
               </ul>
             </div>
 
             <div className="space-y-2">
               <h4 className="font-bold text-slate-900 dark:text-white uppercase tracking-wider text-[11px]">Teaching & Assessment</h4>
               <ul className="space-y-1.5 text-slate-600 dark:text-slate-400">
-                <li><Link to="/planner" className="hover:underline text-indigo-600 dark:text-indigo-400 font-semibold">Unit & Lesson Planner (v0.6)</Link></li>
-                <li><Link to="/assessment-mapper" className="hover:underline">Skill–Assessment Mapper (v0.6)</Link></li>
-                <li><Link to="/rubric/new" className="hover:underline">Custom Rubric Builder (v0.6)</Link></li>
-                <li><Link to="/pathways" className="hover:underline">Skill Pathways (v0.6)</Link></li>
-                <li><Link to="/theme-bundles" className="hover:underline">Theme Bundles (v0.6)</Link></li>
-                <li><Link to="/activities" className="hover:underline">Classroom Activities Bank</Link></li>
-                <li><Link to="/assessment" className="hover:underline">Evidence & Rubrics Hub</Link></li>
-                <li><Link to="/resources" className="hover:underline">Teacher Resource Hub</Link></li>
+                <li><Link to="/planner" className="hover:underline text-indigo-600 dark:text-indigo-400 font-semibold">Unit & Lesson Planner</Link></li>
+                <li><Link to="/co-planning" className="hover:underline text-indigo-600 dark:text-indigo-400 font-semibold">Real-Time Co-Planning (v0.8)</Link></li>
+                <li><Link to="/resources" className="hover:underline text-indigo-600 dark:text-indigo-400 font-semibold">Ready-to-Use Resources (v0.8)</Link></li>
+                <li><Link to="/assessment-mapper" className="hover:underline">Skill–Assessment Mapper</Link></li>
+                <li><Link to="/rubric/new" className="hover:underline">Custom Rubric Builder</Link></li>
+                <li><Link to="/pathways" className="hover:underline">Vertical Skill Pathways</Link></li>
+                <li><Link to="/theme-bundles" className="hover:underline">Theme Bundles Co-Planning</Link></li>
+                <li><Link to="/school-dashboards" className="hover:underline">School & District Dashboards (v0.8)</Link></li>
+                <li><Link to="/professional-development" className="hover:underline">DIKSHA & NISHTHA CPD Hub (v0.8)</Link></li>
                 <li><Link to="/toolkit" className="hover:underline">Teacher Toolkit</Link></li>
-                <li><Link to="/school-planner" className="hover:underline">School Implementation Planner</Link></li>
               </ul>
             </div>
 
@@ -396,11 +512,14 @@ export function Layout() {
               <ul className="space-y-1.5 text-slate-600 dark:text-slate-400">
                 {FEATURES.ENABLE_HOW_IT_WORKS && (<li><Link to="/how-it-works" className="hover:underline text-indigo-600 dark:text-indigo-400 font-semibold">How It Works</Link></li>)}
                 <li><Link to="/about" className="hover:underline">About & Core Principles</Link></li>
-                <li><Link to="/roadmap" className="hover:underline">v0.6 Content Roadmap</Link></li>
-                <li><Link to="/audit-v0-6" className="hover:underline text-indigo-600 dark:text-indigo-400 font-semibold">v0.6 Technical Audit Report</Link></li>
-                <li><Link to="/audit-status" className="hover:underline">v0.4 Implementation Status</Link></li>
-                <li><Link to="/audit-v0-3" className="hover:underline">v0.3 Technical Audit Report</Link></li>
-                <li><Link to="/audit" className="hover:underline">v0.2 Baseline Audit Report</Link></li>
+                <li><Link to="/audit-v0-8" className="hover:underline text-indigo-600 dark:text-indigo-400 font-semibold">v0.8 Technical Audit Report</Link></li>
+                <li><Link to="/resource-guidelines" className="hover:underline">Resource Quality Guidelines (v0.8)</Link></li>
+                <li><Link to="/collab-docs" className="hover:underline">CRDT Architecture Docs (v0.8)</Link></li>
+                <li><Link to="/school-dashboard-docs" className="hover:underline">Institutional Dashboards Docs (v0.8)</Link></li>
+                <li><Link to="/state-docs" className="hover:underline">12-State Framework Docs (v0.8)</Link></li>
+                <li><Link to="/peer-review-guidelines" className="hover:underline">Peer Review Guidelines</Link></li>
+                <li><Link to="/roadmap" className="hover:underline">Release Roadmap</Link></li>
+                <li><Link to="/audit-v0-7" className="hover:underline">v0.7 Technical Audit Report</Link></li>
                 <li><Link to="/about#feedback" className="hover:underline">Submit Educator Feedback</Link></li>
               </ul>
             </div>
@@ -427,7 +546,7 @@ export function Layout() {
                   Replay onboarding tour
                 </button>
               )}
-              <span>© 2026 Subjects2Skills Framework. Built for Indian K–12 education.</span>
+              <span>© 2026 Subjects2Skills Framework. Built for Indian K–12 education. Version 0.8.0.</span>
               <span>Subjects organise knowledge · Skills organise capability</span>
             </div>
           </div>
@@ -438,6 +557,7 @@ export function Layout() {
       <FeedbackWidget />
       
       <BookmarksDrawer isOpen={isBookmarksOpen} onClose={() => setIsBookmarksOpen(false)} />
+      <OfflineVaultDrawer isOpen={isOfflineVaultOpen} onClose={() => setIsOfflineVaultOpen(false)} />
       {FEATURES.ENABLE_ONBOARDING_TOUR && (
         <>
           <OnboardingPrompt onStartTour={() => { setIsTourOpen(true); if (window.innerWidth < 768) setIsMobileMenuOpen(true); }} />

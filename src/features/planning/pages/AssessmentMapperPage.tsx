@@ -32,7 +32,7 @@ export function AssessmentMapperPage() {
           <div>
             <div className="flex items-center gap-2 mb-2">
               <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300">
-                v0.6 Production
+                Competency Assessment
               </span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
@@ -50,7 +50,7 @@ export function AssessmentMapperPage() {
               className="px-4 py-2.5 rounded-xl border border-indigo-200 dark:border-indigo-800 bg-indigo-50 dark:bg-indigo-950/50 hover:bg-indigo-100 text-indigo-700 dark:text-indigo-300 font-semibold flex items-center justify-center gap-2 transition-colors min-h-[44px] shadow-xs whitespace-nowrap text-xs"
             >
               <Target className="w-4 h-4" />
-              <span>Build Custom Rubric (v0.6)</span>
+              <span>Build Custom Rubric</span>
             </Link>
             {FEATURES.ENABLE_ASSESSMENT_WIZARD && (
               <Link

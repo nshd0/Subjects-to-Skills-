@@ -174,7 +174,7 @@ export function ContentReviewPanel({
                 Thank you for contributing to Subjects2Skills!
               </h4>
               <p className="text-xs text-emerald-800 dark:text-emerald-300 max-w-md mx-auto">
-                Your feedback directly informs our v0.6 grade-wise release iterations. Educator inputs are reviewed weekly.
+                Your feedback directly informs our v0.8 grade-wise release iterations. Educator inputs are reviewed weekly.
               </p>
               <button
                 onClick={() => setFeedbackSubmitted(false)}

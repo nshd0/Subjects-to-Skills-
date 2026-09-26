@@ -278,7 +278,7 @@ export function PrintReadyPlanExport({
                     <strong>Curricular Authority Citations:</strong> Aligned to NEP 2020 (Sections 4.4 & 4.27), NCF-SE 2023 Stage Specifications, and CBSE Curriculum Circulars.
                   </div>
                   <div className="text-right whitespace-nowrap font-mono font-bold">
-                    Subjects2Skills v0.6 · Standardized Export
+                    Subjects2Skills v0.8 · Standardized Export
                   </div>
                 </div>
 

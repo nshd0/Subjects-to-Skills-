@@ -197,7 +197,7 @@ export function CustomRubricBuilderPage() {
             <div className="space-y-1.5">
               <div className="flex items-center gap-2">
                 <span className="px-3 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-indigo-100 text-indigo-800 dark:bg-indigo-900/50 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
-                  v0.6 Competency Rubrics
+                  Competency Assessment Rubrics
                 </span>
                 <span className="text-xs text-slate-500 dark:text-slate-400">
                   4-Level Maturity Scale: Emerging → Transfer

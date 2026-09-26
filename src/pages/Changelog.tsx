@@ -7,17 +7,38 @@ export function Changelog() {
       
       <div className="space-y-12 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-200 dark:before:via-slate-800 before:to-transparent">
         
-        {/* v0.6 */}
+        {/* v0.7 */}
         <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
           <div className="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white dark:border-slate-950 bg-indigo-600 text-white shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow">
-            <span className="text-sm font-bold">v0.6</span>
+            <span className="text-sm font-bold">v0.7</span>
           </div>
           <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-5 rounded-2xl border-2 border-indigo-200 dark:border-indigo-900/60 bg-white dark:bg-slate-900 shadow-sm">
             <div className="flex items-center justify-between gap-2 mb-1">
-              <h3 className="font-bold text-lg text-slate-900 dark:text-white">Vertical Pathways, Custom Rubrics, Print Exports & Theme Bundles</h3>
+              <h3 className="font-bold text-lg text-slate-900 dark:text-white">Interdisciplinary Co-Planning, Peer Review & State SCERT Alignment</h3>
               <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-800 dark:bg-indigo-950/80 dark:text-indigo-300 shrink-0">
                 Latest Release
               </span>
+            </div>
+            <p className="text-sm text-slate-500 mb-3">Release 0.7.0 • September 2026</p>
+            <ul className="list-disc pl-5 text-sm space-y-1.5 text-slate-700 dark:text-slate-300">
+              <li><strong>Interdisciplinary Co-Creation:</strong> Multi-subject theme blueprint builder with verifiable source citations, monthly submission quota (max 5/month), and CC BY-SA 4.0 open licensing.</li>
+              <li><strong>Peer Educator Review Workflow:</strong> Open community moderation queue evaluating Curriculum Alignment, Classroom Usability, Source Verification, and Accessibility; bundles earn "Peer-Reviewed" certification upon 2 endorsements.</li>
+              <li><strong>State SCERT Textbook Localization (Pilot):</strong> Chapter-level alignments for Grades 6–8 across Kerala SCERT (Samagra Portal) and Maharashtra SCERT (Balbharati) alongside National NCERT baselines.</li>
+              <li><strong>Community Suggestion Channels:</strong> In-app "Report Issue" and "Suggest Edit" workflows for crowdsourced quality control, plus "Suggest State Alignment" on all skill nodes.</li>
+              <li><strong>Collaborative Unit Planning (Lite):</strong> Version tracking, async co-planning notes, and one-click "Copy to My Plans" fork action.</li>
+              <li><strong>Curriculum Assist (AI Suggestions):</strong> Source-grounded template suggestions clearly labeled as "Suggested", requiring teacher confirmation.</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* v0.6 */}
+        <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+          <div className="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white dark:border-slate-950 bg-slate-300 dark:bg-slate-700 text-slate-600 dark:text-slate-300 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow">
+            <span className="text-sm font-bold">v0.6</span>
+          </div>
+          <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
+            <div className="flex items-center justify-between gap-2 mb-1">
+              <h3 className="font-bold text-lg text-slate-900 dark:text-white">Vertical Pathways, Custom Rubrics, Print Exports & Theme Bundles</h3>
             </div>
             <p className="text-sm text-slate-500 mb-3">Release 0.6.0 • September 2026</p>
             <ul className="list-disc pl-5 text-sm space-y-1.5 text-slate-700 dark:text-slate-300">

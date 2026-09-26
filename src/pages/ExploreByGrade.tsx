@@ -129,7 +129,7 @@ export function ExploreByGrade() {
                 <span>Planned</span>
               </span>
               <Link to="/roadmap" className="text-indigo-600 dark:text-indigo-400 hover:underline font-medium inline-flex items-center gap-1 ml-2">
-                <span>View v0.6 Roadmap</span>
+                <span>View Content Roadmap</span>
                 <ArrowRight className="w-3 h-3" />
               </Link>
             </div>

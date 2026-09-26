@@ -22,6 +22,9 @@ import { AuditReport } from './pages/AuditReport';
 import { AuditReportV0_3 } from './pages/AuditReportV0_3';
 import { AuditStatusV0_3 } from './pages/AuditStatusV0_3';
 import { AuditReportV0_6 } from './pages/AuditReportV0_6';
+import { AuditReportV0_7 } from './pages/AuditReportV0_7';
+import { PeerReviewGuidelines } from './pages/PeerReviewGuidelines';
+import { StateAlignmentsPage } from './pages/StateAlignmentsPage';
 import { AdminDashboard } from './pages/AdminDashboard';
 import { AreaCoverage } from './pages/AreaCoverage';
 import { SchoolPlanner } from './pages/SchoolPlanner';
@@ -49,6 +52,19 @@ import { IntegratedUnitDetail } from './features/planning/pages/IntegratedUnitDe
 import { HowItWorksPage } from './pages/HowItWorksPage';
 import { SkillMapPage } from './pages/SkillMapPage';
 import { FEATURES } from './config/features';
+import { LanguageProvider } from './contexts/LanguageContext';
+import { OfflineIndicator } from './components/OfflineIndicator';
+
+// V0.8 Core Feature Pages
+import { RealtimeCoPlanningWorkspace } from './features/planning/pages/RealtimeCoPlanningWorkspace';
+import { ClassroomResourcesHub } from './pages/ClassroomResourcesHub';
+import { SchoolDistrictDashboards } from './pages/SchoolDistrictDashboards';
+import { ProfessionalDevelopmentHub } from './pages/ProfessionalDevelopmentHub';
+import { AuditReportV0_8 } from './pages/AuditReportV0_8';
+import { ResourceQualityGuidelines } from './pages/ResourceQualityGuidelines';
+import { RealtimeCollabDocs } from './pages/RealtimeCollabDocs';
+import { SchoolDashboardDocs } from './pages/SchoolDashboardDocs';
+import { StateBoardDocs } from './pages/StateBoardDocs';
 
 function AppContent() {
   useAnalytics();
@@ -65,7 +81,8 @@ function AppContent() {
         <Route path="activities" element={<ActivitiesPage />} />
         <Route path="assessment" element={<AssessmentHub />} />
         <Route path="toolkit" element={<TeacherToolkit />} />
-        <Route path="resources" element={<TeacherResourceHub />} />
+        <Route path="resources" element={<ClassroomResourcesHub />} />
+        <Route path="activity-bank" element={<ClassroomResourcesHub />} />
         <Route path="about" element={<About />} />
         <Route path="roadmap" element={<Roadmap />} />
         <Route path="audit" element={<AuditReport />} />
@@ -74,10 +91,37 @@ function AppContent() {
         <Route path="v0-3-audit" element={<AuditStatusV0_3 />} />
         <Route path="audit-v0-6" element={<AuditReportV0_6 />} />
         <Route path="v0-6-audit" element={<AuditReportV0_6 />} />
+        <Route path="audit-v0-7" element={<AuditReportV0_7 />} />
+        <Route path="v0-7-audit" element={<AuditReportV0_7 />} />
+        <Route path="audit/v0.7" element={<AuditReportV0_7 />} />
+        {/* v0.8 Audit & Quality Documentation Routes */}
+        <Route path="audit-v0-8" element={<AuditReportV0_8 />} />
+        <Route path="v0-8-audit" element={<AuditReportV0_8 />} />
+        <Route path="audit/v0.8" element={<AuditReportV0_8 />} />
+        <Route path="resource-guidelines" element={<ResourceQualityGuidelines />} />
+        <Route path="collab-docs" element={<RealtimeCollabDocs />} />
+        <Route path="school-dashboard-docs" element={<SchoolDashboardDocs />} />
+        <Route path="state-docs" element={<StateBoardDocs />} />
+        <Route path="peer-review-guidelines" element={<PeerReviewGuidelines />} />
+        <Route path="peer-review" element={<ThemeBundlesRoute />} />
+        <Route path="state-alignments" element={<StateAlignmentsPage />} />
+        <Route path="alignments" element={<StateAlignmentsPage />} />
         <Route path="admin" element={<AdminDashboard />} />
         <Route path="coverage" element={<AreaCoverage />} />
-        {/* v0.4 Planning Module Routes */}
+        {/* v0.4 & v0.8 Planning Module Routes */}
         <Route path="planner" element={<PlannerRoute />} />
+        <Route path="co-planning" element={<RealtimeCoPlanningWorkspace />} />
+        <Route path="collaborate" element={<RealtimeCoPlanningWorkspace />} />
+        <Route path="coplan" element={<RealtimeCoPlanningWorkspace />} />
+        {/* v0.8 Institutional Dashboards & PD Routes */}
+        <Route path="school-dashboards" element={<SchoolDistrictDashboards />} />
+        <Route path="school-dashboard" element={<SchoolDistrictDashboards />} />
+        <Route path="institutional" element={<SchoolDistrictDashboards />} />
+        <Route path="district-dashboards" element={<SchoolDistrictDashboards />} />
+        <Route path="dashboards" element={<SchoolDistrictDashboards />} />
+        <Route path="professional-development" element={<ProfessionalDevelopmentHub />} />
+        <Route path="pd-training" element={<ProfessionalDevelopmentHub />} />
+        <Route path="diksha-nishtha" element={<ProfessionalDevelopmentHub />} />
         {FEATURES.ENABLE_LESSON_PLAN_WIZARD && <Route path="plan/lesson/new" element={<CreateLessonPlanWizard />} />}
         {FEATURES.ENABLE_CROSS_SUBJECT_COLLAB && <Route path="grade/8/collaborate" element={<Grade8Collaborate />} />}
         {FEATURES.ENABLE_CROSS_SUBJECT_COLLAB && <Route path="plan/integrated/new" element={<CreateIntegratedUnitWizard />} />}
@@ -108,13 +152,16 @@ export default function App() {
   return (
     <ErrorBoundary>
       <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-        <AuthProvider>
-          <ProgressProvider>
-            <BrowserRouter>
-              <AppContent />
-            </BrowserRouter>
-          </ProgressProvider>
-        </AuthProvider>
+        <LanguageProvider>
+          <AuthProvider>
+            <ProgressProvider>
+              <BrowserRouter>
+                <AppContent />
+                <OfflineIndicator />
+              </BrowserRouter>
+            </ProgressProvider>
+          </AuthProvider>
+        </LanguageProvider>
       </ThemeProvider>
     </ErrorBoundary>
   );

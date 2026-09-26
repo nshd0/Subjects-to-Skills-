@@ -75,7 +75,7 @@ export function SkillPathwaysPage() {
             <div className="space-y-2">
               <div className="flex items-center gap-2">
                 <span className="px-3 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
-                  v0.6 Feature · NCF 5+3+3+4 Architecture
+                  NCF 5+3+3+4 Architecture · Longitudinal Progression
                 </span>
                 <span className="text-xs text-slate-500 dark:text-slate-400">
                   Verified Curriculum Pathways

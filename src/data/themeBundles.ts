@@ -63,7 +63,108 @@ export const themeBundles: ThemeBundle[] = [
       'NCERT Class 7 Science: Chapters 7 (Weather, Climate & Adaptations) and 16 (Water: A Precious Resource)',
       'NCERT Class 8 Geography: Chapter 2 (Land, Soil, Water, Natural Vegetation and Wildlife Resources)',
       'CBSE Environmental Education Guidelines for Schools (Circular Acad-18/2021)'
-    ]
+    ],
+    // V0.7 Extensions
+    status: 'published',
+    author: {
+      id: 'author-01',
+      name: 'Dr. Aruna Swaminathan',
+      schoolName: 'Kendriya Vidyalaya IIT Madras, Chennai',
+      displaySchool: true,
+      isVerifiedEducator: true,
+      verificationType: 'school-email',
+      email: 'aruna.swaminathan@kvsedu.in'
+    },
+    license: 'CC BY-SA 4.0',
+    version: 'v1.2.0',
+    versionHistory: [
+      {
+        version: 'v1.2.0',
+        date: '2026-09-20',
+        authorName: 'Dr. Aruna Swaminathan',
+        summary: 'Incorporated Kerala & Maharashtra SCERT regional watershed case studies and low-cost percolation pit activity.'
+      },
+      {
+        version: 'v1.1.0',
+        date: '2026-08-14',
+        authorName: 'Dr. Aruna Swaminathan',
+        summary: 'Added mathematical catchment formulas and standard deviation formulas for precipitation frequency binning.'
+      },
+      {
+        version: 'v1.0.0',
+        date: '2026-06-02',
+        authorName: 'Dr. Aruna Swaminathan',
+        summary: 'Initial peer-reviewed release aligned to NCF-SE 2023 Middle Stage Science & Geography.'
+      }
+    ],
+    peerReviews: [
+      {
+        id: 'rev-cr-01',
+        reviewerId: 'usr-rev-101',
+        reviewerName: 'Rajesh Nair',
+        reviewerDesignation: 'PGT Geography & Environmental Studies',
+        reviewerSchool: 'Govt Model Higher Secondary School, Trivandrum',
+        isVerified: true,
+        ratings: {
+          curriculumAlignment: 5,
+          classroomUsability: 5,
+          sourceVerification: 5,
+          accessibility: 4
+        },
+        decision: 'endorse',
+        comments: 'Outstanding integration. The mathematical formula for rooftop catchment matches the NCERT Class 8 syllabus accurately. The fieldwork is adaptable to both urban and semi-rural schools.',
+        reviewedAt: 1787892000000
+      },
+      {
+        id: 'rev-cr-02',
+        reviewerId: 'usr-rev-102',
+        reviewerName: 'Meenakshi Sundaram',
+        reviewerDesignation: 'TGT Mathematics & Science Mentor',
+        reviewerSchool: 'Atomic Energy Central School, Kalpakkam',
+        isVerified: true,
+        ratings: {
+          curriculumAlignment: 5,
+          classroomUsability: 4,
+          sourceVerification: 5,
+          accessibility: 5
+        },
+        decision: 'endorse',
+        comments: 'Verified against NCF-SE 2023 Middle Stage competencies. Highly recommended for multi-teacher co-planning during the July–September monsoon quarter.',
+        reviewedAt: 1788100000000
+      },
+      {
+        id: 'rev-cr-03',
+        reviewerId: 'usr-rev-103',
+        reviewerName: 'Sanjay Deshmukh',
+        reviewerDesignation: 'DIET Senior Lecturer (Science Education)',
+        reviewerSchool: 'District Institute of Education & Training, Pune',
+        isVerified: true,
+        ratings: {
+          curriculumAlignment: 5,
+          classroomUsability: 5,
+          sourceVerification: 5,
+          accessibility: 5
+        },
+        decision: 'endorse',
+        comments: 'Source citations to NCERT Chapters 7 and 16 and NCF-SE Part C are verified and sound. Includes practical low-cost materials.',
+        reviewedAt: 1788200000000
+      }
+    ],
+    peerReviewedBadge: true,
+    communityFeedback: [
+      {
+        id: 'feed-cr-01',
+        type: 'suggest-edit',
+        authorName: 'Vandana Rao (Delhi Public School)',
+        category: 'accessibility',
+        description: 'For schools with non-accessible flat terraces, suggest using ground-level quad runoff or school bus parking shed catchments instead.',
+        suggestedCorrection: 'Add note under activity step 2: Ground-level paved basketball court or bus shed roof can serve as alternative catchment areas.',
+        status: 'resolved',
+        createdAt: 1788900000000
+      }
+    ],
+    createdAt: 1780000000000,
+    updatedAt: 1789200000000
   },
   {
     id: 'theme-heritage-living-traditions',
@@ -127,7 +228,74 @@ export const themeBundles: ThemeBundle[] = [
       'NEP 2020, Section 4.27: Lok Vidya (Traditional Indian Knowledge)',
       'NCERT Class 7 History: Our Pasts-II, Chapters 5 (Rulers and Buildings) & 6 (Towns, Traders and Craftspersons)',
       'NCERT Class 9 Fine Arts: An Introduction to Indian Art (Heritage Traditions)'
-    ]
+    ],
+    // V0.7 Extensions
+    status: 'published',
+    author: {
+      id: 'author-02',
+      name: 'Priya Narayanan',
+      schoolName: 'The Heritage School, Kolkata',
+      displaySchool: true,
+      isVerifiedEducator: true,
+      verificationType: 'scert-credential',
+      email: 'priya.narayanan@heritage.edu.in'
+    },
+    license: 'CC BY-SA 4.0',
+    version: 'v1.1.0',
+    versionHistory: [
+      {
+        version: 'v1.1.0',
+        date: '2026-08-28',
+        authorName: 'Priya Narayanan',
+        summary: 'Added bilingual vocabulary glossary and oral history ethical consent protocol.'
+      },
+      {
+        version: 'v1.0.0',
+        date: '2026-06-18',
+        authorName: 'Priya Narayanan',
+        summary: 'Initial release endorsed by SCERT Art Education working group.'
+      }
+    ],
+    peerReviews: [
+      {
+        id: 'rev-hl-01',
+        reviewerId: 'usr-rev-104',
+        reviewerName: 'Debashis Sen',
+        reviewerDesignation: 'Head of History & Heritage Club',
+        reviewerSchool: 'Patha Bhavana, Visva-Bharati, Santiniketan',
+        isVerified: true,
+        ratings: {
+          curriculumAlignment: 5,
+          classroomUsability: 5,
+          sourceVerification: 5,
+          accessibility: 5
+        },
+        decision: 'endorse',
+        comments: 'Brings NEP 2020 Lok Vidya to vibrant life. The ethical consent form for interviewing local potters and weavers shows great pedagogical maturity.',
+        reviewedAt: 1788000000000
+      },
+      {
+        id: 'rev-hl-02',
+        reviewerId: 'usr-rev-105',
+        reviewerName: 'Anita Kulkarni',
+        reviewerDesignation: 'Art Master & CBSE Master Trainer',
+        reviewerSchool: 'Balbharati Model School, Pune',
+        isVerified: true,
+        ratings: {
+          curriculumAlignment: 5,
+          classroomUsability: 4,
+          sourceVerification: 5,
+          accessibility: 5
+        },
+        decision: 'endorse',
+        comments: 'Natural pigment preparation is completely non-toxic and classroom safe. Highly recommended for multi-disciplinary weeks.',
+        reviewedAt: 1788150000000
+      }
+    ],
+    peerReviewedBadge: true,
+    communityFeedback: [],
+    createdAt: 1780100000000,
+    updatedAt: 1789250000000
   },
   {
     id: 'theme-data-ai-ethics',
@@ -191,6 +359,181 @@ export const themeBundles: ThemeBundle[] = [
       'Supreme Court of India: Justice K.S. Puttaswamy (Retd.) v. Union of India (Right to Privacy under Article 21)',
       'NCF-SE 2023, Part C: Section 5.1 (Mathematics) and Section 5.3 (Social Sciences)',
       'MeitY & NITI Aayog: National Strategy for Artificial Intelligence (#AIforAll, 2018/2023)'
-    ]
+    ],
+    // V0.7 Extensions
+    status: 'published',
+    author: {
+      id: 'author-03',
+      name: 'Kavita Chawla',
+      schoolName: 'Sanskriti School, Chanakyapuri, New Delhi',
+      displaySchool: true,
+      isVerifiedEducator: true,
+      verificationType: 'school-email',
+      email: 'kavita.chawla@sanskritischool.edu.in'
+    },
+    license: 'CC BY-SA 4.0',
+    version: 'v1.2.0',
+    versionHistory: [
+      {
+        version: 'v1.2.0',
+        date: '2026-09-12',
+        authorName: 'Kavita Chawla',
+        summary: 'Updated legal citations to include the Digital Personal Data Protection (DPDP) Act 2023 rules.'
+      },
+      {
+        version: 'v1.0.0',
+        date: '2026-07-04',
+        authorName: 'Kavita Chawla',
+        summary: 'Original release aligned to CBSE AI Subject 417 and NCF-SE Secondary Social Science.'
+      }
+    ],
+    peerReviews: [
+      {
+        id: 'rev-de-01',
+        reviewerId: 'usr-rev-106',
+        reviewerName: 'Prof. Vikramaditya Roy',
+        reviewerDesignation: 'Curriculum Consultant & Former CBSE AI Taskforce Member',
+        reviewerSchool: 'National Institute of Educational Planning and Administration (NIEPA)',
+        isVerified: true,
+        ratings: {
+          curriculumAlignment: 5,
+          classroomUsability: 5,
+          sourceVerification: 5,
+          accessibility: 5
+        },
+        decision: 'endorse',
+        comments: 'A gold standard for interdisciplinary secondary education. Bridges abstract mathematics (conditional probability) with real constitutional case law (Puttaswamy judgment).',
+        reviewedAt: 1788220000000
+      },
+      {
+        id: 'rev-de-02',
+        reviewerId: 'usr-rev-107',
+        reviewerName: 'Farhan Zaidi',
+        reviewerDesignation: 'PGT Computer Science & AI Subject Leader',
+        reviewerSchool: 'Delhi Public School, R.K. Puram',
+        isVerified: true,
+        ratings: {
+          curriculumAlignment: 5,
+          classroomUsability: 4,
+          sourceVerification: 5,
+          accessibility: 4
+        },
+        decision: 'endorse',
+        comments: 'Accurately reflects CBSE Subject 417 evaluation metrics (precision, recall, F1). Students engage deeply with the confusion matrix exercises.',
+        reviewedAt: 1788300000000
+      }
+    ],
+    peerReviewedBadge: true,
+    communityFeedback: [],
+    createdAt: 1780200000000,
+    updatedAt: 1789300000000
+  },
+  // Community-submitted bundle currently in review
+  {
+    id: 'theme-clean-energy-microgrids',
+    slug: 'clean-energy-microgrids',
+    title: 'Clean Energy Transitions & Rural Microgrids',
+    themeCategory: 'stem-energy',
+    tagline: 'Designing decentralized solar systems, calculating kilowatt-hour economics, and evaluating rural energy sovereignty.',
+    description: 'An applied Middle Stage STEM and Civic inquiry where students calculate community solar irradiance, wire low-voltage photovoltaic circuits, and evaluate village energy access policies.',
+    gradeBand: 'Grades 7–8 (Middle Stage)',
+    recommendedHours: 22,
+    disciplines: ['Science (Physics)', 'Mathematics', 'Social Science (Economics)', 'Vocational Skills (Solar Tech)'],
+    unifyingSkills: [
+      'Photovoltaic Watt-Hour Yield Calculations',
+      'DC Circuit Troubleshooting',
+      'Rural Electrification Policy Analysis',
+      'Public Technical Demonstration'
+    ],
+    crossSubjectConnections: [
+      {
+        subject: 'Science (Physics)',
+        coreConcepts: [
+          'Photovoltaic effect and semiconductor physics basics',
+          'Ohm’s law, series vs parallel solar cell configurations',
+          'Battery storage efficiency and depth of discharge'
+        ],
+        competencyMapped: 'Construct and test simple electrical circuits incorporating photovoltaic cells and measure variations in electrical output under diverse solar angles.',
+        ncfCitation: 'NCF-SE 2023, Part C, Section 4.4: Middle Stage Science, Energy in Daily Life & NCERT Class 8 Science Ch. 14 (Chemical Effects of Electric Current).',
+        classroomActivity: 'Measure voltage and amperage output of a 5W solar panel across 9:00 AM, 12:00 PM, and 4:00 PM to chart diurnal generation curves.'
+      },
+      {
+        subject: 'Mathematics',
+        coreConcepts: [
+          'Unit conversion (Watts to Kilowatt-Hours)',
+          'Load forecasting and battery bank sizing formulas',
+          'Capital payback period calculations'
+        ],
+        competencyMapped: 'Calculate the total daily energy demand of an agrarian primary health sub-centre and compute the required solar panel capacity and battery amp-hours.',
+        ncfCitation: 'NCF-SE 2023, Part C, Section 4.3: Real-World Numerical Problem Solving.',
+        classroomActivity: 'Compute load requirements for a village clinic refrigerator storing vaccines, factoring in 2 days of monsoon cloud autonomy.'
+      },
+      {
+        subject: 'Social Science (Economics)',
+        coreConcepts: [
+          'PM-KUSUM scheme and solar irrigation pump subsidies',
+          'Off-grid vs on-grid decentralized power distribution',
+          'Gender equity impacts of reliable rural lighting'
+        ],
+        competencyMapped: 'Evaluate governmental renewable energy policies and analyze how clean electricity access impacts agrarian women and children.',
+        ncfCitation: 'NCF-SE 2023, Part C, Section 4.5: Economic Systems & Social Welfare.',
+        classroomActivity: 'Interview local farmers or women self-help group (SHG) members on fuel expenses for diesel irrigation pumps vs solar pump installations.'
+      }
+    ],
+    flagshipChallenge: {
+      title: 'The Village Clinic Solar Microgrid Proposal',
+      drivingQuestion: 'How can an off-grid village primary health centre be powered 24/7 with a reliable solar-battery microgrid within a ₹1.5 lakh capital budget?',
+      studentDeliverable: 'A scaled 3D cardboard circuit model, an itemized Bill of Materials (BOM) spreadsheet, and an oral proposal to the Gram Panchayat.',
+      communityEngagement: 'Presenting proposals to local Gram Panchayat ward members and village solar technicians.'
+    },
+    sources: [
+      'NCF-SE 2023, Part C: Sections 4.3 (Mathematics), 4.4 (Science), and 4.5 (Social Science)',
+      'Ministry of New and Renewable Energy (MNRE): PM-KUSUM Component Guidelines',
+      'NCERT Class 8 Science: Chapter 14 (Chemical Effects of Electric Current) and Chapter 18 (Pollution of Air and Water)'
+    ],
+    // In Review Status
+    status: 'in-review',
+    author: {
+      id: 'author-04',
+      name: 'Tanvi Maheshwari',
+      schoolName: 'Govt Excellence Higher Secondary School, Bhopal',
+      displaySchool: true,
+      isVerifiedEducator: true,
+      verificationType: 'school-email',
+      email: 'tanvi.maheshwari@mpedu.gov.in'
+    },
+    license: 'CC BY-SA 4.0',
+    version: 'v1.0.0-rc1',
+    versionHistory: [
+      {
+        version: 'v1.0.0-rc1',
+        date: '2026-09-22',
+        authorName: 'Tanvi Maheshwari',
+        summary: 'Initial community submission entered into Peer Review queue for Middle Stage verification.'
+      }
+    ],
+    peerReviews: [
+      {
+        id: 'rev-ce-01',
+        reviewerId: 'usr-rev-108',
+        reviewerName: 'Harishankar Sharma',
+        reviewerDesignation: 'TGT Science & ATL Innovation Mentor',
+        reviewerSchool: 'Kendriya Vidyalaya No. 1, Gwalior',
+        isVerified: true,
+        ratings: {
+          curriculumAlignment: 5,
+          classroomUsability: 4,
+          sourceVerification: 4,
+          accessibility: 4
+        },
+        decision: 'endorse',
+        comments: 'Excellent STEM application. The circuit models are safe for middle school students (12V DC max). Awaiting 1 additional peer review to complete the 2-review threshold.',
+        reviewedAt: 1789050000000
+      }
+    ],
+    peerReviewedBadge: false, // will become true upon second endorsement!
+    communityFeedback: [],
+    createdAt: 1789000000000,
+    updatedAt: 1789050000000
   }
 ];

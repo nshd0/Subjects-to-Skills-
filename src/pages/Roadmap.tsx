@@ -91,7 +91,7 @@ const PHASES: RoadmapPhase[] = [
     version: 'v0.6',
     title: 'Vertical Pathways + Custom Rubrics + Print Exports + Theme Bundles (Phase 1)',
     status: 'completed',
-    timeline: 'Q3 2026 · Current Release',
+    timeline: 'Q3 2026 · Complete',
     summary: 'Longitudinal progression across all 4 NCF stages, custom rubric construction engine, print-ready monochrome exports, and interdisciplinary theme bundles.',
     deliverables: [
       'Vertical Skill Pathways with NCF-FS / NCF-SE / NCERT competency citations',
@@ -100,19 +100,38 @@ const PHASES: RoadmapPhase[] = [
       'Interdisciplinary Theme Bundles (Climate, Heritage, Data & Ethics) with read-only browse and cloning',
       'Context-aware pedagogical teacher tips for multi-track execution and large classrooms'
     ],
-    isCurrent: true
+    isCurrent: false
   },
   {
     version: 'v0.7',
     title: 'Interdisciplinary Co-Planning + Peer Review + Localized Alignment',
-    status: 'planned',
-    timeline: 'Q4 2026 · Planned',
+    status: 'completed',
+    timeline: 'Q3 2026 · Complete',
     summary: 'Collaborative curriculum co-design, community peer review workflows, and regional SCERT textbook localization.',
     deliverables: [
-      'Collaborative multi-teacher interdisciplinary co-planning workspace',
-      'Community peer review, moderation, and feedback validation workflows',
-      'State SCERT and multilingual localized curriculum alignment modules'
-    ]
+      'Interdisciplinary Theme Bundles (Phase 2 Co-Create & Share) with CC BY-SA 4.0 licensing and rate limiting',
+      'Peer Educator Review Workflow with 4-dimension evaluation rubric and "Peer-Reviewed" certification badge',
+      'State SCERT Textbook Localization pilot for Grades 6–8 across Kerala SCERT and Maharashtra Balbharati',
+      'Community Suggestion Channels ("Report Issue", "Suggest Edit", "Suggest State Alignment")',
+      'Collaborative Unit Planning (Lite) with async co-planning notes, version tracking, and "Copy to My Plans"',
+      'Curriculum Assist (AI Suggestions) with teacher confirmation required before saving'
+    ],
+    isCurrent: false
+  },
+  {
+    version: 'v0.8',
+    title: '12-State SCERT Expansion, Real-Time CRDT Co-Planning & Offline PWA',
+    status: 'completed',
+    timeline: 'Q3 2026 · Current Release',
+    summary: 'Universal 12-state SCERT coverage, real-time Yjs CRDT co-planning studio, ready-to-use classroom resource bank, low-bandwidth offline vault, and institutional school dashboards.',
+    deliverables: [
+      '12 State SCERT Curricular Alignments (Kerala, Maharashtra, Karnataka, Tamil Nadu, UP, Delhi, WB, Gujarat, Rajasthan, Telangana, AP, MP)',
+      'Real-Time CRDT Multi-Teacher Co-Planning Studio with presence indicators, Yjs state syncing, and export',
+      'Ready-to-Use Classroom Resource Bank with 20+ offline activity printables, assessment rubrics, and slide outlines',
+      'Offline-First PWA Infrastructure with Workbox precaching, IndexedDB storage, and low-bandwidth vault drawer',
+      'Institutional School & District Dashboards with stage-wise distribution, analytics, and CSV report exports'
+    ],
+    isCurrent: true
   }
 ];
 
@@ -219,7 +238,7 @@ export function Roadmap() {
               </p>
             </div>
             <div className="text-xs font-bold text-slate-500">
-              Current Release: <span className="text-indigo-600 dark:text-indigo-400">v0.6 Live (Vertical Pathways & Custom Rubrics)</span>
+              Current Release: <span className="text-indigo-600 dark:text-indigo-400">v0.8 Live (12-State SCERTs, CRDT Co-Planning &amp; Offline PWA)</span>
             </div>
           </div>
 

@@ -42,7 +42,7 @@ export function NotFound() {
               className="p-2.5 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 text-indigo-600 dark:text-indigo-400 font-semibold flex items-center gap-2 border border-slate-100 dark:border-slate-800"
             >
               <Search className="w-4 h-4" />
-              <span>v0.6 Content Roadmap</span>
+              <span>Content Roadmap</span>
             </Link>
             <Link
               to="/activities"

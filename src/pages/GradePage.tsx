@@ -135,7 +135,7 @@ export function GradePage() {
           label: 'Planned',
           classes: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 border-slate-200 dark:border-slate-700',
           icon: AlertCircle,
-          explanation: 'Framework, developmental focus, priority skills and intended learning areas are scoped on the v0.6 roadmap.'
+          explanation: 'Framework, developmental focus, priority skills and intended learning areas are scoped on the Content Roadmap.'
         };
     }
   };

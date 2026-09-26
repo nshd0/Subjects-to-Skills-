@@ -1,11 +1,15 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { BookOpen, Map, Target, Layers, ArrowRight, Activity, Filter, FileText } from 'lucide-react';
+import { BookOpen, Map, Target, Layers, ArrowRight, Activity, Filter, FileText, Building2, Plus, ShieldCheck, ExternalLink } from 'lucide-react';
 import { subjectMaps } from '@/data/subjectMaps';
 import { SceneCanvas } from '@/components/3d/SceneCanvas';
 import { SkillMap3D } from '@/components/3d/SkillMap3D';
 import { SubjectSkillMap } from '@/types';
 import { FEATURES } from '@/config/features';
+import { STATE_BOARD_OPTIONS } from '@/data/stateAlignments';
+import { useThemeBundlesStorage } from '@/features/planning/useThemeBundlesStorage';
+import { SuggestAlignmentModal } from '@/features/planning/components/SuggestAlignmentModal';
+import { Link } from 'react-router-dom';
 
 const STAGES = ['Foundational', 'Preparatory', 'Middle', 'Secondary'];
 
@@ -23,9 +27,12 @@ const getTrackBadgeStyle = (trackType?: string) => {
 };
 
 export function SkillMapPage() {
+  const { alignments, submitAlignmentSuggestion } = useThemeBundlesStorage();
   const [selectedSubject, setSelectedSubject] = useState<string>('Mathematics');
+  const [selectedStateBoard, setSelectedStateBoard] = useState<string>('all');
   const [selectedNode, setSelectedNode] = useState<SubjectSkillMap | null>(null);
   const [viewMode, setViewMode] = useState<'2d' | '3d'>('2d');
+  const [isSuggestModalOpen, setIsSuggestModalOpen] = useState(false);
 
   const subjects = useMemo(() => Array.from(new Set(subjectMaps.map(s => s.subject))).sort(), []);
 
@@ -35,6 +42,16 @@ export function SkillMapPage() {
       items: subjectMaps.filter(s => s.subject === selectedSubject && s.stage === stage)
     }));
   }, [selectedSubject]);
+
+  // Find state textbook alignments for the selected node
+  const activeAlignments = useMemo(() => {
+    if (!selectedNode) return [];
+    return alignments.filter(a => {
+      const matchSkill = a.skillId === selectedNode.id || a.subject.toLowerCase().includes(selectedNode.subject.toLowerCase());
+      const matchState = selectedStateBoard === 'all' || a.stateCode === selectedStateBoard;
+      return matchSkill && matchState;
+    });
+  }, [selectedNode, alignments, selectedStateBoard]);
 
   if (!FEATURES.ENABLE_SKILL_VISUALS) {
     return null;
@@ -47,15 +64,40 @@ export function SkillMapPage() {
         {/* Header & Controls */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 bg-white dark:bg-slate-900 p-6 sm:p-8 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm">
           <div className="space-y-2">
+            <div className="flex items-center gap-2">
+              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                v0.7 State SCERT Localized
+              </span>
+              <span className="text-xs text-slate-500">
+                National Competency Progression
+              </span>
+            </div>
             <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-              Skill Map
+              Skill Map & State Alignments
             </h1>
             <p className="text-sm text-slate-600 dark:text-slate-400 max-w-2xl">
-              Follow a skill from early grades to secondary. See how competencies build across stages.
+              Follow a skill from early grades to secondary. Filter by your state board (Kerala SCERT, Maharashtra Balbharati, or CBSE/NCERT) to see exact textbook chapter citations.
             </p>
           </div>
           
           <div className="w-full md:w-auto flex flex-col sm:flex-row items-start sm:items-end gap-4">
+            {/* My State Board Filter */}
+            <div>
+              <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
+                My State Board
+              </label>
+              <select
+                value={selectedStateBoard}
+                onChange={(e) => setSelectedStateBoard(e.target.value)}
+                className="w-full sm:w-56 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white rounded-xl px-3.5 py-2 text-xs font-medium outline-none focus:border-indigo-500 transition-colors"
+              >
+                {STATE_BOARD_OPTIONS.map(opt => (
+                  <option key={opt.code} value={opt.code}>{opt.name}</option>
+                ))}
+              </select>
+            </div>
+
+            {/* Subject Filter */}
             <div>
               <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
                 Filter by Subject
@@ -66,28 +108,33 @@ export function SkillMapPage() {
                   setSelectedSubject(e.target.value);
                   setSelectedNode(null);
                 }}
-                className="w-full md:w-64 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white rounded-xl px-4 py-2.5 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors appearance-none"
+                className="w-full sm:w-52 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white rounded-xl px-3.5 py-2 text-xs font-medium outline-none focus:border-indigo-500 transition-colors"
               >
-                {subjects.map(sub => (
-                  <option key={sub} value={sub}>{sub}</option>
+                {subjects.map(subject => (
+                  <option key={subject} value={subject}>{subject}</option>
                 ))}
               </select>
             </div>
+
+            {/* View Mode Toggle */}
             <div>
-               <div className="flex bg-slate-100 dark:bg-slate-950 rounded-xl p-1 border border-slate-200 dark:border-slate-800">
-                 <button 
-                   onClick={() => setViewMode('2d')} 
-                   className={`px-4 py-1.5 rounded-lg text-sm font-semibold transition-colors ${viewMode === '2d' ? 'bg-white dark:bg-slate-800 text-indigo-600 shadow-sm' : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}
-                 >
-                   2D Map
-                 </button>
-                 <button 
-                   onClick={() => setViewMode('3d')} 
-                   className={`px-4 py-1.5 rounded-lg text-sm font-semibold transition-colors ${viewMode === '3d' ? 'bg-white dark:bg-slate-800 text-indigo-600 shadow-sm' : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}
-                 >
-                   3D Terrain
-                 </button>
-               </div>
+              <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
+                View Mode
+              </label>
+              <div className="flex bg-slate-100 dark:bg-slate-800 p-1 rounded-xl">
+                <button
+                  onClick={() => setViewMode('2d')}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${viewMode === '2d' ? 'bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-xs' : 'text-slate-500'}`}
+                >
+                  2D Grid
+                </button>
+                <button
+                  onClick={() => setViewMode('3d')}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${viewMode === '3d' ? 'bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-xs' : 'text-slate-500'}`}
+                >
+                  3D Orbit
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -220,6 +267,70 @@ export function SkillMapPage() {
                         </div>
                       )}
 
+                      {/* V0.7 State SCERT Textbook Alignments */}
+                      <div className="p-4 rounded-2xl bg-emerald-50/60 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-900/60 space-y-3">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-900 dark:text-emerald-200 uppercase tracking-wider">
+                            <Building2 className="w-4 h-4 text-emerald-600" />
+                            <span>State SCERT Textbooks ({activeAlignments.length})</span>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => setIsSuggestModalOpen(true)}
+                            className="text-[11px] font-bold text-emerald-700 dark:text-emerald-300 hover:underline flex items-center gap-1"
+                          >
+                            <Plus className="w-3 h-3" />
+                            Suggest
+                          </button>
+                        </div>
+
+                        {activeAlignments.length > 0 ? (
+                          <div className="space-y-2">
+                            {activeAlignments.slice(0, 2).map((align) => (
+                              <div 
+                                key={align.id}
+                                className="p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-emerald-200 dark:border-emerald-800 text-xs space-y-1"
+                              >
+                                <div className="flex items-center justify-between">
+                                  <span className="font-bold text-slate-900 dark:text-white text-[11px]">
+                                    {align.stateName}
+                                  </span>
+                                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 dark:bg-emerald-900/60 dark:text-emerald-300 font-semibold">
+                                    {align.pageRange}
+                                  </span>
+                                </div>
+                                <p className="text-slate-700 dark:text-slate-300 text-[11px] font-medium">
+                                  {align.chapterTitle}
+                                </p>
+                                <p className="text-slate-500 text-[10px] leading-tight">
+                                  {align.bridgingNote}
+                                </p>
+                              </div>
+                            ))}
+                            <div className="pt-1 text-center">
+                              <Link
+                                to="/state-alignments"
+                                className="text-[11px] text-emerald-700 dark:text-emerald-300 font-bold hover:underline inline-flex items-center gap-1"
+                              >
+                                View all state SCERT mappings
+                                <ArrowRight className="w-3 h-3" />
+                              </Link>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="text-center py-2 text-xs text-slate-500 space-y-1.5">
+                            <p className="text-[11px]">No specific textbook chapter mapped yet for this node.</p>
+                            <button
+                              type="button"
+                              onClick={() => setIsSuggestModalOpen(true)}
+                              className="px-2.5 py-1 rounded-lg bg-emerald-600 text-white font-semibold text-[11px] hover:bg-emerald-700"
+                            >
+                              Suggest SCERT Chapter Alignment
+                            </button>
+                          </div>
+                        )}
+                      </div>
+
                       {selectedNode.progression?.notes && (
                         <div className="bg-amber-50 dark:bg-amber-900/30 p-4 rounded-2xl border border-amber-200 dark:border-amber-800">
                           <p className="text-xs text-amber-800 dark:text-amber-200 font-bold mb-1">Curriculum Transition Note</p>
@@ -282,6 +393,13 @@ export function SkillMapPage() {
           
         </div>
       </div>
+
+      <SuggestAlignmentModal
+        isOpen={isSuggestModalOpen}
+        onClose={() => setIsSuggestModalOpen(false)}
+        skill={selectedNode}
+        onSubmit={(sugg) => submitAlignmentSuggestion(sugg)}
+      />
     </div>
   );
 }

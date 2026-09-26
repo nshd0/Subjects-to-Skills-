@@ -402,11 +402,63 @@ export interface ThemeCrossSubjectConnection {
   classroomActivity: string;
 }
 
+/**
+ * V0.7 Interdisciplinary Co-Planning, Peer Review & Attribution
+ */
+export interface ThemeBundleAuthor {
+  id: string;
+  name: string;
+  schoolName?: string;
+  displaySchool?: boolean;
+  isVerifiedEducator: boolean;
+  verificationType?: 'school-email' | 'scert-credential' | 'peer-vouched';
+  email?: string;
+}
+
+export interface PeerReviewRatings {
+  curriculumAlignment: number; // 1-5 scale
+  classroomUsability: number;
+  sourceVerification: number;
+  accessibility: number;
+}
+
+export interface PeerReview {
+  id: string;
+  reviewerId: string;
+  reviewerName: string;
+  reviewerDesignation: string;
+  reviewerSchool?: string;
+  isVerified: boolean;
+  ratings: PeerReviewRatings;
+  decision: 'endorse' | 'request-changes';
+  comments: string;
+  reviewedAt: number;
+}
+
+export interface BundleVersionRecord {
+  version: string;
+  date: string;
+  authorName: string;
+  summary: string;
+}
+
+export interface CommunityFeedback {
+  id: string;
+  type: 'report-issue' | 'suggest-edit';
+  authorName: string;
+  authorEmail?: string;
+  category: 'broken-citation' | 'pedagogy-concern' | 'accessibility' | 'clarification' | 'other';
+  description: string;
+  suggestedCorrection?: string;
+  status: 'open' | 'resolved';
+  createdAt: number;
+}
+
 export interface ThemeBundle {
   id: string;
   slug: string;
   title: string;
-  themeCategory: 'climate' | 'heritage' | 'data-ethics';
+  themeCategory: 'climate' | 'heritage' | 'data-ethics' | 'stem-energy' | 'water-security' | 'health-wellness' | string;
   tagline: string;
   description: string;
   gradeBand: string;
@@ -421,6 +473,308 @@ export interface ThemeBundle {
   };
   unifyingSkills: string[];
   sources: string[];
+  // V0.7 Co-creation & Peer Review Extensions
+  status?: 'draft' | 'in-review' | 'published' | 'revisions-requested';
+  author?: ThemeBundleAuthor;
+  license?: string; // e.g. "CC BY-SA 4.0"
+  version?: string; // e.g. "v1.0.0"
+  versionHistory?: BundleVersionRecord[];
+  peerReviews?: PeerReview[];
+  peerReviewedBadge?: boolean;
+  communityFeedback?: CommunityFeedback[];
+  createdAt?: number;
+  updatedAt?: number;
+}
+
+/**
+ * V0.7 & V0.8 State SCERT Textbook Alignment Types
+ */
+export interface StateTextbookAlignment {
+  id: string;
+  skillId: string;
+  stateCode: string; // Supports all 12 states + national CBSE/NCERT
+  stateName: string;
+  grade: string;
+  stageId?: 'foundational' | 'preparatory' | 'middle' | 'secondary';
+  subject: string;
+  textbookTitle: string;
+  chapterNumber: number | string;
+  chapterTitle: string;
+  pageRange: string;
+  qrOrPortalCode?: string;
+  bridgingNote: string;
+  sourceCitation: string;
+  verifiedStatus: 'official-scert' | 'peer-verified' | 'community-suggested';
+  contributorName?: string;
+  verifiedDate?: string;
+  stateCompetencyCode?: string;
+  stateLearningOutcome?: string;
+}
+
+export interface AlignmentSuggestion {
+  id: string;
+  skillId: string;
+  skillName: string;
+  stateCode: string;
+  stateName: string;
+  grade: string;
+  subject: string;
+  textbookTitle: string;
+  chapterNumber: string;
+  chapterTitle: string;
+  pageRange: string;
+  rationale: string;
+  contributorName: string;
+  contributorEmail: string;
+  status: 'pending-review' | 'approved' | 'rejected';
+  submittedAt: number;
+}
+
+/**
+ * V0.8 Real-Time Co-Planning (Google Docs-Style Collaboration) & CRDT
+ */
+export type CollaboratorRole = 'owner' | 'editor' | 'viewer';
+
+export interface Collaborator {
+  id: string;
+  name: string;
+  avatarColor: string;
+  currentSection: string;
+  cursorPosition?: string;
+  lastActive: number;
+  role: CollaboratorRole;
+  isOnline: boolean;
+}
+
+export interface UnitCommentReply {
+  id: string;
+  authorId: string;
+  authorName: string;
+  text: string;
+  timestamp: number;
+}
+
+export interface UnitComment {
+  id: string;
+  authorId: string;
+  authorName: string;
+  section: string;
+  lessonId?: string;
+  text: string;
+  timestamp: number;
+  resolved: boolean;
+  replies: UnitCommentReply[];
+}
+
+export interface UnitSuggestion {
+  id: string;
+  authorId: string;
+  authorName: string;
+  section: string;
+  field: string;
+  originalText: string;
+  suggestedText: string;
+  timestamp: number;
+  status: 'pending' | 'accepted' | 'rejected';
+  reviewedBy?: string;
+  reviewedAt?: number;
+}
+
+export interface ActivityLogItem {
+  id: string;
+  authorName: string;
+  action: string;
+  section: string;
+  timestamp: number;
+}
+
+export interface CollaborativeLessonPlan {
+  id: string;
+  lessonNumber: number;
+  title: string;
+  durationMinutes: number;
+  learningOutcomes: string;
+  teacherAction: string;
+  studentActivity: string;
+  differentiationNotes: string;
+  materialsNeeded: string;
+}
+
+export interface CollaborativeUnitPlan {
+  id: string;
+  title: string;
+  themeCategory: string;
+  grade: string;
+  stage: string;
+  disciplines: string[];
+  essentialQuestion: string;
+  summativeAssessment: string;
+  curriculumGoal: string;
+  lessons: CollaborativeLessonPlan[];
+  version: number;
+  lastModifiedBy: string;
+  lastModifiedAt: number;
+  currentUserRole: CollaboratorRole;
+  collaborators: Collaborator[];
+  comments: UnitComment[];
+  suggestions: UnitSuggestion[];
+  activityLog: ActivityLogItem[];
+  isLockedForSync?: boolean;
+}
+
+/**
+ * V0.8 Ready-to-Use Classroom Resources (Activity Bank 2.0)
+ */
+export type ClassroomResourceType = 
+  | 'worksheet' 
+  | 'slides' 
+  | 'video' 
+  | 'activity-kit' 
+  | 'exit-ticket';
+
+export type UDLMode = 'visual' | 'auditory' | 'kinesthetic' | 'reading-writing';
+
+export interface MultilingualVocabularyItem {
+  term: string;
+  transliteration?: string;
+  translations: Record<string, string>; // language code -> translated term
+  classroomPrompt: string;
+}
+
+export interface SlideItem {
+  slideNumber: number;
+  title: string;
+  bullets: string[];
+  teacherNotes: string;
+}
+
+export interface ExitTicketPrompt {
+  id: string;
+  question: string;
+  type: 'mcq' | 'open';
+  options?: string[];
+  exemplarAnswer: string;
+  rubricCriterion: string;
+}
+
+export interface ClassroomResourceContent {
+  printablePdfPreview?: string;
+  answerKey?: string;
+  slidesOutline?: SlideItem[];
+  videoUrl?: string;
+  videoDuration?: string;
+  dikshaLink?: string;
+  kitMaterials?: string[];
+  kitSteps?: string[];
+  safetyNotes?: string;
+  exitTicketPrompts?: ExitTicketPrompt[];
+  estimatedMinutes?: number;
+}
+
+export interface ClassroomResource {
+  id: string;
+  slug: string;
+  title: string;
+  description: string;
+  resourceType: ClassroomResourceType;
+  grade: string;
+  stage: 'foundational' | 'preparatory' | 'middle' | 'secondary';
+  subject: string;
+  stateBoards: string[];
+  languages: string[];
+  skillsMapped: string[];
+  competencyCodes: string[];
+  udlModes: UDLMode[];
+  iepGoals: string[];
+  scaffolding: {
+    simplify: string;
+    extend: string;
+  };
+  multilingualVocab: MultilingualVocabularyItem[];
+  content: ClassroomResourceContent;
+  downloadsCount: number;
+  rating: number;
+  ratingCount: number;
+  author: ThemeBundleAuthor;
+  license: string; // "CC BY-SA 4.0"
+  peerReviews: PeerReview[];
+  peerReviewedBadge: boolean;
+  status: 'draft' | 'in-review' | 'published';
+  sourceCitation: string;
+  createdAt: number;
+  updatedAt: number;
+}
+
+/**
+ * V0.8 School & District Implementation Dashboards
+ */
+export interface SchoolMetrics {
+  schoolId: string;
+  schoolName: string;
+  district: string;
+  state: string;
+  totalTeachers: number;
+  activeTeachers: number;
+  plannedLessonsCount: number;
+  resourcesClonedCount: number;
+  subjectActivity: { subject: string; count: number }[];
+  gradeActivity: { grade: string; count: number }[];
+  competencyCoveragePercent: number;
+  isOptedIn: boolean;
+}
+
+export interface DistrictTeacherLeader {
+  id: string;
+  name: string;
+  school: string;
+  resourcesAdopted: number;
+  averageRating: number;
+  verifiedBadgesCount: number;
+}
+
+export interface DistrictGoalProgress {
+  goalId: string;
+  title: string;
+  targetPercent: number;
+  currentPercent: number;
+  alignedSubject: string;
+}
+
+export interface DistrictMetrics {
+  districtId: string;
+  districtName: string;
+  state: string;
+  totalSchools: number;
+  totalTeachers: number;
+  clusterCoverageRate: number;
+  topTeachers: DistrictTeacherLeader[];
+  goalProgress: DistrictGoalProgress[];
+  urbanRuralSplit: { urbanCount: number; ruralCount: number };
+}
+
+/**
+ * V0.8 Professional Development (DIKSHA / NISHTHA)
+ */
+export interface DikshaNishthaCourse {
+  id: string;
+  themeOrSkillId: string;
+  courseCode: string;
+  courseTitle: string;
+  nishthaPhase: 'NISHTHA 1.0 (Elementary)' | 'NISHTHA 2.0 (Secondary)' | 'NISHTHA 3.0 (FLN)' | 'NISHTHA 4.0 (ECCE)';
+  moduleNumber: number;
+  pdHoursAccredited: number;
+  directLink: string;
+  description: string;
+}
+
+export interface TeacherPDRecord {
+  id: string;
+  activityType: 'bundle-creation' | 'resource-creation' | 'peer-review' | 'nishtha-module';
+  title: string;
+  hours: number;
+  date: string;
+  verified: boolean;
+  certificateRef: string;
 }
 
 
