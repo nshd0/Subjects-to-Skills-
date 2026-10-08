@@ -1,0 +1,47 @@
+[
+  {
+    "id": "SEED-G10-SCI-01",
+    "grade": "Grade 10",
+    "stage": "Secondary",
+    "subject": "Science",
+    "course_code": "086",
+    "chapter_title": "Chemical Reactions and Equations",
+    "ncert_textbook": "NCERT Class 10 Science",
+    "page_range": "1-16",
+    "competency_code": "C-G10-SCI-01",
+    "competency_statement": "Balance chemical equations and predict reaction mechanisms (combination, decomposition, displacement, double displacement, redox).",
+    "board_question_weightage": "8-10% (Section A & C)",
+    "mandatory_practical": "Performing and observing action of water on quicklime, action of heat on ferrous sulphate, and iron nails in copper sulphate solution.",
+    "source_citation": "CBSE Secondary Curriculum 2025–26, Science (Code 086); NCERT Class 10 Chapter 1"
+  },
+  {
+    "id": "SEED-G10-SCI-02",
+    "grade": "Grade 10",
+    "stage": "Secondary",
+    "subject": "Science",
+    "course_code": "086",
+    "chapter_title": "Electricity & Magnetic Effects",
+    "ncert_textbook": "NCERT Class 10 Science",
+    "page_range": "185-224",
+    "competency_code": "C-G10-SCI-06",
+    "competency_statement": "Apply Ohm's law, compute equivalent resistance, and analyze Joule's heating and domestic electric safety circuits.",
+    "board_question_weightage": "12-14% (Case-based 4-mark item + Long Answer)",
+    "mandatory_practical": "Studying the dependence of potential difference across a resistor on current and determining its resistance.",
+    "source_citation": "CBSE Secondary Curriculum 2025–26, Science (Code 086); NCERT Class 10 Chapter 11"
+  },
+  {
+    "id": "SEED-G10-MATH-01",
+    "grade": "Grade 10",
+    "stage": "Secondary",
+    "subject": "Mathematics Standard",
+    "course_code": "041",
+    "chapter_title": "Quadratic Equations",
+    "ncert_textbook": "NCERT Class 10 Mathematics",
+    "page_range": "69-92",
+    "competency_code": "C-G10-MATH-01",
+    "competency_statement": "Formulate quadratic models from real-world situations, solve via quadratic formula, and classify root nature using discriminant.",
+    "board_question_weightage": "6-8% (Section B & D)",
+    "mandatory_practical": "Classroom activity on visual verification of quadratic factorization using paper grid algebra tiles.",
+    "source_citation": "CBSE Secondary Curriculum 2025–26, Mathematics (Code 041); NCERT Class 10 Chapter 4"
+  }
+]

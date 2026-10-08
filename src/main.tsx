@@ -10,6 +10,12 @@ try {
     throw new Error("Failed to find the root element with id 'root'");
   }
 
+  // Clear static preloader so React mounts into a clean container
+  const preloader = document.getElementById('s2s-preloader');
+  if (preloader) {
+    preloader.remove();
+  }
+
   createRoot(rootElement).render(
     <StrictMode>
       <ErrorBoundary>

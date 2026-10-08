@@ -18,7 +18,7 @@ export function Health() {
     timestamp: new Date().toISOString(),
     service: 'Subjects2Skills SPA',
     version: '0.8.0',
-    environment: import.meta.env.MODE || 'production',
+    environment: (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.MODE) || 'production',
     routesActive: 30,
     gradesConfigured: gradesData.length,
     activitiesConfigured: activitiesData.length,

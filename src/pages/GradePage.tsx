@@ -301,6 +301,33 @@ export function GradePage() {
           </div>
         </div>
 
+        {/* Grade 8 Flagship Task-Based Learning Pilot Callout */}
+        {grade.id === 'grade-8' && (
+          <div className="p-6 rounded-2xl bg-gradient-to-r from-indigo-950 via-indigo-900 to-slate-900 text-white border border-indigo-700/60 shadow-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="space-y-1.5">
+              <div className="flex items-center gap-2">
+                <span className="px-2.5 py-0.5 rounded text-[11px] font-bold bg-amber-400 text-slate-950">
+                  Flagship TBL Pilot Live
+                </span>
+                <span className="text-xs text-indigo-200 font-medium">62 Discrete Actionable Tasks</span>
+              </div>
+              <h3 className="text-lg sm:text-xl font-black text-white">
+                Grade 8 Task-Based Learning (TBL) Architecture
+              </h3>
+              <p className="text-xs text-indigo-200 max-w-2xl leading-relaxed">
+                Decomposed competencies for Science (Force & Motion), Math (Linear Equations), AI (Problem Scoping), Civics (Constitution), and Sustainability into 15–45 min classroom tasks with scaffolds and extension challenges.
+              </p>
+            </div>
+            <Link
+              to="/tasks/grade-8"
+              className="shrink-0 px-4 py-2.5 rounded-xl bg-indigo-500 hover:bg-indigo-400 text-white font-bold text-xs flex items-center gap-2 transition-all shadow-sm"
+            >
+              <span>Explore TBL Pilot Tasks</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+        )}
+
         {/* SECTION: DEVELOPMENTAL FOCUS */}
         <section className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-xs space-y-4">
           <div className="border-b border-slate-100 dark:border-slate-800 pb-3 flex items-center justify-between">

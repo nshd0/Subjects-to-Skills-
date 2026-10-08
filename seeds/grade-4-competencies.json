@@ -1,0 +1,65 @@
+[
+  {
+    "id": "SEED-G4-M-01",
+    "grade": "Grade 4",
+    "stage": "Preparatory",
+    "subject": "Mathematics",
+    "competency_code": "C-G4-M-01",
+    "competency_statement": "Solves 4-digit addition and subtraction word problems and multiplies 2-digit numbers by 1-digit/2-digit numbers.",
+    "what_student_can_do": "Calculates expenses, ticket prices, and distances using column place-value arithmetic up to 9,999.",
+    "pedagogical_approach": "Market simulation and Concrete-Pictorial-Abstract (CPA) representation",
+    "observable_indicators": [
+      "Aligns digits accurately in place-value columns up to thousands",
+      "Estimates realistic sums before calculating to detect arithmetic errors",
+      "Solves multi-step real-world money word problems"
+    ],
+    "textbook_mapping": {
+      "ncert": { "book": "Math-Magic Book 4", "chapter": "Chapter 3: A Trip to Bhopal", "pages": "23-34" },
+      "kerala_scert": { "book": "Mathematics Standard 4", "chapter": "Unit 3: Give and Take", "pages": "38-54" },
+      "maharashtra_scert": { "book": "Mathematics Standard 4", "chapter": "Part 1: Addition & Subtraction", "pages": "18-28" }
+    ],
+    "source_citation": "NCF-SE 2023 Curricular Area 2 (Mathematics), Section 2.1; NCERT Curriculum Framework 2024–26"
+  },
+  {
+    "id": "SEED-G4-M-02",
+    "grade": "Grade 4",
+    "stage": "Preparatory",
+    "subject": "Mathematics",
+    "competency_code": "C-G4-M-02",
+    "competency_statement": "Measures and converts weights between kilograms and grams, estimating everyday weights accurately.",
+    "what_student_can_do": "Balances two-pan scales using standard weights and converts weights (e.g., 2 kg 450 g = 2450 g).",
+    "pedagogical_approach": "Hands-on balance scale laboratory and grocery packaging audits",
+    "observable_indicators": [
+      "Balances kitchen scale using 100g, 250g, 500g, and 1kg weights",
+      "Converts fractional kilogram quantities to grams without errors",
+      "Estimates weights of common school objects within 20% margin"
+    ],
+    "textbook_mapping": {
+      "ncert": { "book": "Math-Magic Book 4", "chapter": "Chapter 12: How Heavy? How Light?", "pages": "133-145" },
+      "kerala_scert": { "book": "Mathematics Standard 4", "chapter": "Unit 6: Weighty Matters", "pages": "82-97" },
+      "maharashtra_scert": { "book": "Mathematics Standard 4", "chapter": "Part 2, Ch 11: Measurement of Weight", "pages": "61-72" }
+    ],
+    "source_citation": "NCF-SE 2023 Curricular Area 2 (Mathematics), Section 2.3; NCERT Class 4 Syllabus"
+  },
+  {
+    "id": "SEED-G4-EVS-01",
+    "grade": "Grade 4",
+    "stage": "Preparatory",
+    "subject": "Environmental Studies",
+    "competency_code": "C-G4-EVS-01",
+    "competency_statement": "Traces community water supply paths, tests basic filtration, and audits household and school water wastage.",
+    "what_student_can_do": "Builds a three-layer sand-gravel filter and calculates water loss from leaking school taps.",
+    "pedagogical_approach": "Guided community water walk and fair-test low-cost filtration experiment",
+    "observable_indicators": [
+      "Illustrates pipeline flow from river/well to household tap",
+      "Builds an operative 3-tier plastic bottle sand/gravel filter",
+      "Computes daily tap drip wastage and drafts conservation pledge"
+    ],
+    "textbook_mapping": {
+      "ncert": { "book": "Looking Around (Aas Paas) 4", "chapter": "Chapter 18: Too Much Water, Too Little Water", "pages": "146-155" },
+      "kerala_scert": { "book": "Environmental Studies Class 4", "chapter": "Unit 1: Purity Around Us", "pages": "9-24" },
+      "maharashtra_scert": { "book": "Parisar Abhyas 1 (Class 4)", "chapter": "Chapter 4: Water for Every Household", "pages": "19-27" }
+    ],
+    "source_citation": "NCF-SE 2023 Curricular Area 3 (Science & Social Studies Integration), Section 3.1; NCERT Looking Around Syllabus"
+  }
+]

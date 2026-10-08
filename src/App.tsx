@@ -65,6 +65,8 @@ import { ResourceQualityGuidelines } from './pages/ResourceQualityGuidelines';
 import { RealtimeCollabDocs } from './pages/RealtimeCollabDocs';
 import { SchoolDashboardDocs } from './pages/SchoolDashboardDocs';
 import { StateBoardDocs } from './pages/StateBoardDocs';
+import { ContentProgressDashboard } from './pages/ContentProgressDashboard';
+import { Grade8TaskPilotPage } from './pages/Grade8TaskPilotPage';
 
 function AppContent() {
   useAnalytics();
@@ -98,6 +100,8 @@ function AppContent() {
         <Route path="audit-v0-8" element={<AuditReportV0_8 />} />
         <Route path="v0-8-audit" element={<AuditReportV0_8 />} />
         <Route path="audit/v0.8" element={<AuditReportV0_8 />} />
+        <Route path="content-progress" element={<ContentProgressDashboard />} />
+        <Route path="curriculum-progress" element={<ContentProgressDashboard />} />
         <Route path="resource-guidelines" element={<ResourceQualityGuidelines />} />
         <Route path="collab-docs" element={<RealtimeCollabDocs />} />
         <Route path="school-dashboard-docs" element={<SchoolDashboardDocs />} />
@@ -139,6 +143,11 @@ function AppContent() {
         <Route path="about-framework" element={<AboutFramework />} />
         <Route path="about-content" element={<AboutContent />} />
         <Route path="health" element={<Health />} />
+        {/* Grade 8 Task-Based Learning (TBL) Flagship Pilot Routes */}
+        <Route path="tasks" element={<Grade8TaskPilotPage />} />
+        <Route path="tasks/grade-8" element={<Grade8TaskPilotPage />} />
+        <Route path="grade-8-tasks" element={<Grade8TaskPilotPage />} />
+        <Route path="tbl-pilot" element={<Grade8TaskPilotPage />} />
         {FEATURES.ENABLE_HOW_IT_WORKS && <Route path="how-it-works" element={<HowItWorksPage />} />}
         {FEATURES.ENABLE_SKILL_VISUALS && <Route path="skill-map" element={<SkillMapPage />} />}
         {/* SPA 404 Catch-All Route */}

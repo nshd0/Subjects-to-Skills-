@@ -18,8 +18,12 @@ export function useAnalytics() {
     // }
 
     // Development diagnostic log
-    if (import.meta.env.DEV) {
-      console.debug(`[Telemetry] Page navigation to: ${currentPath}`);
+    try {
+      if (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.DEV) {
+        console.debug(`[Telemetry] Page navigation to: ${currentPath}`);
+      }
+    } catch {
+      // Safe no-op
     }
   }, [location]);
 }

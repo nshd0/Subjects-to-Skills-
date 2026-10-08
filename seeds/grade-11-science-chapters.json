@@ -1,0 +1,53 @@
+[
+  {
+    "id": "SEED-G11-PHY-01",
+    "grade": "Grade 11",
+    "stage": "Senior Secondary",
+    "stream": "Science (STEM)",
+    "subject": "Physics",
+    "course_code": "042",
+    "chapter_title": "Units and Measurements",
+    "ncert_textbook": "NCERT Class 11 Physics Part 1",
+    "page_range": "16-35",
+    "competencies": [
+      "Determine dimensions of physical quantities and apply dimensional analysis to test equation consistency",
+      "Calculate absolute, relative, and percentage errors in combination of physical measurements"
+    ],
+    "laboratory_practical": "Use of Vernier Calipers to measure diameter of small spherical/cylindrical body; Screw Gauge to measure diameter of wire",
+    "source_citation": "CBSE Senior School Curriculum 2025–26, Physics (Code 042); NCERT Physics 11 Chapter 2"
+  },
+  {
+    "id": "SEED-G11-PHY-02",
+    "grade": "Grade 11",
+    "stage": "Senior Secondary",
+    "stream": "Science (STEM)",
+    "subject": "Physics",
+    "course_code": "042",
+    "chapter_title": "Laws of Motion & Work-Energy-Power",
+    "ncert_textbook": "NCERT Class 11 Physics Part 1",
+    "page_range": "89-138",
+    "competencies": [
+      "Derive impulse-momentum theorem and resolve concurrent forces in equilibrium",
+      "Apply conservation of mechanical energy in elastic and inelastic collisions in one and two dimensions"
+    ],
+    "laboratory_practical": "Find force constant of helical spring by plotting load vs extension graph",
+    "source_citation": "NCF-SE 2023 Senior Secondary Stage; CBSE Physics Curriculum 2025–26"
+  },
+  {
+    "id": "SEED-G11-CHEM-01",
+    "grade": "Grade 11",
+    "stage": "Senior Secondary",
+    "stream": "Science (STEM)",
+    "subject": "Chemistry",
+    "course_code": "043",
+    "chapter_title": "Structure of Atom & Chemical Bonding",
+    "ncert_textbook": "NCERT Class 11 Chemistry Part 1",
+    "page_range": "29-134",
+    "competencies": [
+      "Apply de Broglie relation and Heisenberg uncertainty principle to quantum atomic models",
+      "Predict molecular geometries using VSEPR theory and formulate hybridization models (sp, sp2, sp3, dsp2)"
+    ],
+    "laboratory_practical": "Preparation of standard oxalic acid solution and titration against sodium hydroxide with phenolphthalein indicator",
+    "source_citation": "CBSE Chemistry Curriculum 2025–26; NCERT Class 11 Chemistry Units 2 & 4"
+  }
+]

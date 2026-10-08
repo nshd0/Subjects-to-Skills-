@@ -44,15 +44,15 @@ export const gradesData: (GradeProfile & {
       "Language & Emergent Literacy",
       "Aesthetic & Cultural Expression"
     ],
-    status: "planned",
+    status: "reviewed",
     cbseSubjects: ["Mathematics", "Science", "Social Science", "English", "Hindi"],
     ncrtBooks: [
       { subject: "Mathematics", title: "NCERT Mathematics", url: "https://ncert.nic.in/textbook.php" },
       { subject: "Science", title: "NCERT Science", url: "https://ncert.nic.in/textbook.php" },
       { subject: "Social Science", title: "NCERT Social Science", url: "https://ncert.nic.in/textbook.php" }
     ],
-    lastUpdated: "2025-09",
-    sources: ["CBSE Curriculum 2025–26", "NCERT Textbooks 2025–26", "NCF 2023 – Competency Framework"],
+    lastUpdated: "2026-10",
+    sources: ["NEP 2020 §4.1–4.10", "NCF-FS 2022 (Foundational Stage)", "NCERT Jaadui Pitara Guidelines 2024–26"],
     stageRoute: "/stage/foundational",
     nextGrade: "grade-1",
     previousGradeBridge: [],
@@ -62,10 +62,14 @@ export const gradesData: (GradeProfile & {
     ],
     bringFromPrevious: "Home language foundation and sensory curiosity.",
     readyForNext: "Readiness for structured early classroom routines and interactive games.",
-    currentFocus: "Grade-level structure and framework alignment in development.",
-    nextMilestone: "v0.4 Curriculum Scoping",
-    reviewStatus: "Queued for Development",
-    feedbackEnabled: true
+    currentFocus: "Panchakosha early childhood care and emergent play-based literacy.",
+    nextMilestone: "Live V0.8 Production Content",
+    reviewStatus: "Curriculum Blueprint Complete / Reviewed",
+    feedbackEnabled: true,
+    flagshipProject: {
+      title: "Panchakosha Sensory Discovery Table",
+      description: "Daily tactile and rhythm circle exploring natural seeds, leaves, and oral stories."
+    }
   },
   {
     id: "grade-1",
@@ -104,15 +108,15 @@ export const gradesData: (GradeProfile & {
       "Art Education (Drawing & Movement)",
       "Physical Well-being & Hygiene"
     ],
-    status: "planned",
+    status: "reviewed",
     cbseSubjects: ["Mathematics", "Science", "Social Science", "English", "Hindi"],
     ncrtBooks: [
       { subject: "Mathematics", title: "NCERT Mathematics", url: "https://ncert.nic.in/textbook.php" },
       { subject: "Science", title: "NCERT Science", url: "https://ncert.nic.in/textbook.php" },
       { subject: "Social Science", title: "NCERT Social Science", url: "https://ncert.nic.in/textbook.php" }
     ],
-    lastUpdated: "2025-09",
-    sources: ["CBSE Curriculum 2025–26", "NCERT Textbooks 2025–26", "NCF 2023 – Competency Framework"],
+    lastUpdated: "2026-10",
+    sources: ["NCF-FS 2022", "NIPUN Bharat FLN Mission", "NCERT Sarangi & Joyful Mathematics (2024–26)"],
     stageRoute: "/stage/foundational",
     previousGrade: "pre-school",
     nextGrade: "grade-2",
@@ -126,10 +130,14 @@ export const gradesData: (GradeProfile & {
     ],
     bringFromPrevious: "Pre-school story familiarity and fine-motor coordination.",
     readyForNext: "Independent phonics decoding and basic addition with counters.",
-    currentFocus: "Grade-level structure and framework alignment in development.",
-    nextMilestone: "v0.4 Curriculum Scoping",
-    reviewStatus: "Queued for Development",
-    feedbackEnabled: true
+    currentFocus: "FLN decoding, 1-to-20 ten bundling and observational discovery.",
+    nextMilestone: "Live V0.8 Production Content",
+    reviewStatus: "Curriculum Blueprint Complete / Reviewed",
+    feedbackEnabled: true,
+    flagshipProject: {
+      title: "The Fruit Stall: Counting & Shapes",
+      description: "Market role-play applying 1-to-20 counting, 2D shapes, and oral English/Hindi vocabulary."
+    }
   },
   {
     id: "grade-2",
@@ -168,32 +176,36 @@ export const gradesData: (GradeProfile & {
       "Art & Craft (Creative Assembly)",
       "Physical Education & Games"
     ],
-    status: "planned",
+    status: "reviewed",
     cbseSubjects: ["Mathematics", "Science", "Social Science", "English", "Hindi"],
     ncrtBooks: [
       { subject: "Mathematics", title: "NCERT Mathematics", url: "https://ncert.nic.in/textbook.php" },
       { subject: "Science", title: "NCERT Science", url: "https://ncert.nic.in/textbook.php" },
       { subject: "Social Science", title: "NCERT Social Science", url: "https://ncert.nic.in/textbook.php" }
     ],
-    lastUpdated: "2025-09",
-    sources: ["CBSE Curriculum 2025–26", "NCERT Textbooks 2025–26", "NCF 2023 – Competency Framework"],
+    lastUpdated: "2026-10",
+    sources: ["NCF-FS 2022", "NIPUN Bharat FLN Mission", "NCERT Mridang & Joyful Math Book 2"],
     stageRoute: "/stage/foundational",
     previousGrade: "grade-1",
     nextGrade: "grade-3",
     previousGradeBridge: [
-      "Phonological decoding and single-digit counting",
-      "Listening and speaking in guided peer circles"
+      "Phonics decoding of simple sentences",
+      "Addition and subtraction within 20"
     ],
     nextGradeBridge: [
-      "Transition from learning-to-read to reading-to-learn",
-      "Ability to record structured observations and tally counts"
+      "Transition into preparatory textbook reading and 3-digit operations",
+      "Structured environmental observation and recording"
     ],
-    bringFromPrevious: "Foundational literacy and basic number recognition.",
-    readyForNext: "Readiness for independent reading and early data collection in Grade 3.",
-    currentFocus: "Grade-level structure and framework alignment in development.",
-    nextMilestone: "v0.4 Curriculum Scoping",
-    reviewStatus: "Queued for Development",
-    feedbackEnabled: true
+    bringFromPrevious: "Independent phonics decoding and basic addition with counters.",
+    readyForNext: "Preparatory Stage textbook study, 3-digit operations, and nature field observation.",
+    currentFocus: "Reading comprehension, 2-digit operations with regrouping, and plant lifecycles.",
+    nextMilestone: "Live V0.8 Production Content",
+    reviewStatus: "Curriculum Blueprint Complete / Reviewed",
+    feedbackEnabled: true,
+    flagshipProject: {
+      title: "Sprouting Seeds & Weather Log",
+      description: "Hands-on biological observation journal tracking seed germination over 10 days."
+    }
   },
 
   // ================= PREPARATORY STAGE (Ages 8–11) =================
@@ -307,11 +319,11 @@ export const gradesData: (GradeProfile & {
       "Creative Arts & Performance",
       "Physical Education & Team Sports"
     ],
-    status: "planned",
+    status: "reviewed",
     curriculumFramework: "NCF-SE-2023",
     textbookStatus: "new-ncert-published",
     academicSession: "2026-27",
-    lastVerifiedDate: "2026-09-18",
+    lastVerifiedDate: "2026-10-01",
     
   
     cbseSubjects: ["Mathematics", "EVS", "English", "Hindi"],
@@ -320,8 +332,8 @@ export const gradesData: (GradeProfile & {
       { subject: "Science", title: "NCERT Science", url: "https://ncert.nic.in/textbook.php" },
       { subject: "Social Science", title: "NCERT Social Science", url: "https://ncert.nic.in/textbook.php" }
     ],
-    lastUpdated: "2025-09",
-    sources: ["CBSE Curriculum 2025–26", "NCERT Textbooks 2025–26", "NCF 2023 – Competency Framework"],
+    lastUpdated: "2026-10",
+    sources: ["NCF-SE 2023 Preparatory Stage", "NCERT Math-Magic & Looking Around 4", "Kerala & Maharashtra SCERT Class 4"],
     stageRoute: "/stage/preparatory",
     previousGrade: "grade-3",
     nextGrade: "grade-5",
@@ -335,10 +347,14 @@ export const gradesData: (GradeProfile & {
     ],
     bringFromPrevious: "Neighbourhood observation skills and basic data tallies.",
     readyForNext: "Abstract problem-solving and independent investigative reports.",
-    currentFocus: "Grade-level structure and framework alignment in development.",
-    nextMilestone: "v0.4 Curriculum Scoping",
-    reviewStatus: "Queued for Development",
-    feedbackEnabled: true
+    currentFocus: "Metric weight measurement, water conservation audits, and structured writing.",
+    nextMilestone: "Live V0.8 Production Content",
+    reviewStatus: "Curriculum Blueprint Complete / Reviewed",
+    feedbackEnabled: true,
+    flagshipProject: {
+      title: "The Water Caravan: Weight & Conservation",
+      description: "Hands-on balance scale measurement, school tap water audit, and multi-stage sand filter construction."
+    }
   },
   {
     id: "grade-5",
@@ -376,11 +392,11 @@ export const gradesData: (GradeProfile & {
       "Vocational Exposure & Traditional Crafts",
       "Physical Education & Health Habits"
     ],
-    status: "planned",
+    status: "reviewed",
     curriculumFramework: "NCF-SE-2023",
     textbookStatus: "new-ncert-published",
     academicSession: "2026-27",
-    lastVerifiedDate: "2026-09-18",
+    lastVerifiedDate: "2026-10-01",
     
   
     cbseSubjects: ["Mathematics", "EVS", "English", "Hindi"],
@@ -389,8 +405,8 @@ export const gradesData: (GradeProfile & {
       { subject: "Science", title: "NCERT Science", url: "https://ncert.nic.in/textbook.php" },
       { subject: "Social Science", title: "NCERT Social Science", url: "https://ncert.nic.in/textbook.php" }
     ],
-    lastUpdated: "2025-09",
-    sources: ["CBSE Curriculum 2025–26", "NCERT Textbooks 2025–26", "NCF 2023 – Competency Framework"],
+    lastUpdated: "2026-10",
+    sources: ["NCF-SE 2023 Preparatory Stage Capstone", "NCERT Math-Magic & Looking Around 5", "Kerala SCERT Class 5"],
     stageRoute: "/stage/preparatory",
     previousGrade: "grade-4",
     nextGrade: "grade-6",
@@ -404,10 +420,14 @@ export const gradesData: (GradeProfile & {
     ],
     bringFromPrevious: "Measurement competence and collaborative inquiry habits.",
     readyForNext: "Readiness for Middle Stage subject-based learning and lab science.",
-    currentFocus: "Grade-level structure and framework alignment in development.",
-    nextMilestone: "v0.4 Curriculum Scoping",
-    reviewStatus: "Queued for Development",
-    feedbackEnabled: true
+    currentFocus: "Decimal math, digestion physiological tracing, and disaster preparedness.",
+    nextMilestone: "Live V0.8 Production Content",
+    reviewStatus: "Curriculum Blueprint Complete / Reviewed",
+    feedbackEnabled: true,
+    flagshipProject: {
+      title: "The Architecture of Energy & Digestion",
+      description: "Inquiry into food chains, digestive amylase breakdown, and decimal nutritional intake budgeting."
+    }
   },
 
   // ================= MIDDLE STAGE (Ages 11–14) =================
@@ -754,11 +774,11 @@ export const gradesData: (GradeProfile & {
       "Vocational & Applied Technology Skills",
       "Health & Physical Well-being"
     ],
-    status: "planned",
+    status: "reviewed",
     curriculumFramework: "pre-NCF-2023",
     textbookStatus: "existing-textbooks-continuing",
     academicSession: "2026-27",
-    lastVerifiedDate: "2026-09-18",
+    lastVerifiedDate: "2026-10-01",
     thirdLanguageRequired: true,
   
     cbseSubjects: ["Mathematics", "Science", "Social Science", "English", "Second Language", "Third Language"],
@@ -767,8 +787,8 @@ export const gradesData: (GradeProfile & {
       { subject: "Science", title: "NCERT Science", url: "https://ncert.nic.in/textbook.php" },
       { subject: "Social Science", title: "NCERT Social Science", url: "https://ncert.nic.in/textbook.php" }
     ],
-    lastUpdated: "2025-09",
-    sources: ["CBSE Curriculum 2025–26", "NCERT Textbooks 2025–26", "NCF 2023 – Competency Framework"],
+    lastUpdated: "2026-10",
+    sources: ["CBSE Secondary Curriculum 2025–26", "NCERT Class 10 Textbooks", "PARAKH Competency Assessment Standards"],
     stageRoute: "/stage/secondary",
     previousGrade: "grade-9",
     nextGrade: "grade-11",
@@ -782,10 +802,14 @@ export const gradesData: (GradeProfile & {
     ],
     bringFromPrevious: "Disciplinary reasoning and evidence-based writing.",
     readyForNext: "Specialized academic discipline selection and in-depth seminar inquiry.",
-    currentFocus: "Grade-level structure and framework alignment in development.",
-    nextMilestone: "v0.4 Curriculum Scoping",
-    reviewStatus: "Queued for Development",
-    feedbackEnabled: true
+    currentFocus: "Board examination competency questions, laboratory practical verification, and stream decision-making.",
+    nextMilestone: "Live V0.8 Production Content",
+    reviewStatus: "Curriculum Blueprint Complete / Reviewed",
+    feedbackEnabled: true,
+    flagshipProject: {
+      title: "CBSE Board Science Practical & Portfolio Capstone",
+      description: "Verification of Ohm's Law, focal length ray optics, and 50% competency-based case studies."
+    }
   },
   {
     id: "grade-11",
@@ -824,15 +848,15 @@ export const gradesData: (GradeProfile & {
       "Language & Advanced Communication",
       "Interdisciplinary Project & Vocational Internship"
     ],
-    status: "planned",
+    status: "reviewed",
     cbseSubjects: ["Mathematics", "Science", "Social Science", "English", "Hindi"],
     ncrtBooks: [
       { subject: "Mathematics", title: "NCERT Mathematics", url: "https://ncert.nic.in/textbook.php" },
       { subject: "Science", title: "NCERT Science", url: "https://ncert.nic.in/textbook.php" },
       { subject: "Social Science", title: "NCERT Social Science", url: "https://ncert.nic.in/textbook.php" }
     ],
-    lastUpdated: "2025-09",
-    sources: ["CBSE Curriculum 2025–26", "NCERT Textbooks 2025–26", "NCF 2023 – Competency Framework"],
+    lastUpdated: "2026-10",
+    sources: ["NCF-SE 2023 Senior Secondary Stage", "CBSE Senior School Curriculum 2025–26", "NCERT Class 11 Textbooks"],
     stageRoute: "/stage/secondary",
     previousGrade: "grade-10",
     nextGrade: "grade-12",
@@ -846,10 +870,14 @@ export const gradesData: (GradeProfile & {
     ],
     bringFromPrevious: "Board curriculum consolidation and stream choices.",
     readyForNext: "Final year capstone research and professional presentation.",
-    currentFocus: "Grade-level structure and framework alignment in development.",
-    nextMilestone: "v0.4 Curriculum Scoping",
-    reviewStatus: "Queued for Development",
-    feedbackEnabled: true
+    currentFocus: "4-Stream specialization (STEM, Commerce, Humanities, Applied Tech) and experimental methodology.",
+    nextMilestone: "Live V0.8 Production Content",
+    reviewStatus: "Curriculum Blueprint Complete / Reviewed",
+    feedbackEnabled: true,
+    flagshipProject: {
+      title: "Senior Secondary Interdisciplinary Capstone (Phase 1)",
+      description: "Formulating a testable empirical research question across STEM, Commerce, Humanities, or Applied AI."
+    }
   },
   {
     id: "grade-12",
@@ -888,15 +916,15 @@ export const gradesData: (GradeProfile & {
       "Advanced Academic & Professional Communication",
       "Capstone Portfolio & Real-World Application"
     ],
-    status: "planned",
+    status: "reviewed",
     cbseSubjects: ["Mathematics", "Science", "Social Science", "English", "Hindi"],
     ncrtBooks: [
       { subject: "Mathematics", title: "NCERT Mathematics", url: "https://ncert.nic.in/textbook.php" },
       { subject: "Science", title: "NCERT Science", url: "https://ncert.nic.in/textbook.php" },
       { subject: "Social Science", title: "NCERT Social Science", url: "https://ncert.nic.in/textbook.php" }
     ],
-    lastUpdated: "2025-09",
-    sources: ["CBSE Curriculum 2025–26", "NCERT Textbooks 2025–26", "NCF 2023 – Competency Framework"],
+    lastUpdated: "2026-10",
+    sources: ["NCF-SE 2023 Senior Secondary Capstone", "CBSE Senior School Curriculum 2025–26", "NCERT Class 12 Textbooks"],
     stageRoute: "/stage/secondary",
     previousGrade: "grade-11",
     previousGradeBridge: [
@@ -909,9 +937,13 @@ export const gradesData: (GradeProfile & {
     ],
     bringFromPrevious: "Specialized disciplinary depth and academic seminar experience.",
     readyForNext: "Higher education, professional careers and civic leadership.",
-    currentFocus: "Grade-level structure and framework alignment in development.",
-    nextMilestone: "v0.4 Curriculum Scoping",
-    reviewStatus: "Queued for Development",
-    feedbackEnabled: true
+    currentFocus: "Capstone project defense, university entrance preparedness, and board examination mastery.",
+    nextMilestone: "Live V0.8 Production Content",
+    reviewStatus: "Curriculum Blueprint Complete / Reviewed",
+    feedbackEnabled: true,
+    flagshipProject: {
+      title: "Senior Secondary Capstone Defense & Board Portfolio",
+      description: "Comprehensive thesis defense before external jury and CBSE Board examination mastery."
+    }
   }
 ];

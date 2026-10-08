@@ -4,6 +4,7 @@ import { preparatorySubjectMaps } from './curriculumDataPreparatory';
 import { middleSecondarySubjectMaps } from './curriculumDataMiddleSecondary';
 import { secondarySupplementarySubjectMaps } from './curriculumDataSecondary_v05';
 import { aiSubjectMaps } from './curriculumDataAI';
+import { authoritativeV08SubjectMaps } from './curriculumDataAuthoritativeV08';
 
 const baseSubjectMaps: SubjectSkillMap[] = [
   // ================= GRADE 3 =================
@@ -669,5 +670,6 @@ export const subjectMaps: SubjectSkillMap[] = [
   ...preparatorySubjectMaps,
   ...middleSecondarySubjectMaps,
   ...secondarySupplementarySubjectMaps,
+  ...authoritativeV08SubjectMaps,
   ...(FEATURES.ENABLE_AI_SUBJECT ? aiSubjectMaps : [])
 ];

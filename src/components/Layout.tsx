@@ -45,7 +45,9 @@ export function Layout() {
   const [isTourOpen, setIsTourOpen] = React.useState(false);
   const [isOfflineVaultOpen, setIsOfflineVaultOpen] = React.useState(false);
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = React.useState(false);
-  const [isOnline, setIsOnline] = React.useState(navigator.onLine);
+  const [isOnline, setIsOnline] = React.useState(() => {
+    return typeof navigator !== 'undefined' && typeof navigator.onLine === 'boolean' ? navigator.onLine : true;
+  });
   const location = useLocation();
 
   React.useEffect(() => {
@@ -111,6 +113,7 @@ export function Layout() {
   ];
 
   const teachAndPlanLinks = [
+    { name: 'Grade 8 TBL Tasks (Pilot)', path: '/tasks/grade-8', badge: 'New Pilot' },
     { name: 'Classroom Activities', path: '/activities' },
     { name: 'Unit & Lesson Planner', path: '/planner' },
     { name: 'Real-Time Co-Planning (v0.8)', path: '/co-planning' },
@@ -129,6 +132,7 @@ export function Layout() {
   ];
 
   const resourcesLinks = [
+    { name: 'Curriculum Content Progress (v0.8)', path: '/content-progress' },
     { name: 'Ready-to-Use Classroom Resources (v0.8)', path: '/resources' },
     { name: 'School & District Dashboards (v0.8)', path: '/school-dashboards' },
     { name: 'DIKSHA & NISHTHA CPD Hub (v0.8)', path: '/professional-development' },
@@ -191,16 +195,24 @@ export function Layout() {
           </div>
 
           <div className="flex items-center gap-3 text-[11px] text-indigo-200 shrink-0">
+            <Link to="/tasks/grade-8" className="hover:text-white underline underline-offset-2 font-bold text-amber-300">
+              Grade 8 Tasks (TBL Pilot)
+            </Link>
+            <span>·</span>
+            <Link to="/content-progress" className="hover:text-white underline underline-offset-2 font-semibold text-emerald-300">
+              Content Progress
+            </Link>
+            <span>·</span>
             <Link to="/audit-v0-8" className="hover:text-white underline underline-offset-2 font-semibold text-amber-300">
-              v0.8 Audit Report
+              v0.8 Audit
             </Link>
             <span>·</span>
             <Link to="/co-planning" className="hover:text-white underline underline-offset-2">
-              Co-Planning Studio
+              Co-Planning
             </Link>
             <span>·</span>
             <Link to="/resources" className="hover:text-white underline underline-offset-2">
-              Classroom Resources
+              Resources
             </Link>
           </div>
         </div>
