@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   ArrowRight, BookOpen, Layers, Users, Activity, 
@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { FEATURES } from '@/config/features';
 import { stages, secondaryStage, homeHeroImage } from '@/data/curriculum';
+import { LiveSmartClass } from '@/features/smartclass/LiveSmartClass';
 
 const containerVariants = {
   hidden: { opacity: 1 },
@@ -25,6 +26,7 @@ const itemVariants = {
 };
 
 export function Home() {
+  const [homeView, setHomeView] = useState<'smartclass' | 'curriculum'>('smartclass');
   const stageList = Object.values(stages);
 
   const getStageColorStyles = (stageId: string) => {
@@ -62,9 +64,54 @@ export function Home() {
   };
 
   return (
-    <div className="flex flex-col gap-16 sm:gap-20 pb-20">
-      {/* Hero Section */}
-      <section className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 overflow-hidden relative">
+    <div className="flex flex-col pb-20">
+      {/* Smart Board / Live Smart Class Primary Home Switcher */}
+      <div className="bg-slate-900 border-b border-slate-800 py-2.5 px-4 sticky top-16 z-30 shadow-md">
+        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-bold text-slate-300 uppercase tracking-wider hidden sm:inline">
+              Teacher Home View:
+            </span>
+            <div className="flex items-center bg-slate-950 p-1 rounded-xl border border-slate-800">
+              <button
+                onClick={() => setHomeView('smartclass')}
+                className={`min-h-[40px] px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
+                  homeView === 'smartclass'
+                    ? 'bg-amber-400 text-slate-950 font-black shadow'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                <Sparkles className="w-3.5 h-3.5 text-slate-950" />
+                <span>Live Smart Class (Smart Board Station)</span>
+              </button>
+              <button
+                onClick={() => setHomeView('curriculum')}
+                className={`min-h-[40px] px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
+                  homeView === 'curriculum'
+                    ? 'bg-indigo-600 text-white shadow'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                <Layers className="w-3.5 h-3.5" />
+                <span>Curriculum Framework</span>
+              </button>
+            </div>
+          </div>
+
+          <div className="text-xs text-slate-400 font-medium hidden md:flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span>Smart Board Optimized (Touch & Stylus Ready)</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Primary View: Live Smart Class (Default on Smart Boards) */}
+      {homeView === 'smartclass' ? (
+        <LiveSmartClass />
+      ) : (
+        <div className="flex flex-col gap-16 sm:gap-20">
+          {/* Hero Section */}
+          <section className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 overflow-hidden relative">
         <div className="absolute inset-0 bg-gradient-to-b from-indigo-50/40 via-transparent to-slate-50/60 dark:from-indigo-950/20 dark:via-transparent dark:to-slate-900/60 -z-10"></div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 max-w-7xl">
           <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
@@ -424,6 +471,8 @@ export function Home() {
           </div>
         </motion.div>
       </section>
+    </div>
+    )}
     </div>
   );
 }

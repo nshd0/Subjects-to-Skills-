@@ -67,6 +67,8 @@ import { SchoolDashboardDocs } from './pages/SchoolDashboardDocs';
 import { StateBoardDocs } from './pages/StateBoardDocs';
 import { ContentProgressDashboard } from './pages/ContentProgressDashboard';
 import { Grade8TaskPilotPage } from './pages/Grade8TaskPilotPage';
+import { TeacherFastTrack } from './features/teacher/TeacherFastTrack';
+import { LiveSmartClass } from './features/smartclass/LiveSmartClass';
 
 function AppContent() {
   useAnalytics();
@@ -143,11 +145,19 @@ function AppContent() {
         <Route path="about-framework" element={<AboutFramework />} />
         <Route path="about-content" element={<AboutContent />} />
         <Route path="health" element={<Health />} />
-        {/* Grade 8 Task-Based Learning (TBL) Flagship Pilot Routes */}
+        {/* Task-Based Learning (TBL) Multi-Grade Library & Pilot Routes */}
         <Route path="tasks" element={<Grade8TaskPilotPage />} />
-        <Route path="tasks/grade-8" element={<Grade8TaskPilotPage />} />
+        <Route path="tasks/:gradeId" element={<Grade8TaskPilotPage />} />
         <Route path="grade-8-tasks" element={<Grade8TaskPilotPage />} />
         <Route path="tbl-pilot" element={<Grade8TaskPilotPage />} />
+        {/* Zero-Training 5-Minute Teacher Fast-Track Routes */}
+        <Route path="teacher" element={<LiveSmartClass />} />
+        <Route path="live-class" element={<LiveSmartClass />} />
+        <Route path="smart-class" element={<LiveSmartClass />} />
+        <Route path="smartboard" element={<LiveSmartClass />} />
+        <Route path="live" element={<LiveSmartClass />} />
+        <Route path="assign" element={<TeacherFastTrack />} />
+        <Route path="fast-track" element={<TeacherFastTrack />} />
         {FEATURES.ENABLE_HOW_IT_WORKS && <Route path="how-it-works" element={<HowItWorksPage />} />}
         {FEATURES.ENABLE_SKILL_VISUALS && <Route path="skill-map" element={<SkillMapPage />} />}
         {/* SPA 404 Catch-All Route */}

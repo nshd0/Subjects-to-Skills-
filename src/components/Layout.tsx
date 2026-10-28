@@ -195,8 +195,17 @@ export function Layout() {
           </div>
 
           <div className="flex items-center gap-3 text-[11px] text-indigo-200 shrink-0">
-            <Link to="/tasks/grade-8" className="hover:text-white underline underline-offset-2 font-bold text-amber-300">
-              Grade 8 Tasks (TBL Pilot)
+            <Link to="/live-class" className="hover:text-white font-black text-amber-300 flex items-center gap-1.5 px-2 py-0.5 rounded bg-amber-400/20 border border-amber-400/40">
+              <Sparkles className="w-3.5 h-3.5 text-amber-300 animate-pulse" />
+              <span>Live Smart Class</span>
+            </Link>
+            <span>·</span>
+            <Link to="/teacher" className="hover:text-white underline underline-offset-2 font-bold text-amber-200">
+              Fast-Track
+            </Link>
+            <span>·</span>
+            <Link to="/tasks/grade-8" className="hover:text-white underline underline-offset-2 font-bold text-indigo-200">
+              Grade 8 Tasks
             </Link>
             <span>·</span>
             <Link to="/content-progress" className="hover:text-white underline underline-offset-2 font-semibold text-emerald-300">
@@ -240,6 +249,13 @@ export function Layout() {
             {/* Main Navigation (Preserved and complete) */}
             <nav className="hidden xl:flex items-center gap-1">
               <NavLink to="/" className={navLinkClass}>Home</NavLink>
+              <NavLink 
+                to="/live-class" 
+                className="px-2.5 py-1.5 rounded-lg text-xs lg:text-sm font-bold bg-amber-400 text-slate-950 hover:bg-amber-300 shadow-sm flex items-center gap-1.5 transition-transform active:scale-95"
+              >
+                <Sparkles className="w-3.5 h-3.5 fill-current" />
+                <span>Live Smart Class</span>
+              </NavLink>
               <div id="tour-step-map-desktop"><NavDropdown label="Grades" to="/grades" items={gradesDropdownLinks} /></div>
               <NavDropdown label="Stages" to="/stage/foundational" items={stagesLinks} />
               <div id="tour-step-planner-desktop"><NavDropdown label="Teach & Plan" items={teachAndPlanLinks} /></div>
@@ -252,6 +268,13 @@ export function Layout() {
             {/* Compact Nav for Mid-Sized Screens */}
             <nav className="hidden md:flex xl:hidden items-center gap-1">
               <NavLink to="/" className={navLinkClass}>Home</NavLink>
+              <NavLink 
+                to="/live-class" 
+                className="px-2 py-1 rounded-lg text-xs font-bold bg-amber-400 text-slate-950 hover:bg-amber-300 flex items-center gap-1"
+              >
+                <Sparkles className="w-3 h-3 fill-current" />
+                <span>Live Class</span>
+              </NavLink>
               <div id="tour-step-map-compact"><NavDropdown label="Grades" to="/grades" items={gradesDropdownLinks} /></div>
               <NavDropdown label="Stages" to="/stage/foundational" items={stagesLinks} />
               <div id="tour-step-planner-compact"><NavDropdown label="Teach & Plan" items={teachAndPlanLinks} /></div>
